@@ -221,10 +221,9 @@
 
     .app-card + .app-card { margin-top: var(--cardGap); }
 
-    /* ✅ カードリンク化（aでも見た目を崩さない） */
     a.app-card {
       display: block;
-      border-bottom: none;      /* 下線を消す */
+      border-bottom: none; 
       padding-bottom: 0;
     }
 
@@ -234,7 +233,6 @@
       border-color: rgba(17,17,17,0.10);
     }
 
-    /* ✅ キーボード操作のフォーカスも綺麗に */
     a.app-card:focus-visible {
       outline: 2px solid rgba(43,108,255,0.25);
       outline-offset: 4px;
@@ -264,7 +262,6 @@
       line-height: 1.6;
     }
 
-    /* ✅ カード内の “View details” は下線なし・軽い強調だけ */
     .app-card .link-arrow {
       border-bottom: 1px solid var(--line);
       width: fit-content;
@@ -365,7 +362,7 @@
 
     <div class="card-stack">
 
-      <!-- ✅ PMP BOOST：カード全体リンク -->
+      <!-- PMP BOOST -->
       <a class="app-card" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
         <div class="app-name">PMP BOOST</div>
         <p class="app-desc-jp">PMP試験対策のための学習アプリ</p>
@@ -373,7 +370,6 @@
         <span class="link-arrow">View details →</span>
       </a>
 
-      <!-- Coming Soon：クリック不可 -->
       <div class="app-card coming" aria-disabled="true">
         <div class="app-name">Coming soon...</div>
         <p class="app-desc-jp">新しいアプリを準備中です</p>
