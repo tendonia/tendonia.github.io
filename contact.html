@@ -313,5 +313,18 @@
       document.head.appendChild(s);
     })();
   </script>
+
+  <script>
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    const email = document.getElementById("email").value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!valid) {
+      e.preventDefault();
+      document.getElementById("status").textContent =
+        "正しいメールアドレスを入力してください。";
+    }
+  });
+</script>
+
 </body>
 </html>
