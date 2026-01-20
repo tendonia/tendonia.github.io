@@ -15,11 +15,12 @@
       --text-sub: #666;
       --text-fade: #9a9a9a;
       --line-soft: #ececec;
+      --card-radius: 8px;
     }
 
     /* ===== Base ===== */
     body {
-      font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-family: "Noto Sans JP", system-ui, sans-serif;
       margin: 0;
       padding: 96px 24px;
       background: #fff;
@@ -56,7 +57,6 @@
 
     .hero-icons img {
       height: 64px;
-      width: auto;
       opacity: 0.95;
     }
 
@@ -74,7 +74,7 @@
       letter-spacing: 0.04em;
     }
 
-    /* ===== Anchor Nav ===== */
+    /* ===== Nav ===== */
     nav {
       margin: 48px 0 96px;
       display: flex;
@@ -106,7 +106,6 @@
 
     .section-head img {
       height: 22px;
-      width: auto;
     }
 
     h2 {
@@ -138,14 +137,19 @@
       margin-bottom: 22px;
     }
 
-    /* ===== Apps ===== */
-    .app {
-      padding: 28px 0;
-      border-top: 1px solid var(--line-soft);
+    /* ===== App Card ===== */
+    .app-card {
+      padding: 28px 32px;
+      border: 1px solid var(--line-soft);
+      border-radius: var(--card-radius);
+      transition: transform .2s ease, box-shadow .2s ease;
+      background: #fff;
+      max-width: 520px;
     }
 
-    .app:last-child {
-      border-bottom: 1px solid var(--line-soft);
+    .app-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
     }
 
     .app-name {
@@ -181,7 +185,7 @@
     .link-arrow {
       font-size: 13px;
       letter-spacing: 0.06em;
-      margin-top: 12px;
+      margin-top: 14px;
       display: inline-block;
     }
 
@@ -194,26 +198,26 @@
       color: var(--text-fade);
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
       gap: 12px;
     }
 
     @media (max-width: 640px) {
       h1 { font-size: 32px; }
       .hero-icons img { height: 52px; }
+      .app-card { padding: 24px; }
     }
   </style>
 </head>
-<body>
 
+<body>
 <div class="container">
 
   <!-- Hero -->
   <div class="hero">
     <div class="hero-icons">
-      <img src="assets/blue-透過.png" alt="">
-      <img src="assets/yellow-透過.png" alt="">
-      <img src="assets/red-透過.png" alt="">
+      <img src="assets/blue-透過.png">
+      <img src="assets/yellow-透過.png">
+      <img src="assets/red-透過.png">
     </div>
     <div>
       <h1>TendOn</h1>
@@ -231,28 +235,24 @@
   <!-- About -->
   <section id="about">
     <div class="section-head">
-      <img src="assets/blue-透過.png" alt="">
+      <img src="assets/blue-透過.png">
       <h2>ABOUT</h2>
     </div>
     <div class="section-line"></div>
 
-    <p class="jp">
-      TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。
-    </p>
-    <p class="en">
-      Independent app studio building iOS apps.
-    </p>
+    <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。</p>
+    <p class="en">Independent app studio building iOS apps.</p>
   </section>
 
   <!-- Apps -->
   <section id="apps">
     <div class="section-head">
-      <img src="assets/yellow-透過.png" alt="">
+      <img src="assets/yellow-透過.png">
       <h2>APPS</h2>
     </div>
     <div class="section-line"></div>
 
-    <div class="app">
+    <div class="app-card">
       <div class="app-name">PMP BOOST</div>
       <div class="app-desc-jp">PMP試験対策のための学習アプリ</div>
       <div class="app-desc-en">iOS app for PMP exam preparation.</div>
@@ -264,31 +264,22 @@
   <!-- Contact -->
   <section id="contact">
     <div class="section-head">
-      <img src="assets/red-透過.png" alt="">
+      <img src="assets/red-透過.png">
       <h2>CONTACT</h2>
     </div>
     <div class="section-line"></div>
 
-    <p class="jp">
-      お問い合わせ・サポートは専用フォームからお願いいたします。
-    </p>
-    <p class="en">
-      For inquiries and support, please use the contact form.
-    </p>
+    <p class="jp">お問い合わせ・サポートは専用フォームからお願いいたします。</p>
+    <p class="en">For inquiries and support, please use the contact form.</p>
 
     <a class="link-arrow" href="contact.html">Contact Form →</a>
   </section>
 
   <footer>
-    <div>
-      <a href="privacy.html">プライバシーポリシー</a>
-    </div>
-    <div>
-      © TendOn
-    </div>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span>© TendOn</span>
   </footer>
 
 </div>
-
 </body>
 </html>
