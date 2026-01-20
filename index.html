@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <title>TendOn</title>
@@ -43,13 +43,13 @@
       flex-wrap: wrap;
     }
 
-    .icons {
+    .hero-icons {
       display: flex;
       gap: 16px;
       align-items: center;
     }
 
-    .icons img {
+    .hero-icons img {
       height: 64px;
       width: auto;
       opacity: 0.95;
@@ -68,8 +68,22 @@
       margin-top: 6px;
     }
 
+    /* ===== Sections ===== */
     section {
       margin-bottom: 96px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .section-head img {
+      height: 26px;
+      width: auto;
+      opacity: 0.9;
     }
 
     h2 {
@@ -78,12 +92,19 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--text-fade);
-      margin-bottom: 24px;
+      margin: 0;
     }
 
-    p {
-      font-size: 15px;
-      margin-bottom: 16px;
+    /* ===== Text styles ===== */
+    .jp {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .en {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 20px;
     }
 
     .app {
@@ -100,9 +121,14 @@
       font-size: 16px;
     }
 
-    .app-desc {
+    .app-desc-jp {
+      font-size: 15px;
+      margin-top: 6px;
+    }
+
+    .app-desc-en {
+      font-size: 13px;
       color: var(--text-sub);
-      font-size: 14px;
       margin-top: 4px;
     }
 
@@ -130,7 +156,7 @@
     }
 
     @media (max-width: 640px) {
-      .icons img {
+      .hero-icons img {
         height: 52px;
       }
       h1 {
@@ -144,9 +170,9 @@
 
     <!-- Hero -->
     <div class="hero">
-      <div class="icons">
-        <img src="assets/blue-透過.png" alt="" />
-        <img src="assets/yellow-透過.png" alt="" />
+      <div class="hero-icons">
+        <img src="assets/tendon-透過.png" alt="" />
+        <img src="assets/yello2nd-透過.png" alt="" />
         <img src="assets/red-透過.png" alt="" />
       </div>
 
@@ -156,31 +182,60 @@
       </div>
     </div>
 
+    <!-- About -->
     <section>
-      <p>
-        TendOn is an independent app studio focused on building calm,
-        thoughtful iOS apps for learning and productivity.
+      <div class="section-head">
+        <img src="assets/tendon-透過.png" alt="" />
+        <h2>About</h2>
+      </div>
+
+      <p class="jp">
+        TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。
       </p>
-      <p>
-        We believe good software should feel quiet, clear, and supportive.
+      <p class="en">
+        TendOn is an independent app studio building iOS apps for learning and productivity.
+      </p>
+
+      <p class="jp">
+        静かで、分かりやすく、使う人に寄り添う体験を大切にしています。
+      </p>
+      <p class="en">
+        We value calm, clarity, and supportive user experiences.
       </p>
     </section>
 
+    <!-- Apps -->
     <section>
-      <h2>Apps</h2>
+      <div class="section-head">
+        <img src="assets/yello2nd-透過.png" alt="" />
+        <h2>Apps</h2>
+      </div>
+
       <div class="app">
         <div class="app-name">PMP BOOST</div>
-        <div class="app-desc">
+        <div class="app-desc-jp">
+          PMP試験対策のための学習アプリ（iOS）
+        </div>
+        <div class="app-desc-en">
           PMP exam learning app for iOS.
         </div>
       </div>
     </section>
 
+    <!-- Contact -->
     <section>
-      <h2>Contact</h2>
-      <p>
-        For inquiries and support, please use the contact form.
+      <div class="section-head">
+        <img src="assets/red-透過.png" alt="" />
+        <h2>Contact</h2>
+      </div>
+
+      <p class="jp">
+        お問い合わせ・サポートは、以下のフォームからご連絡ください。
       </p>
+      <p class="en">
+        For inquiries and support, please use the contact form below.
+      </p>
+
       <p>
         <a href="https://forms.gle/XXXXXXX" target="_blank" rel="noopener">
           Contact Form
@@ -190,7 +245,7 @@
 
     <footer>
       <div>
-        <a href="privacy.html">Privacy Policy</a>
+        <a href="privacy.html">プライバシーポリシー</a>
       </div>
       <div>
         © TendOn
