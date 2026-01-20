@@ -94,12 +94,7 @@
     <p class="jp">お問い合わせ・サポートは、下記フォームよりお願いいたします。</p>
     <p class="en">For inquiries and support, please use the form below.</p>
 
-    <a class="logo" href="index.html" aria-label="Back to Home">
-      <img src="assets/contact-透過.png" alt="">
-    </a>
-
     <div class="card">
-      <!-- ✅ 通常POST（CORS不要） -->
       <form id="contactForm" method="POST">
         <label for="name">NAME</label>
         <input id="name" name="name" type="text" autocomplete="name" required>
@@ -113,22 +108,16 @@
         <label for="message">MESSAGE</label>
         <textarea id="message" name="message" required></textarea>
 
-        <!-- ✅ token（GASが発行 / secret不要） -->
         <input type="hidden" id="token" name="token" value="">
 
-        <!-- ✅ page/meta（任意） -->
         <input type="hidden" id="page" name="page" value="">
         <input type="hidden" id="ua" name="ua" value="">
         <input type="hidden" id="ts" name="ts" value="">
 
-        <!-- ✅ honeypot -->
         <div class="hp-wrap" aria-hidden="true">
           <label for="company">Company</label>
           <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
         </div>
-
-        <!-- 任意：JSONで返してほしい時は _mode=json（通常はHTMLのThanksページでOK） -->
-        <!-- <input type="hidden" name="_mode" value="json"> -->
 
         <div class="actions">
           <button class="btn" id="sendBtn" type="submit" disabled>Send →</button>
@@ -150,14 +139,11 @@
   </div>
 
   <script>
-    // ✅ あなたのGAS WebアプリURL（/exec）
-    const GAS_EXEC_URL = "https://script.google.com/macros/s/PASTE_YOUR_DEPLOYMENT_ID/exec";
+    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbw3qX7lb306Jq28S0aD5GWi5ejHMG5QaGxogL8r3-UwpUctIXeq9yg-_z4FJ1EI4V7naQ/exec";
 
-    // form action をGASに向ける
     const form = document.getElementById("contactForm");
     form.action = GAS_EXEC_URL;
 
-    // meta
     document.getElementById("page").value = location.href;
     document.getElementById("ua").value = navigator.userAgent;
     document.getElementById("ts").value = new Date().toISOString();
@@ -180,10 +166,8 @@
       }
     }
 
-    // tokenjs が先に読み込まれた場合にも対応
     applyTokenFromGlobal();
 
-    // 念のため一定時間リトライ
     let tries = 0;
     const timer = setInterval(() => {
  ///0;    tries++;
@@ -192,9 +176,7 @@
     }, 200);
   </script>
 
-  <!-- ✅ CORS不要のトークン取得（scriptタグ） -->
   <script>
-    // tokenjs URL を動的に差し込む（GAS_EXEC_URLを使う）
     (function(){
       const s = document.createElement("script");
       s.src = GAS_EXEC_URL + "?action=tokenjs&v=" + Date.now();
