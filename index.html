@@ -7,82 +7,149 @@
   <meta name="description" content="TendOn is an independent app studio building thoughtful iOS apps." />
 
   <style>
+    :root {
+      --text-main: #111;
+      --text-sub: #666;
+      --text-fade: #999;
+      --line-soft: #eaeaea;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
       margin: 0;
-      padding: 72px 24px;
-      background: #ffffff;
-      color: #111;
+      padding: 96px 24px;
+      background: #fff;
+      color: var(--text-main);
       line-height: 1.9;
     }
 
     .container {
-      max-width: 760px;
+      max-width: 820px;
       margin: 0 auto;
+      animation: fadeIn 0.8s ease-out both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    header {
+      margin-bottom: 96px;
     }
 
     h1 {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 600;
-      margin-bottom: 4px;
-      letter-spacing: 0.2px;
+      letter-spacing: 0.3px;
+      margin: 0;
     }
 
     .subtitle {
-      font-size: 15px;
-      color: #777;
-      margin-bottom: 56px;
+      font-size: 14px;
+      color: var(--text-sub);
+      margin-top: 6px;
     }
 
     section {
-      margin-bottom: 64px;
+      margin-bottom: 96px;
     }
 
     h2 {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
-      margin-bottom: 16px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-fade);
+      margin-bottom: 24px;
     }
 
     p {
       font-size: 15px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .app {
-      margin-bottom: 24px;
+      padding: 24px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .app:last-child {
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .app-name {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .app-desc {
+      color: var(--text-sub);
+      font-size: 14px;
+      margin-top: 4px;
     }
 
     a {
-      color: #111;
-      text-decoration: underline;
-      text-decoration-color: #ccc;
-      text-underline-offset: 3px;
+      color: var(--text-main);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 2px;
+      transition: border-color 0.2s ease;
     }
 
     a:hover {
-      text-decoration-color: #111;
+      border-color: var(--text-main);
     }
 
     footer {
-      margin-top: 96px;
+      margin-top: 120px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line-soft);
       font-size: 13px;
-      color: #888;
+      color: var(--text-fade);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 72px 20px;
+      }
+      h1 {
+        font-size: 32px;
+      }
+      section {
+        margin-bottom: 72px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>TendOn</h1>
-    <div class="subtitle">Independent App Studio</div>
+    <header>
+      <h1>TendOn</h1>
+      <div class="subtitle">Independent App Studio</div>
+    </header>
 
     <section>
       <p>
-        TendOn is an independent app studio focused on building simple,
+        TendOn is an independent app studio focused on building calm,
         thoughtful iOS apps for learning and productivity.
       </p>
       <p>
-        We value clarity, continuity, and calm user experiences.
+        We believe good software should feel quiet, clear, and supportive.
       </p>
     </section>
 
@@ -90,28 +157,32 @@
       <h2>Apps</h2>
 
       <div class="app">
-        <p>
-          <strong>PMP BOOST</strong><br />
+        <div class="app-name">PMP BOOST</div>
+        <div class="app-desc">
           PMP exam learning app for iOS.
-        </p>
+        </div>
       </div>
     </section>
 
     <section>
       <h2>Contact</h2>
       <p>
-        For inquiries, please contact:<br />
-        <a href="mailto:your-email@example.com">your-email@example.com</a>
+        For inquiries and support, please use the contact form.
+      </p>
+      <p>
+        <a href="https://forms.gle/XXXXXXX" target="_blank" rel="noopener">
+          Contact Form
+        </a>
       </p>
     </section>
 
     <footer>
-      <p>
+      <div>
         <a href="privacy.html">Privacy Policy</a>
-      </p>
-      <p>
+      </div>
+      <div>
         © TendOn
-      </p>
+      </div>
     </footer>
   </div>
 </body>
