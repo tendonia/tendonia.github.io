@@ -15,8 +15,6 @@
       --font:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",sans-serif;
       --pageY:72px; --pageX:22px;
       --h1:32px; --h1-lh:1.2;
-      --body-jp:15px; --body-en:14px;
-      --lh-tight:1.65;
       --cardPadY:22px; --cardPadX:24px;
       --btnH:44px;
       --link-accent: rgba(17,17,17,0.35);
@@ -148,7 +146,6 @@
     .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 
     .help{margin-top:10px;font-size:12px;opacity:.62;line-height:1.6;}
-    .status{margin-top:12px;font-size:12px;opacity:.78;line-height:1.6;}
 
     .hp-wrap{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
 
@@ -196,6 +193,7 @@
 </head>
 
 <body>
+  <!-- Toast only -->
   <div class="toast" id="toast" role="status" aria-live="polite">
     <p class="toast-title" id="toastTitle"></p>
     <p class="toast-msg" id="toastMsg"></p>
@@ -245,11 +243,10 @@
           <button class="btn" id="sendBtn" type="submit" disabled>Send</button>
         </div>
 
-        <p class="status" id="status"></p>
       </form>
     </div>
 
-    <a class="link-arrow en" href="index.html">← Back to Home</a>
+    <a class="link-arrow" href="index.html">← Back to Home</a>
 
     <footer>
       <a href="privacy.html">プライバシーポリシー</a>
@@ -263,7 +260,6 @@
     // ===== elements =====
     const form = document.getElementById("contactForm");
     const sendBtn = document.getElementById("sendBtn");
-    const statusEl = document.getElementById("status");
     const tokenEl = document.getElementById("token");
 
     const toastEl = document.getElementById("toast");
@@ -274,8 +270,6 @@
     document.getElementById("page").value = location.href;
     document.getElementById("ua").value = navigator.userAgent;
     document.getElementById("ts").value = new Date().toISOString();
-
-    function setStatus(msg){ statusEl.textContent = msg || ""; }
 
     function showToast(title, msg){
       toastTitleEl.textContent = title || "";
@@ -291,18 +285,18 @@
     function isValidEmailStrict(email){
       const e = String(email || "").trim();
 
-      // basic format
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return false;
 
       const lower = e.toLowerCase();
       const domain = lower.split("@")[1] || "";
 
-      // ✅ block obvious placeholders / test domains
       const blockedDomains = new Set([
         "example.com", "example.net", "example.org",
         "test.com", "test.jp", "mailinator.com"
       ]);
       if (blockedDomains.has(domain)) return false;
+
+      if (lower === "saisai@example.com") return false;
 
       return true;
     }
@@ -317,7 +311,7 @@
         return { ok:false, msg:"未入力の項目があります。" };
       }
       if (!isValidEmailStrict(email)) {
-        return { ok:false, msg:"有効なメールアドレスを入力してください。（例: example.com は使用できません）" };
+        return { ok:false, msg:"有効なメールアドレスを入力してください。" };
       }
       if (!tokenEl.value) {
         return { ok:false, msg:"トークン取得中です。数秒待ってから再度お試しください。" };
@@ -330,7 +324,6 @@
     // ===========================
     async function fetchToken(){
       try{
-        setStatus("トークン取得中です…");
         sendBtn.disabled = true;
 
         const res = await fetch(GAS_EXEC_URL + "?action=token&v=" + Date.now(), {
@@ -343,10 +336,10 @@
 
         tokenEl.value = String(data.token);
         sendBtn.disabled = false;
-        setStatus("");
+
       }catch(e){
         sendBtn.disabled = true;
-        setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
+        showToast("送信できません", "トークン取得に失敗しました。時間をおいて再度お試しください。");
       }
     }
 
@@ -359,13 +352,11 @@
       const v = validateForm();
       if (!v.ok) {
         showToast("送信できません", v.msg);
-        setStatus(v.msg);
         return;
       }
 
       try{
         sendBtn.disabled = true;
-        setStatus("送信中…");
 
         const fd = new FormData(form);
         fd.append("_mode", "json");
@@ -381,10 +372,10 @@
 
         if (data && data.ok) {
           showToast("送信完了しました", "お問い合わせありがとうございます。");
-          setStatus("");
 
           form.reset();
 
+          // hidden再設定
           document.getElementById("page").value = location.href;
           document.getElementById("ua").value = navigator.userAgent;
           document.getElementById("ts").value = new Date().toISOString();
@@ -394,7 +385,6 @@
         } else {
           const reason = (data && data.error) ? String(data.error) : "UNKNOWN";
           showToast("送信失敗しました", "時間をおいて再度お試しください。(" + reason + ")");
-          setStatus("送信に失敗しました: " + reason);
 
           tokenEl.value = "";
           await fetchToken();
@@ -402,11 +392,9 @@
 
       }catch(err){
         showToast("送信失敗しました", "ネットワーク状況をご確認ください。");
-        setStatus("送信に失敗しました（通信エラー）");
 
         tokenEl.value = "";
         await fetchToken();
-      }finally{
       }
     });
 
