@@ -88,7 +88,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 18px;
     }
 
     .section-head img {
@@ -105,16 +105,16 @@
       color: var(--text-main);
       position: relative;
       display: inline-block;
-      padding-bottom: 6px;
+      padding-bottom: 8px;
     }
 
-    /* ✅ 色味は “細いライン” で足す（ドット無し） */
+    /* ✅ 見出し下の線：長くする（42px → 64px） */
     .accent-line::after {
       content: "";
       position: absolute;
       left: 0;
       bottom: 0;
-      width: 42px;
+      width: 64px;   /* ← ここを長くした */
       height: 2px;
       border-radius: 999px;
       background: var(--line-soft);
@@ -158,6 +158,7 @@
       background: #fff;
       max-width: 520px;
       transition: transform .2s ease, box-shadow .2s ease;
+      margin-top: 12px;
     }
 
     .app-card + .app-card {
@@ -273,14 +274,11 @@
       <h2 class="accent-line accent-blue">ABOUT</h2>
     </div>
 
+    <!-- ✅ 日本語をまとめて書く -->
     <p class="jp">
       TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。
     </p>
-    <p class="en">
-      Independent app studio building iOS apps.
-    </p>
 
-    <!-- ✅ About増量 -->
     <p class="jp small">
       “迷わず使えること”と“続けられること”を大切に、静かで集中できるUIUXを設計しています。
     </p>
@@ -289,8 +287,9 @@
       ひとつひとつのアプリが、生活や学びの中で自然に馴染み、少しずつ前に進めるきっかけになることを目指しています。
     </p>
 
+    <!-- ✅ 最後に英語 -->
     <p class="en">
-      Focused on calm, distraction-free UI and thoughtful design that helps people keep going.
+      Independent app studio building iOS apps. Focused on calm, distraction-free UI and thoughtful design that helps people keep going.
     </p>
   </section>
 
