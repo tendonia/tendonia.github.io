@@ -13,13 +13,15 @@
     :root {
       --bg: #ffffff;
       --text: #111111;
-      --text-sub: rgba(17,17,17,0.64);
       --line: #ececec;
+
+      /* 見出し下ライン */
       --accent-orange: #ff7a2f;
 
       --radius: 14px;
       --container: 720px;
 
+      /* ✅ タイトルで使っているフォントを全域の唯一の基準にする */
       --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
 
       --h1: 38px;
@@ -52,6 +54,8 @@
     }
 
     * { box-sizing: border-box; }
+
+    /* ✅ “フォントの基準”をここで固定（タイトルと同じ） */
     body {
       font-family: var(--font);
       margin: 0;
@@ -60,6 +64,12 @@
       color: var(--text);
       line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ✅ どこで表示されても同じフォントに見えるように inherit を強める */
+    h1, h2, p, a, ul, li, footer, span, div {
+      font-family: inherit;
     }
 
     .container {
@@ -73,6 +83,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ✅ リンクも本文と同じ色（灰にしない） */
     a {
       color: var(--text);
       text-decoration: none;
@@ -85,7 +96,7 @@
       letter-spacing: 0.06em;
       margin-top: 14px;
       display: inline-block;
-      opacity: 0.78;
+      color: var(--text);
     }
 
     /* ===== Hero ===== */
@@ -108,6 +119,7 @@
       font-weight: 600;
       margin: 0;
       letter-spacing: 0.02em;
+      color: var(--text);
     }
 
     .subtitle-wrap { margin-top: 6px; }
@@ -115,16 +127,15 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.06em;
-      color: var(--text-sub);
       margin: 0;
+      color: var(--text);
     }
     .subtitle-en {
       font-size: 12px;
       font-weight: 500;
       letter-spacing: 0.14em;
-      color: var(--text-sub);
-      opacity: 0.78;
       margin: 4px 0 0;
+      color: var(--text);
     }
 
     /* ===== Sections ===== */
@@ -149,6 +160,7 @@
       margin: 0;
       position: relative;
       padding-bottom: calc(var(--lineGap) + var(--lineH));
+      color: var(--text);
     }
 
     .accent-line::after {
@@ -164,19 +176,26 @@
 
     p { margin: 0 0 var(--paraB); }
 
-    .jp {
-      font-size: var(--body-jp);
-      font-weight: 500;
-      opacity: 0.92;
-      line-height: var(--lh-tight);
-    }
+/* ✅ 共通（色・字面のルールはここで統一） */
+.jp, .en {
+  color: var(--text);
+  line-height: var(--lh-tight);
+  letter-spacing: 0.01em;
+}
 
-    .en {
-      font-size: var(--body-en);
-      opacity: 0.64;
-      letter-spacing: 0.02em;
-      line-height: var(--lh-tight);
-    }
+/* ✅ 日本語（濃さはデフォルト＝1） */
+.jp {
+  font-size: var(--body-jp);
+  font-weight: 500;
+  opacity: 1;
+}
+
+/* ✅ 英語（薄さはここ “1箇所だけ” で管理） */
+.en {
+  font-size: var(--body-en);
+  font-weight: 500;
+  opacity: 0.78;
+}
 
     .app-card {
       max-width: 560px;
@@ -186,6 +205,7 @@
       background: #fff;
     }
 
+    /* ===== Lists ===== */
     .list {
       margin: 14px 0 0;
       padding-left: 18px;
@@ -195,8 +215,12 @@
       font-size: 14px;
       font-weight: 500;
       line-height: 1.7;
+      color: var(--text);
+      opacity: 1;
+      letter-spacing: 0.01em;
     }
 
+    /* ===== App Store Slot ===== */
     .store-slot {
       margin-top: 14px;
       padding-top: 12px;
@@ -204,18 +228,21 @@
       display: flex;
       justify-content: space-between;
       gap: 12px;
+      color: var(--text);
     }
-
     .store-slot[hidden] { display: none; }
 
+    /* ===== Footer ===== */
     footer {
       margin-top: 84px;
       padding-top: 22px;
       border-top: 1px solid var(--line);
       font-size: 13px;
-      opacity: 0.62;
+      color: var(--text);
       display: flex;
       justify-content: space-between;
+      gap: 12px;
+      align-items: center;
     }
   </style>
 </head>
@@ -247,19 +274,19 @@
         PMP BOOSTは、PMP試験に向けた学習を「静かに」「迷わず」「続けられる」状態に整えるための学習アプリです。
       </p>
       <p class="jp">
-        今日取り組むべき内容、理解が浅い分野、次に復習すべきテーマ——それらを自然な流れで提示し、学習の判断を減らします。
+        今日取り組むこと、理解が浅い領域、次に復習すべきテーマ——その判断をできるだけ減らし、学習の流れに集中できるように設計しています。
       </p>
 
       <p class="en">
         PMP BOOST is designed to keep PMP exam preparation calm, focused, and sustainable.
       </p>
       <p class="en">
-        It gently guides you through what to study today, what needs review, and where to focus next—without overthinking.
+        It reduces decision-making—what to study today, what to revisit, and what to do next—so you can stay in the flow.
       </p>
 
       <div class="store-slot" id="appstore-slot" hidden>
         <span>App Store</span>
-        <a id="appstore-link" href="#" target="_blank">View on App Store →</a>
+        <a id="appstore-link" href="#" target="_blank" rel="noopener">View on App Store →</a>
       </div>
     </div>
   </section>
@@ -273,23 +300,25 @@
 
     <div class="app-card">
       <p class="jp">
-        PMP BOOSTでは、学習の流れを極力シンプルに保つことで、理解と継続の両立を目指しています。
+        学習の流れをできるだけシンプルに保ち、理解と継続のどちらも崩さないことを目指しています。
       </p>
       <p class="en">
-        PMP BOOST keeps the learning flow intentionally simple, helping you balance understanding and consistency.
+        The flow stays intentionally simple—so you can keep both understanding and consistency.
       </p>
 
+      <!-- ✅ 日本語 list -->
       <ul class="list">
         <li>クイズ形式で、短時間でも集中して学習できる</li>
-        <li>「苦手」や「保存」により、復習対象をすぐに整理できる</li>
+        <li>「苦手」や「保存」で、復習対象をすぐに整理できる</li>
         <li>進捗を可視化し、積み重ねを実感できる</li>
         <li>次に何をすればよいかが自然に分かる導線</li>
       </ul>
 
+      <!-- ✅ 英語 list（同じ色・同じフォント感） -->
       <ul class="list">
         <li>Learn efficiently through focused, quiz-based sessions</li>
-        <li>Quickly organize topics to review with weak-point and saved lists</li>
-        <li>Track progress to feel steady improvement over time</li>
+        <li>Organize what to review with weak-point and saved lists</li>
+        <li>Track progress and feel steady improvement over time</li>
         <li>Always know the next step without breaking concentration</li>
       </ul>
     </div>
@@ -307,14 +336,14 @@
         PMPの学習では、長時間の集中よりも、日々の小さな積み重ねが結果につながります。
       </p>
       <p class="jp">
-        PMP BOOSTは、余計な刺激や選択を減らし、「また開きたくなる」感覚を大切に設計されています。
+        PMP BOOSTは、余計な刺激や迷いを減らし、「また開きたくなる」感覚を大切に設計しています。
       </p>
 
       <p class="en">
         Consistency matters more than intensity in PMP preparation.
       </p>
       <p class="en">
-        PMP BOOST minimizes noise and decision fatigue, making it easy to come back every day.
+        PMP BOOST reduces noise and decision fatigue, making it easy to come back every day.
       </p>
     </div>
   </section>
@@ -352,8 +381,8 @@
   const slot = document.getElementById("appstore-slot");
   const link = document.getElementById("appstore-link");
 
-  if (APP_STORE_URL) {
-    link.href = APP_STORE_URL;
+  if (APP_STORE_URL && APP_STORE_URL.trim().length > 0) {
+    link.href = APP_STORE_URL.trim();
     slot.hidden = false;
   }
 </script>
