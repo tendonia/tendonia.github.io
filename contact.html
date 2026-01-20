@@ -64,7 +64,7 @@
       letter-spacing:0.01em;
       font-weight:500;
       display:inline-block;
-      margin-top:14px;
+      margin-top:28px; /* ← 下に配置 */
       border-bottom-color: rgba(17,17,17,0.18);
     }
     .link-arrow:hover{
@@ -80,11 +80,16 @@
       margin-bottom:56px;
       flex-wrap:wrap;
     }
+
+    /* ✅ 縦横比を崩さず、正方形に収める */
     .app-icon{
-      height:58px;
       width:58px;
+      height:58px;
       display:block;
+      object-fit:contain;
+      object-position:center;
     }
+
     h1{
       font-size:var(--h1);
       line-height:var(--h1-lh);
@@ -92,6 +97,7 @@
       margin:0;
       letter-spacing:.02em;
     }
+
     .subtitle-wrap{ margin-top:6px; }
     .subtitle-jp,
     .subtitle-en{
@@ -165,7 +171,7 @@
     /* honeypot */
     .hp-wrap{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
 
-    /* ===== Footer (match pmpboost.html vibe) ===== */
+    /* ===== Footer ===== */
     footer{
       margin-top:84px;
       padding-top:22px;
@@ -182,7 +188,7 @@
     @media (max-width:640px){
       :root{--pageY:56px;--pageX:18px;--h1:28px;}
       .hero{ margin-bottom:48px; }
-      .app-icon{height:52px;width:52px;}
+      .app-icon{width:52px;height:52px;}
     }
   </style>
 </head>
@@ -233,12 +239,7 @@
 
         <!-- actions -->
         <div class="actions">
-          <!-- ✅ send button (was missing in your original code) -->
           <button class="btn" id="sendBtn" type="submit" disabled>Send</button>
-        </div>
-
-        <div class="help">
-          ※ 送信は TendOn の受付システム（Google Apps Script）経由で行われます。
         </div>
 
         <p class="status" id="status"></p>
@@ -256,7 +257,8 @@
   </div>
 
   <script>
-    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbw3qX7lb306Jq28S0aD5GWi5ejHMG5QaGxogL8r3-UwpUctIXeq9yg-_z4FJ1EI4V7naQ/exec";
+    // ✅ Updated GAS /exec URL
+    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbzj93r2bvkhRnjm5LzL6q40bpMlpbHweGCG5T29O_SV9rjsg2150fK7uuzBM66qAoUVMA/exec";
 
     const form = document.getElementById("contactForm");
     form.action = GAS_EXEC_URL;
@@ -289,7 +291,13 @@
     const timer = setInterval(() => {
       tries++;
       applyTokenFromGlobal();
-      if (!sendBtn.disabled || tries > 25) clearInterval(timer);
+
+      if (!sendBtn.disabled) {
+        clearInterval(timer);
+      } else if (tries > 25) {
+        clearInterval(timer);
+        setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
+      }
     }, 200);
   </script>
 
