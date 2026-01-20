@@ -107,6 +107,8 @@
       margin-top: 12px;
       display: inline-block;
       opacity: 0.78;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2px;
     }
 
     /* ===== Hero ===== */
@@ -194,8 +196,8 @@
       font-size: var(--body-en);
       font-weight: 400;
       color: var(--text);
-      opacity: 0.64;          /* ✅ 英文は“薄さ”で分ける */
-      letter-spacing: 0.02em; /* ✅ italicはやめて読みやすさ優先 */
+      opacity: 0.64;
+      letter-spacing: 0.02em;
       line-height: var(--lh-tight);
     }
 
@@ -219,10 +221,23 @@
 
     .app-card + .app-card { margin-top: var(--cardGap); }
 
+    /* ✅ カードリンク化（aでも見た目を崩さない） */
+    a.app-card {
+      display: block;
+      border-bottom: none;      /* 下線を消す */
+      padding-bottom: 0;
+    }
+
     .app-card:hover {
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
       border-color: rgba(17,17,17,0.10);
+    }
+
+    /* ✅ キーボード操作のフォーカスも綺麗に */
+    a.app-card:focus-visible {
+      outline: 2px solid rgba(43,108,255,0.25);
+      outline-offset: 4px;
     }
 
     .app-name {
@@ -247,6 +262,12 @@
       opacity: 0.62;
       letter-spacing: 0.02em;
       line-height: 1.6;
+    }
+
+    /* ✅ カード内の “View details” は下線なし・軽い強調だけ */
+    .app-card .link-arrow {
+      border-bottom: 1px solid var(--line);
+      width: fit-content;
     }
 
     /* ===== Coming Soon ===== */
@@ -343,21 +364,23 @@
     </div>
 
     <div class="card-stack">
-      <!-- PMP BOOST -->
-      <div class="app-card">
+
+      <!-- ✅ PMP BOOST：カード全体リンク -->
+      <a class="app-card" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
         <div class="app-name">PMP BOOST</div>
         <p class="app-desc-jp">PMP試験対策のための学習アプリ</p>
         <p class="app-desc-en">iOS app for PMP exam preparation.</p>
-        <a class="link-arrow" href="pmp-boost.html">View details →</a>
-      </div>
+        <span class="link-arrow">View details →</span>
+      </a>
 
-      <!-- Coming Soon -->
-      <div class="app-card coming">
+      <!-- Coming Soon：クリック不可 -->
+      <div class="app-card coming" aria-disabled="true">
         <div class="app-name">Coming soon...</div>
         <p class="app-desc-jp">新しいアプリを準備中です</p>
         <p class="app-desc-en">A new app is currently in development.</p>
         <span class="link-arrow disabled">View details →</span>
       </div>
+
     </div>
   </section>
 
