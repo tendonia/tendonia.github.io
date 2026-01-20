@@ -11,54 +11,102 @@
 
   <style>
     :root {
-      /* Text */
-      --text-main: #111;
-      --text-sub: rgba(17,17,17,0.62);
+      /* ===== Color ===== */
+      --bg: #ffffff;
+      --text: #111111;
+      --text-sub: rgba(17,17,17,0.64);
+      --line: #ececec;
 
-      /* Lines */
-      --line-soft: #ececec;
-
-      /* Accent */
       --accent-blue: #2b6cff;
       --accent-yellow: #f3b700;
       --accent-red: #ff4b4b;
 
-      /* Radius */
-      --card-radius: 12px;
+      /* ===== Radius / Shadow ===== */
+      --radius: 14px;
+      --shadow-sm: 0 10px 24px rgba(0,0,0,0.06);
 
-      /* ✅ Spacing scale（ここが間延び調整の要） */
-      --space-pageY: 68px;
-      --space-heroB: 64px;
-      --space-sectionB: 76px;
+      /* ===== Layout ===== */
+      --container: 720px;
 
-      --space-headB: 14px;
-      --space-p: 10px;
-      --space-cardTop: 10px;
-      --space-cardGap: 18px;
+      /* ===== Typography scale ===== */
+      --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+      --h1: 38px;
+      --h1-lh: 1.15;
+
+      --kicker: 12px;
+      --kicker-ls: 0.14em;
+
+      --section: 12px;
+      --section-ls: 0.18em;
+
+      --body-jp: 15px;
+      --body-en: 14px;
+
+      --lh: 1.8;
+      --lh-tight: 1.65;
+
+      /* ===== Spacing scale ===== */
+      --pageY: 72px;
+      --pageX: 22px;
+
+      --heroB: 56px;
+      --sectionB: 72px;
+
+      --headB: 16px;      /* section head bottom */
+      --paraB: 10px;      /* paragraph bottom */
+      --paraB-last: 0px;
+
+      --cardPadY: 22px;
+      --cardPadX: 24px;
+      --cardGap: 16px;
+
+      --lineW: 52px;
+      --lineH: 2px;
+      --lineGap: 10px;
     }
 
     /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      font-family: "Noto Sans JP", system-ui, sans-serif;
+      font-family: var(--font);
       margin: 0;
-      padding: var(--space-pageY) 22px;
-      background: #fff;
-      color: var(--text-main);
-      line-height: 1.75;
+      padding: var(--pageY) var(--pageX);
+      background: var(--bg);
+      color: var(--text);
+      line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
     .container {
-      /* ✅ 横幅を“少し細く”して締める */
-      max-width: 720px;
+      max-width: var(--container);
       margin: 0 auto;
-      animation: fadeIn 0.8s ease-out both;
+      animation: fadeIn .7s ease-out both;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== Links ===== */
+    a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2px;
+      transition: border-color .18s ease, opacity .18s ease;
+    }
+    a:hover { border-color: rgba(17,17,17,0.75); }
+
+    .link-arrow {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      display: inline-block;
+      opacity: 0.78;
     }
 
     /* ===== Hero ===== */
@@ -66,58 +114,55 @@
       display: flex;
       align-items: center;
       gap: 16px;
-      margin-bottom: var(--space-heroB);
+      margin-bottom: var(--heroB);
       flex-wrap: wrap;
     }
 
     .hero-icons img {
-      height: 58px; /* 少しだけ引き締め */
-      opacity: 1;
+      height: 58px;
+      display: block;
     }
 
     h1 {
-      font-size: 36px;
+      font-size: var(--h1);
+      line-height: var(--h1-lh);
       font-weight: 600;
       margin: 0;
       letter-spacing: 0.02em;
-      color: var(--text-main);
-      line-height: 1.15;
     }
 
     .subtitle {
-      font-size: 13px;
-      font-weight: 500;
       margin-top: 6px;
-      letter-spacing: 0.08em;
+      font-size: var(--kicker);
+      font-weight: 500;
+      letter-spacing: var(--kicker-ls);
       color: var(--text-sub);
     }
 
     /* ===== Sections ===== */
-    section {
-      margin-bottom: var(--space-sectionB);
-    }
+    section { margin-bottom: var(--sectionB); }
 
     .section-head {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: var(--space-headB);
+      margin-bottom: var(--headB);
     }
 
     .section-head img {
       height: 16px;
-      opacity: 1;
+      display: block;
     }
 
     h2 {
-      font-size: 12px;
+      font-size: var(--section);
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: var(--section-ls);
       margin: 0;
-      color: var(--text-main);
+      color: var(--text);
       position: relative;
       display: inline-block;
-      padding-bottom: 8px;
+      padding-bottom: calc(var(--lineGap) + var(--lineH));
     }
 
     .accent-line::after {
@@ -125,123 +170,96 @@
       position: absolute;
       left: 0;
       bottom: 0;
-      width: 56px; /* ✅ 64→56で少し締める */
-      height: 2px;
+      width: var(--lineW);
+      height: var(--lineH);
       border-radius: 999px;
-      background: var(--line-soft);
+      background: var(--line);
     }
     .accent-blue::after   { background: var(--accent-blue); }
     .accent-yellow::after { background: var(--accent-yellow); }
     .accent-red::after    { background: var(--accent-red); }
 
-    /* ===== Text ===== */
+    /* ===== Paragraphs ===== */
+    p { margin: 0 0 var(--paraB) 0; }
+
     .jp {
-      color: var(--text-main);
+      font-size: var(--body-jp);
+      font-weight: 500;
+      color: var(--text);
+      opacity: 0.92;
+      line-height: var(--lh-tight);
     }
 
     .en {
-      color: var(--text-main);
-      opacity: 0.62;
-      font-style: italic;
-      letter-spacing: 0.04em;
-    }
-
-    .jp.small {
-      font-size: 15px;
-      font-weight: 500;
-      opacity: 0.92;
-      margin: 0 0 var(--space-p) 0; /* ✅ 段落間を詰める */
-      line-height: 1.7;
-    }
-
-    .en.small {
-      font-size: 13px;
+      font-size: var(--body-en);
       font-weight: 400;
-      margin: 0 0 14px 0; /* ✅ 英文の下余白を圧縮 */
-      line-height: 1.65;
+      color: var(--text);
+      opacity: 0.64;          /* ✅ 英文は“薄さ”で分ける */
+      letter-spacing: 0.02em; /* ✅ italicはやめて読みやすさ優先 */
+      line-height: var(--lh-tight);
     }
 
-    /* ===== App Cards ===== */
-    .app-card {
-      padding: 22px 24px; /* ✅ カード内余白も少し圧縮 */
-      border: 1px solid var(--line-soft);
-      border-radius: var(--card-radius);
-      background: #fff;
+    .group { margin-top: 4px; }
+    .group p:last-child { margin-bottom: var(--paraB-last); }
 
-      /* ✅ max-width 固定やめて自然に */
+    /* ===== Cards ===== */
+    .card-stack { margin-top: 10px; }
+
+    .app-card {
       width: 100%;
       max-width: 560px;
 
-      transition: transform .18s ease, box-shadow .18s ease;
-      margin-top: var(--space-cardTop);
+      padding: var(--cardPadY) var(--cardPadX);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
-    .app-card + .app-card {
-      margin-top: var(--space-cardGap);
-    }
+    .app-card + .app-card { margin-top: var(--cardGap); }
 
     .app-card:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-sm);
+      border-color: rgba(17,17,17,0.10);
     }
 
     .app-name {
       font-size: 16px;
       font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text-main);
+      margin: 0 0 6px 0;
       letter-spacing: 0.01em;
     }
 
     .app-desc-jp {
       font-size: 14px;
       font-weight: 500;
-      margin-bottom: 4px;
-      color: var(--text-main);
+      margin: 0 0 4px 0;
       opacity: 0.86;
+      line-height: 1.6;
     }
 
     .app-desc-en {
       font-size: 13px;
-      font-style: italic;
-      letter-spacing: 0.04em;
-      color: var(--text-main);
+      font-weight: 400;
+      margin: 0;
       opacity: 0.62;
-    }
-
-    /* ===== Links ===== */
-    a {
-      color: var(--text-main);
-      text-decoration: none;
-      border-bottom: 1px solid var(--line-soft);
-      padding-bottom: 2px;
-    }
-
-    a:hover {
-      border-color: rgba(17,17,17,0.8);
-    }
-
-    .link-arrow {
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      margin-top: 12px; /* ✅ 14→12 */
-      display: inline-block;
-      color: var(--text-main);
-      opacity: 0.78;
+      letter-spacing: 0.02em;
+      line-height: 1.6;
     }
 
     /* ===== Coming Soon ===== */
     .app-card.coming {
-      opacity: 0.58;
+      opacity: 0.55;
     }
-
     .app-card.coming:hover {
       transform: none;
       box-shadow: none;
+      border-color: var(--line);
     }
-
     .link-arrow.disabled {
-      opacity: 0.45;
+      opacity: 0.42;
       border-bottom: none;
       cursor: default;
       pointer-events: none;
@@ -249,24 +267,38 @@
 
     /* ===== Footer ===== */
     footer {
-      margin-top: 90px; /* ✅ 120→90 */
-      padding-top: 22px; /* ✅ 32→22 */
-      border-top: 1px solid var(--line-soft);
+      margin-top: 84px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
       font-size: 13px;
-      color: var(--text-main);
+      color: var(--text);
       opacity: 0.62;
+
       display: flex;
       justify-content: space-between;
       gap: 12px;
+      align-items: center;
     }
 
+    /* ===== Mobile ===== */
     @media (max-width: 640px) {
-      body { padding: 56px 18px; }
-      h1 { font-size: 30px; }
-      .hero-icons img { height: 50px; }
-      .app-card { padding: 20px 20px; }
-      .hero { margin-bottom: 56px; }
-      section { margin-bottom: 62px; }
+      :root {
+        --pageY: 56px;
+        --pageX: 18px;
+
+        --h1: 32px;
+
+        --heroB: 48px;
+        --sectionB: 58px;
+
+        --cardPadY: 20px;
+        --cardPadX: 20px;
+
+        --lineW: 48px;
+      }
+
+      .hero-icons img { height: 52px; }
+      .app-card { max-width: 100%; }
     }
   </style>
 </head>
@@ -292,21 +324,15 @@
       <h2 class="accent-line accent-blue">ABOUT</h2>
     </div>
 
-    <p class="jp small">
-      TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。
-    </p>
+    <div class="group">
+      <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
+      <p class="jp">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
+    </div>
 
-    <p class="jp small">
-      “迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。
-    </p>
-
-    <p class="en small">
-      TendOn designs and builds iOS apps for learning and productivity.
-    </p>
-
-    <p class="en small">
-      We focus on apps that feel effortless to use—and easy to stick with—while never losing our sense of play.
-    </p>
+    <div class="group" style="margin-top: 14px;">
+      <p class="en">TendOn designs and builds iOS apps for learning and productivity.</p>
+      <p class="en">We focus on apps that feel effortless to use—and easy to stick with—while keeping a sense of play.</p>
+    </div>
   </section>
 
   <!-- Apps -->
@@ -316,22 +342,22 @@
       <h2 class="accent-line accent-yellow">APPS</h2>
     </div>
 
-    <!-- PMP BOOST -->
-    <div class="app-card">
-      <div class="app-name">PMP BOOST</div>
-      <div class="app-desc-jp">PMP試験対策のための学習アプリ</div>
-      <div class="app-desc-en">iOS app for PMP exam preparation.</div>
+    <div class="card-stack">
+      <!-- PMP BOOST -->
+      <div class="app-card">
+        <div class="app-name">PMP BOOST</div>
+        <p class="app-desc-jp">PMP試験対策のための学習アプリ</p>
+        <p class="app-desc-en">iOS app for PMP exam preparation.</p>
+        <a class="link-arrow" href="pmp-boost.html">View details →</a>
+      </div>
 
-      <a class="link-arrow" href="pmp-boost.html">View details →</a>
-    </div>
-
-    <!-- Coming Soon -->
-    <div class="app-card coming">
-      <div class="app-name">Coming soon...</div>
-      <div class="app-desc-jp">新しいアプリを準備中です</div>
-      <div class="app-desc-en">A new app is currently in development.</div>
-
-      <span class="link-arrow disabled">View details →</span>
+      <!-- Coming Soon -->
+      <div class="app-card coming">
+        <div class="app-name">Coming soon...</div>
+        <p class="app-desc-jp">新しいアプリを準備中です</p>
+        <p class="app-desc-en">A new app is currently in development.</p>
+        <span class="link-arrow disabled">View details →</span>
+      </div>
     </div>
   </section>
 
@@ -342,12 +368,10 @@
       <h2 class="accent-line accent-red">CONTACT</h2>
     </div>
 
-    <p class="jp small">
-      お問い合わせ・サポートは専用フォームからお願いいたします。
-    </p>
-    <p class="en">
-      For inquiries and support, please use the contact form.
-    </p>
+    <div class="group">
+      <p class="jp">お問い合わせ・サポートは専用フォームからお願いいたします。</p>
+      <p class="en">For inquiries and support, please use the contact form.</p>
+    </div>
 
     <a class="link-arrow" href="contact.html">Contact Form →</a>
   </section>
