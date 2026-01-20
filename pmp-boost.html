@@ -240,8 +240,15 @@
       color: var(--text);
       letter-spacing: 0.01em;
     }
-    /* ✅ 英語リストも index と同じ薄さ */
-    .list.en li { opacity: 0.64; }
+    /* ✅ 英語リストは本文英語(.en)に完全一致させる */
+.list.en li {
+  font-size: var(--body-en);     /* 14px */
+  font-weight: 400;             /* ← ここが重要 */
+  color: var(--text);
+  opacity: 0.64;                /* indexと同じ薄さ */
+  letter-spacing: 0.02em;       /* .en と同じ */
+  line-height: var(--lh-tight); /* .en と同じ */
+}
 
     /* ===== App Store Slot ===== */
     .store-slot {
