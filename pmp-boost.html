@@ -4,169 +4,314 @@
   <meta charset="UTF-8" />
   <title>PMP BOOST – TendOn</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PMP BOOST is an iOS app for PMP exam preparation by TendOn." />
 
   <!-- Noto Sans JP -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --text-main: #111;
-      --text-sub: #666;
-      --text-fade: #9a9a9a;
-      --line-soft: #ececec;
-      --card-radius: 8px;
+      /* ===== Color ===== */
+      --bg: #ffffff;
+      --text: #111111;
+      --text-sub: rgba(17,17,17,0.64);
+      --line: #ececec;
+
+      /* トークンとして保持（このページでは強くは使わない） */
+      --accent-blue: #2b6cff;
+      --accent-yellow: #f3b700;
+      --accent-red: #ff4b4b;
+
+      /* ===== Radius / Shadow ===== */
+      --radius: 14px;
+      --shadow-sm: 0 10px 24px rgba(0,0,0,0.06);
+
+      /* ===== Layout ===== */
+      --container: 720px;
+
+      /* ===== Typography scale ===== */
+      --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+      --h1: 38px;
+      --h1-lh: 1.15;
+
+      --kicker: 12px;
+      --kicker-ls: 0.14em;
+
+      --section: 12px;
+      --section-ls: 0.18em;
+
+      --body-jp: 15px;
+      --body-en: 14px;
+
+      --lh: 1.8;
+      --lh-tight: 1.65;
+
+      /* ===== Spacing scale ===== */
+      --pageY: 72px;
+      --pageX: 22px;
+
+      --heroB: 56px;
+      --sectionB: 72px;
+
+      --headB: 16px;
+      --paraB: 10px;
+      --paraB-last: 0px;
+
+      --cardPadY: 22px;
+      --cardPadX: 24px;
+
+      --lineW: 52px;
+      --lineH: 2px;
+      --lineGap: 10px;
     }
 
     /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      font-family: "Noto Sans JP", system-ui, sans-serif;
+      font-family: var(--font);
       margin: 0;
-      padding: 96px 24px;
-      background: #fff;
-      color: var(--text-main);
-      line-height: 1.85;
+      padding: var(--pageY) var(--pageX);
+      background: var(--bg);
+      color: var(--text);
+      line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     .container {
-      max-width: 900px;
+      max-width: var(--container);
       margin: 0 auto;
-      animation: fadeIn 0.8s ease-out both;
+      animation: fadeIn .7s ease-out both;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== Header / Hero ===== */
-    .hero {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 56px;
-      flex-wrap: wrap;
-    }
-
-    .app-icon {
-      height: 56px;
-      width: 56px;
-      opacity: 0.95;
-    }
-
-    h1 {
-      font-size: 38px;
-      font-weight: 600;
-      margin: 0;
-      letter-spacing: 0.02em;
-    }
-
-    .subtitle {
-      font-size: 14px;
-      color: var(--text-sub);
-      margin-top: 6px;
-      letter-spacing: 0.04em;
-    }
-
-    /* ===== Section Head ===== */
-    section {
-      margin-bottom: 88px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-    }
-
-    .section-head img {
-      height: 22px;
-    }
-
-    h2 {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      color: var(--text-fade);
-      margin: 0;
-    }
-
-    .section-line {
-      height: 1px;
-      background: var(--line-soft);
-      margin: 16px 0 32px;
-    }
-
-    /* ===== Text ===== */
-    .jp {
-      font-size: 16px;
-      line-height: 1.65;
-      margin-bottom: 10px;
-    }
-
-    .en {
-      font-size: 13px;
-      color: var(--text-sub);
-      font-style: italic;
-      letter-spacing: 0.04em;
-      margin-bottom: 22px;
-    }
-
-    /* ===== Card ===== */
-    .app-card {
-      padding: 28px 32px;
-      border: 1px solid var(--line-soft);
-      border-radius: var(--card-radius);
-      background: #fff;
-      max-width: 720px;
-    }
-
-    .feature-list {
-      margin: 18px 0 0;
-      padding-left: 18px;
-      color: var(--text-main);
-    }
-
-    .feature-list li {
-      margin: 8px 0;
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== Links ===== */
     a {
-      color: var(--text-main);
+      color: var(--text);
       text-decoration: none;
-      border-bottom: 1px solid var(--line-soft);
+      border-bottom: 1px solid var(--line);
       padding-bottom: 2px;
+      transition: border-color .18s ease, opacity .18s ease;
     }
-
-    a:hover {
-      border-color: var(--text-main);
-    }
+    a:hover { border-color: rgba(17,17,17,0.75); }
 
     .link-arrow {
       font-size: 13px;
       letter-spacing: 0.06em;
       margin-top: 14px;
       display: inline-block;
+      opacity: 0.78;
     }
 
-    /* ===== Footer ===== */
-    footer {
-      margin-top: 88px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line-soft);
-      font-size: 13px;
-      color: var(--text-fade);
+    /* ===== Hero ===== */
+    .hero {
       display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: var(--heroB);
+      flex-wrap: wrap;
+    }
+
+    .app-icon {
+      height: 58px;
+      width: 58px;
+      display: block;
+    }
+
+    h1 {
+      font-size: var(--h1);
+      line-height: var(--h1-lh);
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.02em;
+    }
+
+    /* ✅ subtitle を “日→英” 2段に */
+    .subtitle-wrap { margin-top: 6px; }
+    .subtitle-jp {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-sub);
+      line-height: 1.4;
+      margin: 0;
+    }
+    .subtitle-en {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: var(--kicker-ls);
+      color: var(--text-sub);
+      opacity: 0.78;
+      line-height: 1.4;
+      margin: 4px 0 0 0;
+    }
+
+    /* ===== Sections ===== */
+    section { margin-bottom: var(--sectionB); }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--headB);
+    }
+
+    /* ✅ 使うアイコンは PMPBOOST_icon-透過.png のみ */
+    .section-head img {
+      height: 16px;
+      width: 16px;
+      display: block;
+      opacity: 0.95;
+    }
+
+    h2 {
+      font-size: var(--section);
+      font-weight: 600;
+      letter-spacing: var(--section-ls);
+      margin: 0;
+      color: var(--text);
+      position: relative;
+      display: inline-block;
+      padding-bottom: calc(var(--lineGap) + var(--lineH));
+    }
+
+    /* 見出し下のライン（控えめ） */
+    .accent-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: var(--lineW);
+      height: var(--lineH);
+      border-radius: 999px;
+      background: rgba(17,17,17,0.12);
+    }
+
+    /* ===== Paragraphs ===== */
+    p { margin: 0 0 var(--paraB) 0; }
+
+    .jp {
+      font-size: var(--body-jp);
+      font-weight: 500;
+      color: var(--text);
+      opacity: 0.92;
+      line-height: var(--lh-tight);
+    }
+
+    .en {
+      font-size: var(--body-en);
+      font-weight: 400;
+      color: var(--text);
+      opacity: 0.64;
+      letter-spacing: 0.02em;
+      line-height: var(--lh-tight);
+    }
+
+    .group { margin-top: 4px; }
+    .group p:last-child { margin-bottom: var(--paraB-last); }
+
+    /* ===== Card ===== */
+    .app-card {
+      width: 100%;
+      max-width: 560px;
+
+      padding: var(--cardPadY) var(--cardPadX);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      color: var(--text);
+      opacity: 0.92;
+    }
+    .list li {
+      margin: 8px 0;
+      line-height: 1.7;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .note {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--text);
+      opacity: 0.62;
+      line-height: 1.7;
+    }
+
+    /* ===== App Store Slot ===== */
+    .store-slot {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
       justify-content: space-between;
       gap: 12px;
     }
 
+    .store-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      opacity: 0.62;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .store-link {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      opacity: 0.82;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2px;
+    }
+
+    /* ✅ URLが空のときは非表示（公開前はここでOK） */
+    .store-slot[hidden] { display: none !important; }
+
+    /* ===== Footer ===== */
+    footer {
+      margin-top: 84px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--text);
+      opacity: 0.62;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
     @media (max-width: 640px) {
-      h1 { font-size: 32px; }
+      :root {
+        --pageY: 56px;
+        --pageX: 18px;
+        --h1: 32px;
+        --heroB: 48px;
+        --sectionB: 58px;
+        --cardPadY: 20px;
+        --cardPadX: 20px;
+        --lineW: 48px;
+      }
+
       .app-icon { height: 52px; width: 52px; }
-      .app-card { padding: 24px; }
+      .app-card { max-width: 100%; }
+
+      .store-slot { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -176,40 +321,117 @@
 
   <!-- Hero -->
   <div class="hero">
-    <!-- ✅ ここが置き換え：PMPBOOST_icon-透過.png -->
     <img class="app-icon" src="assets/PMPBOOST_icon-透過.png" alt="PMP BOOST Icon">
-
     <div>
       <h1>PMP BOOST</h1>
-      <div class="subtitle">iOS app for PMP exam preparation</div>
+
+      <!-- ✅ 日→英 2段 subtitle -->
+      <div class="subtitle-wrap">
+        <p class="subtitle-jp">PMP試験対策アプリ</p>
+        <p class="subtitle-en">iOS app for PMP exam preparation</p>
+      </div>
     </div>
   </div>
 
-  <!-- Overview -->
+  <!-- OVERVIEW -->
   <section>
     <div class="section-head">
-      <img src="assets/yellow-透過.png" alt="">
-      <h2>OVERVIEW</h2>
+      <img src="assets/PMPBOOST_icon-透過.png" alt="">
+      <h2 class="accent-line">OVERVIEW</h2>
     </div>
-    <div class="section-line"></div>
+
+    <div class="app-card">
+      <div class="group">
+        <p class="jp">
+          PMP BOOSTは、PMP試験に向けた学習を「静かに」「迷わず」「続けられる」形に整えるための学習アプリです。
+        </p>
+        <p class="jp">
+          今日は何をすればいいか、どこが弱いか、次に何を復習すればいいか——それらをアプリが自然に見える形で支えます。
+        </p>
+      </div>
+
+      <div class="group" style="margin-top: 14px;">
+        <p class="en">
+          PMP BOOST helps you prepare for the PMP exam with a calm, frictionless learning experience.
+        </p>
+        <p class="en">
+          It keeps the next step clear: what to practice today, what to review next, and where your weak points are.
+        </p>
+      </div>
+
+      <!-- ✅ App Storeリンク枠（公開前は hidden のまま） -->
+      <div class="store-slot" id="appstore-slot" hidden>
+        <span class="store-label">App Store</span>
+        <a class="store-link" id="appstore-link" href="#" target="_blank" rel="noopener">View on App Store →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU CAN DO -->
+  <section>
+    <div class="section-head">
+      <img src="assets/PMPBOOST_icon-透過.png" alt="">
+      <h2 class="accent-line">WHAT YOU CAN DO</h2>
+    </div>
 
     <div class="app-card">
       <p class="jp">
-        PMP BOOSTは、PMP試験合格を目指すためのiOS向け学習アプリです。
+        学習の流れはシンプルです。テンポよく解いて、迷わず復習し、積み上がりを実感できるように設計しています。
+      </p>
+
+      <ul class="list">
+        <li>クイズ形式で、短い時間でもリズムよく学習</li>
+        <li>「苦手」や「保存」で、復習対象をすぐに手元へ</li>
+        <li>進捗の可視化で、学習の手応えを静かに積み上げる</li>
+        <li>継続を邪魔しない導線（次の一手が常に分かる）</li>
+      </ul>
+
+      <div class="note">
+        ※ 機能はアップデートで改善・追加される場合があります。PMP BOOSTは、学習を“続ける感覚”が損なわれないことを最優先に設計しています。
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGNED FOR CONSISTENCY -->
+  <section>
+    <div class="section-head">
+      <img src="assets/PMPBOOST_icon-透過.png" alt="">
+      <h2 class="accent-line">DESIGNED FOR CONSISTENCY</h2>
+    </div>
+
+    <div class="app-card">
+      <p class="jp">
+        PMPの学習は、まとまった時間より「小さく継続すること」が効きます。
+      </p>
+      <p class="jp">
+        PMP BOOSTは、気合いよりも“習慣”を味方につけるために、余計な刺激や迷いを減らし、集中が途切れにくいUIに整えています。
+      </p>
+
+      <div class="group" style="margin-top: 14px;">
+        <p class="en">
+          Consistency beats intensity. PMP BOOST is designed to reduce noise and keep learning friction low.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY -->
+  <section>
+    <div class="section-head">
+      <img src="assets/PMPBOOST_icon-透過.png" alt="">
+      <h2 class="accent-line">PRIVACY</h2>
+    </div>
+
+    <div class="app-card">
+      <p class="jp">
+        プライバシーに配慮し、必要以上の情報を集めない方針で設計しています。
+        詳細はプライバシーポリシーをご確認ください。
       </p>
       <p class="en">
-        An iOS app designed to support PMP exam preparation.
+        We are mindful about privacy and aim to collect only what is necessary. See the privacy policy for details.
       </p>
 
-      <p class="jp">
-        静かで集中しやすいUIと、継続を支える設計を大切にしています。
-      </p>
-
-      <ul class="feature-list">
-        <li>クイズ形式でテンポよく学習</li>
-        <li>復習しやすい設計（苦手・保存）</li>
-        <li>学習継続を支える仕組み</li>
-      </ul>
+      <a class="link-arrow" href="privacy.html">Privacy Policy →</a>
     </div>
   </section>
 
@@ -222,5 +444,25 @@
   </footer>
 
 </div>
+
+<!-- ✅ App Store URL を入れたら自動で表示（公開前は非表示のまま） -->
+<script>
+  // ここに公開後の App Store URL を入れてください（空なら非表示のまま）
+  const APP_STORE_URL = "";
+
+  (function () {
+    const slot = document.getElementById("appstore-slot");
+    const link = document.getElementById("appstore-link");
+    if (!slot || !link) return;
+
+    if (APP_STORE_URL && APP_STORE_URL.trim().length > 0) {
+      link.href = APP_STORE_URL.trim();
+      slot.hidden = false;
+    } else {
+      slot.hidden = true;
+    }
+  })();
+</script>
+
 </body>
 </html>
