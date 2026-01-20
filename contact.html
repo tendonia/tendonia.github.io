@@ -16,58 +16,148 @@
       --font:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",sans-serif;
       --pageY:72px; --pageX:22px;
       --h1:32px; --h1-lh:1.2;
+
       --body-jp:15px; --body-en:14px;
       --lh-tight:1.65;
+
       --cardPadY:22px; --cardPadX:24px;
       --btnH:44px;
+
+      /* subtle link accent like pmpboost */
+      --link-accent: rgba(17,17,17,0.35);
     }
+
     *{box-sizing:border-box;}
+    html, body { height:100%; }
+
     body{
       font-family:var(--font); margin:0;
       padding:var(--pageY) var(--pageX);
       background:var(--bg); color:var(--text);
       -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      line-height: 1.8;
     }
-    .container{max-width:var(--container);margin:0 auto;animation:fadeIn .7s ease-out both;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
-    h1{font-size:var(--h1);line-height:var(--h1-lh);font-weight:600;margin:0 0 10px;letter-spacing:.02em;}
+    .container{
+      max-width:var(--container);
+      margin:0 auto;
+      animation:fadeIn .7s ease-out both;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(8px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+
+    /* ===== Links (match pmpboost.html) ===== */
+    a{
+      color:var(--text);
+      text-decoration:none;
+      border-bottom:1px solid var(--line);
+      padding-bottom:2px;
+      transition:border-color .18s ease, transform .18s ease, opacity .18s ease;
+    }
+    a:hover{ border-color: rgba(17,17,17,0.7); }
+
+    .link-arrow{
+      font-size:13px;
+      letter-spacing:0.01em;
+      font-weight:500;
+      display:inline-block;
+      margin-top:14px;
+      border-bottom-color: rgba(17,17,17,0.18);
+    }
+    .link-arrow:hover{
+      border-bottom-color: var(--link-accent);
+      transform: translateY(-1px);
+    }
+
+    /* ===== Hero (match pmpboost.html) ===== */
+    .hero{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:56px;
+      flex-wrap:wrap;
+    }
+    .app-icon{
+      height:58px;
+      width:58px;
+      display:block;
+    }
+    h1{
+      font-size:var(--h1);
+      line-height:var(--h1-lh);
+      font-weight:600;
+      margin:0;
+      letter-spacing:.02em;
+    }
+    .subtitle-wrap{ margin-top:6px; }
+    .subtitle-jp,
+    .subtitle-en{
+      font-size:13px;
+      font-weight:500;
+      letter-spacing:0.06em;
+      margin:0;
+      color:var(--text);
+      line-height:1.55;
+    }
+    .subtitle-en{
+      margin-top:4px;
+      opacity:.64;
+    }
+
+    /* ===== Typography (JP/EN) ===== */
     p{margin:0 0 10px;}
     .jp{font-size:var(--body-jp);font-weight:500;opacity:.92;line-height:var(--lh-tight);letter-spacing:.01em;}
     .en{font-size:var(--body-en);font-weight:400;opacity:.64;letter-spacing:.02em;line-height:var(--lh-tight);}
 
-    a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;}
+    /* ===== Card ===== */
+    .card{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:#fff;
+      padding:var(--cardPadY) var(--cardPadX);
+    }
 
-    .logo{margin-top:18px;display:inline-block;}
-    .logo img{height:92px;display:block;}
-
-    .card{margin-top:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:var(--cardPadY) var(--cardPadX);}
-
-    label{display:block;font-size:12px;font-weight:600;letter-spacing:.14em;margin:16px 0 6px;opacity:.9;}
+    /* ===== Form ===== */
+    label{
+      display:block;
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:.14em;
+      margin:16px 0 6px;
+      opacity:.9;
+    }
     input,textarea{
-      width:100%; border:1px solid var(--line);
-      border-radius:12px; padding:12px;
-      font:inherit; font-size:14px; color:var(--text);
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      font:inherit;
+      font-size:14px;
+      color:var(--text);
       outline:none;
     }
     textarea{min-height:140px;resize:vertical;}
 
     .actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap;}
+
     .btn{
-      height:var(--btnH); padding:0 16px; border-radius:12px;
+      height:var(--btnH);
+      padding:0 16px;
+      border-radius:12px;
       border:1px solid rgba(17,17,17,.10);
-      background:#111; color:#fff; font-weight:600; letter-spacing:.02em;
-      cursor:pointer; transition:transform .18s ease, opacity .18s ease;
+      background:#111;
+      color:#fff;
+      font-weight:600;
+      letter-spacing:.02em;
+      cursor:pointer;
+      transition:transform .18s ease, opacity .18s ease;
     }
     .btn:hover{transform:translateY(-1px);}
     .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-
-    .btn-ghost{
-      height:var(--btnH); padding:0 16px; border-radius:12px;
-      border:1px solid var(--line); background:#fff; color:var(--text);
-      font-weight:600; display:inline-flex; align-items:center;
-      text-decoration:none;
-    }
 
     .help{margin-top:10px;font-size:12px;opacity:.62;line-height:1.6;}
     .status{margin-top:12px;font-size:12px;opacity:.78;line-height:1.6;}
@@ -75,23 +165,34 @@
     /* honeypot */
     .hp-wrap{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
 
+    /* ===== Footer (match pmpboost.html vibe) ===== */
     footer{
-      margin-top:48px;padding-top:18px;border-top:1px solid var(--line);
-      display:flex;justify-content:space-between;gap:12px;align-items:center;
-      font-size:13px;opacity:.62;
+      margin-top:84px;
+      padding-top:22px;
+      border-top:1px solid var(--line);
+      font-size:13px;
+      color:var(--text);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      opacity:.62;
     }
 
     @media (max-width:640px){
       :root{--pageY:56px;--pageX:18px;--h1:28px;}
-      .logo img{height:84px;}
+      .hero{ margin-bottom:48px; }
+      .app-icon{height:52px;width:52px;}
     }
   </style>
 </head>
 
 <body>
-  <!-- Hero -->
+  <div class="container">
+
+    <!-- Hero (aligned to pmpboost.html) -->
     <header class="hero">
-      <img class="app-icon" src="assets/red-透過.png" alt="PMP BOOST Icon">
+      <img class="app-icon" src="assets/red-透過.png" alt="TendOn Contact">
       <div>
         <h1>Contact</h1>
         <div class="subtitle-wrap">
@@ -100,9 +201,10 @@
         </div>
       </div>
     </header>
-  
+
     <div class="card">
       <form id="contactForm" method="POST">
+
         <label for="name">NAME</label>
         <input id="name" name="name" type="text" autocomplete="name" required>
 
@@ -115,15 +217,24 @@
         <label for="message">MESSAGE</label>
         <textarea id="message" name="message" required></textarea>
 
+        <!-- token -->
         <input type="hidden" id="token" name="token" value="">
 
+        <!-- meta -->
         <input type="hidden" id="page" name="page" value="">
         <input type="hidden" id="ua" name="ua" value="">
         <input type="hidden" id="ts" name="ts" value="">
 
+        <!-- honeypot -->
         <div class="hp-wrap" aria-hidden="true">
           <label for="company">Company</label>
           <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <!-- actions -->
+        <div class="actions">
+          <!-- ✅ send button (was missing in your original code) -->
+          <button class="btn" id="sendBtn" type="submit" disabled>Send</button>
         </div>
 
         <div class="help">
@@ -134,13 +245,14 @@
       </form>
     </div>
 
-      <!-- Back -->
+    <!-- Back (aligned to pmpboost.html) -->
     <a class="link-arrow en" href="index.html">← Back to Home</a>
 
     <footer>
       <a href="privacy.html">プライバシーポリシー</a>
       <span>© TendOn</span>
     </footer>
+
   </div>
 
   <script>
@@ -175,7 +287,7 @@
 
     let tries = 0;
     const timer = setInterval(() => {
- ///0;    tries++;
+      tries++;
       applyTokenFromGlobal();
       if (!sendBtn.disabled || tries > 25) clearInterval(timer);
     }, 200);
