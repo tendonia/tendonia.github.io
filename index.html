@@ -174,18 +174,6 @@
       letter-spacing: 0.04em;
     }
 
-    /* ===== Coming Soon ===== */
-    .app-card.coming {
-      opacity: 0.55;
-      border-style: dashed;
-    }
-
-    .app-card.coming:hover {
-      transform: none;
-      box-shadow: none;
-      cursor: default;
-    }
-
     /* ===== Links ===== */
     a {
       color: var(--text-main);
@@ -203,6 +191,23 @@
       letter-spacing: 0.06em;
       margin-top: 14px;
       display: inline-block;
+    }
+
+    /* ===== Coming Soon (same card, inactive) ===== */
+    .app-card.coming {
+      opacity: 0.6;
+    }
+
+    .app-card.coming:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .link-arrow.disabled {
+      color: var(--text-fade);
+      border-bottom: none;
+      cursor: default;
+      pointer-events: none;
     }
 
     /* ===== Footer ===== */
@@ -286,6 +291,8 @@
       <div class="app-name">Coming soon...</div>
       <div class="app-desc-jp">新しいアプリを準備中です</div>
       <div class="app-desc-en">A new app is currently in development.</div>
+
+      <span class="link-arrow disabled">View details →</span>
     </div>
   </section>
 
