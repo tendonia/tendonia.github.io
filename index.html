@@ -4,254 +4,166 @@
   <meta charset="UTF-8" />
   <title>TendOn</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="TendOn is an independent app studio building thoughtful iOS apps." />
 
   <style>
     :root {
-      --text-main: #111;
-      --text-sub: #666;
-      --text-fade: #999;
-      --line-soft: #eaeaea;
+      --text-main:#111;
+      --text-sub:#666;
+      --text-fade:#999;
+      --line-soft:#eaeaea;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      margin: 0;
-      padding: 96px 24px;
-      background: #fff;
-      color: var(--text-main);
-      line-height: 1.9;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+      margin:0;
+      padding:96px 24px;
+      background:#fff;
+      color:var(--text-main);
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
-      animation: fadeIn 0.8s ease-out both;
+      max-width:900px;
+      margin:0 auto;
+      animation:fadeIn .8s ease-out both;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+      from{opacity:0;transform:translateY(6px)}
+      to{opacity:1;transform:none}
     }
 
-    /* ===== Hero ===== */
+    /* Hero */
     .hero {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      margin-bottom: 120px;
-      flex-wrap: wrap;
+      display:flex;
+      gap:48px;
+      align-items:center;
+      margin-bottom:120px;
+      flex-wrap:wrap;
     }
 
-    .hero-icons {
-      display: flex;
-      gap: 16px;
-      align-items: center;
+    .hero-icons img { height:64px }
+
+    h1 { font-size:38px;margin:0 }
+    .subtitle { font-size:14px;color:var(--text-sub) }
+
+    /* Nav */
+    nav {
+      margin:48px 0 96px;
+      display:flex;
+      gap:24px;
+      font-size:14px;
     }
 
-    .hero-icons img {
-      height: 64px;
-      width: auto;
-      opacity: 0.95;
+    nav a {
+      text-decoration:none;
+      color:var(--text-fade);
     }
 
-    h1 {
-      font-size: 38px;
-      font-weight: 600;
-      margin: 0;
-      letter-spacing: 0.3px;
-    }
+    nav a:hover { color:var(--text-main) }
 
-    .subtitle {
-      font-size: 14px;
-      color: var(--text-sub);
-      margin-top: 6px;
-    }
-
-    /* ===== Sections ===== */
-    section {
-      margin-bottom: 96px;
-    }
+    section { margin-bottom:120px }
 
     .section-head {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 24px;
+      display:flex;
+      gap:14px;
+      align-items:center;
+      margin-bottom:24px;
     }
 
-    .section-head img {
-      height: 26px;
-      width: auto;
-      opacity: 0.9;
-    }
+    .section-head img { height:26px }
 
     h2 {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-fade);
-      margin: 0;
+      font-size:14px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--text-fade);
+      margin:0;
     }
 
-    /* ===== Text styles ===== */
-    .jp {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-
-    .en {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-bottom: 20px;
-    }
+    .jp { font-size:16px; line-height:1.65 }
+    .en { font-size:13px; color:var(--text-sub); font-style:italic; letter-spacing:.04em }
 
     .app {
-      padding: 24px 0;
-      border-top: 1px solid var(--line-soft);
+      padding:24px 0;
+      border-top:1px solid var(--line-soft);
     }
 
-    .app:last-child {
-      border-bottom: 1px solid var(--line-soft);
-    }
-
-    .app-name {
-      font-weight: 600;
-      font-size: 16px;
-    }
-
-    .app-desc-jp {
-      font-size: 15px;
-      margin-top: 6px;
-    }
-
-    .app-desc-en {
-      font-size: 13px;
-      color: var(--text-sub);
-      margin-top: 4px;
-    }
-
-    a {
-      color: var(--text-main);
-      text-decoration: none;
-      border-bottom: 1px solid var(--line-soft);
-      padding-bottom: 2px;
-    }
-
-    a:hover {
-      border-color: var(--text-main);
-    }
+    a { color:var(--text-main); text-decoration:none; border-bottom:1px solid var(--line-soft) }
+    a:hover { border-color:var(--text-main) }
 
     footer {
-      margin-top: 120px;
-      padding-top: 32px;
-      border-top: 1px solid var(--line-soft);
-      font-size: 13px;
-      color: var(--text-fade);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    @media (max-width: 640px) {
-      .hero-icons img {
-        height: 52px;
-      }
-      h1 {
-        font-size: 32px;
-      }
+      margin-top:120px;
+      padding-top:32px;
+      border-top:1px solid var(--line-soft);
+      font-size:13px;
+      color:var(--text-fade);
+      display:flex;
+      justify-content:space-between;
     }
   </style>
 </head>
 <body>
-  <div class="container">
+<div class="container">
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="hero-icons">
-        <img src="assets/tendon-透過.png" alt="" />
-        <img src="assets/yello2nd-透過.png" alt="" />
-        <img src="assets/red-透過.png" alt="" />
-      </div>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-icons">
+      <img src="assets/blue-透過.png">
+      <img src="assets/yellow-透過.png">
+      <img src="assets/red-透過.png">
+    </div>
+    <div>
+      <h1>TendOn</h1>
+      <div class="subtitle">Independent App Studio</div>
+    </div>
+  </div>
 
-      <div>
-        <h1>TendOn</h1>
-        <div class="subtitle">Independent App Studio</div>
-      </div>
+  <!-- Anchor Nav -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#apps">Apps</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-head">
+      <img src="assets/blue-透過.png">
+      <h2>About</h2>
+    </div>
+    <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。</p>
+    <p class="en">Independent app studio building iOS apps.</p>
+  </section>
+
+  <!-- Apps -->
+  <section id="apps">
+    <div class="section-head">
+      <img src="assets/yellow-透過.png">
+      <h2>Apps</h2>
     </div>
 
-    <!-- About -->
-    <section>
-      <div class="section-head">
-        <img src="assets/tendon-透過.png" alt="" />
-        <h2>About</h2>
-      </div>
+    <div class="app">
+      <strong>PMP BOOST</strong><br>
+      <span class="jp">PMP試験対策アプリ</span><br>
+      <a href="pmp-boost.html">View details →</a>
+    </div>
+  </section>
 
-      <p class="jp">
-        TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。
-      </p>
-      <p class="en">
-        TendOn is an independent app studio building iOS apps for learning and productivity.
-      </p>
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-head">
+      <img src="assets/red-透過.png">
+      <h2>Contact</h2>
+    </div>
+    <p class="jp">お問い合わせは専用フォームからお願いいたします。</p>
+    <a href="contact.html">Contact Form →</a>
+  </section>
 
-      <p class="jp">
-        静かで、分かりやすく、使う人に寄り添う体験を大切にしています。
-      </p>
-      <p class="en">
-        We value calm, clarity, and supportive user experiences.
-      </p>
-    </section>
+  <footer>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <span>© TendOn</span>
+  </footer>
 
-    <!-- Apps -->
-    <section>
-      <div class="section-head">
-        <img src="assets/yello2nd-透過.png" alt="" />
-        <h2>Apps</h2>
-      </div>
-
-      <div class="app">
-        <div class="app-name">PMP BOOST</div>
-        <div class="app-desc-jp">
-          PMP試験対策のための学習アプリ（iOS）
-        </div>
-        <div class="app-desc-en">
-          PMP exam learning app for iOS.
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section>
-      <div class="section-head">
-        <img src="assets/red-透過.png" alt="" />
-        <h2>Contact</h2>
-      </div>
-
-      <p class="jp">
-        お問い合わせ・サポートは、以下のフォームからご連絡ください。
-      </p>
-      <p class="en">
-        For inquiries and support, please use the contact form below.
-      </p>
-
-      <p>
-        <a href="https://forms.gle/XXXXXXX" target="_blank" rel="noopener">
-          Contact Form
-        </a>
-      </p>
-    </section>
-
-    <footer>
-      <div>
-        <a href="privacy.html">プライバシーポリシー</a>
-      </div>
-      <div>
-        © TendOn
-      </div>
-    </footer>
-
-  </div>
+</div>
 </body>
 </html>
