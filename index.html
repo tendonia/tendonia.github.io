@@ -11,12 +11,16 @@
 
   <style>
     :root {
+      /* ✅ 文字色はぜんぶこれに統一 */
       --text-main: #111;
-      --text-sub: #5f5f5f;
-      --text-fade: #7a7a7a;
 
-      /* ✅ ここを少し濃くして区切りを分かりやすく */
-      --line-soft: #e6e6e6;
+      /* ✅ 区切り線は薄め */
+      --line-soft: #ececec;
+
+      /* ✅ セクション見出しに色を足す（主張しすぎない範囲） */
+      --accent-blue: #2b6cff;
+      --accent-yellow: #f3b700;
+      --accent-red: #ff4b4b;
 
       --card-radius: 10px;
     }
@@ -47,21 +51,15 @@
     .hero {
       display: flex;
       align-items: center;
-      gap: 48px;
-      margin-bottom: 84px; /* ✅ Nav削除分、少し詰める */
+      gap: 18px;
+      margin-bottom: 92px;
       flex-wrap: wrap;
     }
 
-    .hero-icons {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
+    /* ✅ ロゴは囲まない：完全に素で置く */
     .hero-icons img {
       height: 64px;
-      opacity: 1; /* ✅ 薄さを撤廃 */
-      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.06)); /* ✅ ほんのり立たせる */
+      opacity: 1;
     }
 
     h1 {
@@ -69,13 +67,16 @@
       font-weight: 600;
       margin: 0;
       letter-spacing: 0.02em;
+      color: var(--text-main);
     }
 
     .subtitle {
       font-size: 14px;
-      color: var(--text-sub);
+      font-weight: 500;
       margin-top: 6px;
       letter-spacing: 0.04em;
+      color: var(--text-main); /* ✅ 同じ色に統一 */
+      opacity: 0.62;           /* ✅ 差は透明度で */
     }
 
     /* ===== Sections ===== */
@@ -90,28 +91,18 @@
       margin-bottom: 16px;
     }
 
-    /* ✅ セクションアイコンに「台座」を作って視認性UP */
-    .section-icon {
-      width: 26px;
-      height: 26px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      background: #fafafa;
-      border: 1px solid var(--line-soft);
-    }
-
-    .section-icon img {
+    .section-head img {
       height: 18px;
       opacity: 1;
     }
 
+    /* ✅ タイトル：文字色は統一しつつ、spanで色を足す */
     h2 {
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.12em;
-      color: var(--text-fade); /* ✅ うっすら→ちゃんと見えるグレーに */
+      letter-spacing: 0.14em;
       margin: 0;
+      color: var(--text-main);
     }
 
     .section-line {
@@ -120,19 +111,37 @@
       margin: 14px 0 34px;
     }
 
+    /* ✅ ここが色の差：タイトルの左に小さな色印だけ */
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 8px;
+      transform: translateY(1px);
+    }
+
+    .dot.blue { background: var(--accent-blue); }
+    .dot.yellow { background: var(--accent-yellow); }
+    .dot.red { background: var(--accent-red); }
+
     /* ===== Text ===== */
     .jp {
       font-size: 16px;
+      font-weight: 500;      /* ✅ 日本語は少しだけ厚みを出す */
       line-height: 1.65;
       margin-bottom: 10px;
+      color: var(--text-main); /* ✅ 統一 */
     }
 
     .en {
       font-size: 13px;
-      color: var(--text-sub);
+      font-weight: 400;
       font-style: italic;
       letter-spacing: 0.04em;
       margin-bottom: 22px;
+      color: var(--text-main); /* ✅ 統一 */
+      opacity: 0.62;           /* ✅ 差は透明度 */
     }
 
     /* ===== App Cards ===== */
@@ -151,25 +160,30 @@
 
     .app-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(0,0,0,0.06); /* ✅ 少しだけ見やすく */
+      box-shadow: 0 10px 26px rgba(0,0,0,0.06);
     }
 
     .app-name {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 6px;
+      color: var(--text-main);
     }
 
     .app-desc-jp {
       font-size: 15px;
+      font-weight: 500;
       margin-bottom: 4px;
+      color: var(--text-main);
+      opacity: 0.85; /* ✅ ほんの少し差 */
     }
 
     .app-desc-en {
       font-size: 13px;
-      color: var(--text-sub);
       font-style: italic;
       letter-spacing: 0.04em;
+      color: var(--text-main);
+      opacity: 0.62;
     }
 
     /* ===== Links ===== */
@@ -189,11 +203,13 @@
       letter-spacing: 0.06em;
       margin-top: 14px;
       display: inline-block;
+      color: var(--text-main);
+      opacity: 0.78;
     }
 
-    /* ===== Coming Soon (same card, inactive) ===== */
+    /* ===== Coming Soon (inactive) ===== */
     .app-card.coming {
-      opacity: 0.62;
+      opacity: 0.58;
     }
 
     .app-card.coming:hover {
@@ -202,7 +218,7 @@
     }
 
     .link-arrow.disabled {
-      color: var(--text-fade);
+      opacity: 0.45;
       border-bottom: none;
       cursor: default;
       pointer-events: none;
@@ -214,7 +230,8 @@
       padding-top: 32px;
       border-top: 1px solid var(--line-soft);
       font-size: 13px;
-      color: var(--text-fade);
+      color: var(--text-main); /* ✅ 統一 */
+      opacity: 0.62;
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -224,7 +241,7 @@
       h1 { font-size: 32px; }
       .hero-icons img { height: 52px; }
       .app-card { padding: 24px; }
-      .hero { margin-bottom: 72px; }
+      .hero { margin-bottom: 78px; }
     }
   </style>
 </head>
@@ -246,10 +263,8 @@
   <!-- About -->
   <section id="about">
     <div class="section-head">
-      <span class="section-icon">
-        <img src="assets/blue-透過.png" alt="">
-      </span>
-      <h2>ABOUT</h2>
+      <img src="assets/blue-透過.png" alt="">
+      <h2><span class="dot blue"></span>ABOUT</h2>
     </div>
     <div class="section-line"></div>
 
@@ -264,10 +279,8 @@
   <!-- Apps -->
   <section id="apps">
     <div class="section-head">
-      <span class="section-icon">
-        <img src="assets/yellow-透過.png" alt="">
-      </span>
-      <h2>APPS</h2>
+      <img src="assets/yellow-透過.png" alt="">
+      <h2><span class="dot yellow"></span>APPS</h2>
     </div>
     <div class="section-line"></div>
 
@@ -293,10 +306,8 @@
   <!-- Contact -->
   <section id="contact">
     <div class="section-head">
-      <span class="section-icon">
-        <img src="assets/red-透過.png" alt="">
-      </span>
-      <h2>CONTACT</h2>
+      <img src="assets/red-透過.png" alt="">
+      <h2><span class="dot red"></span>CONTACT</h2>
     </div>
     <div class="section-line"></div>
 
