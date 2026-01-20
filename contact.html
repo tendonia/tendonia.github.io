@@ -64,7 +64,7 @@
       letter-spacing:0.01em;
       font-weight:500;
       display:inline-block;
-      margin-top:28px; /* ← 下に配置 */
+      margin-top:28px;
       border-bottom-color: rgba(17,17,17,0.18);
     }
     .link-arrow:hover{
@@ -81,7 +81,6 @@
       flex-wrap:wrap;
     }
 
-    /* ✅ 縦横比を崩さず、正方形に収める */
     .app-icon{
       width:58px;
       height:58px;
@@ -242,6 +241,10 @@
           <button class="btn" id="sendBtn" type="submit" disabled>Send</button>
         </div>
 
+        <div class="help">
+          ※ 送信は TendOn の受付システム（Google Apps Script）経由で行われます。
+        </div>
+
         <p class="status" id="status"></p>
       </form>
     </div>
@@ -257,11 +260,12 @@
   </div>
 
   <script>
-    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbx0WPFiCpVbqCEllE6og-4C3Bms1hwi27TgLHn5pOl79G5uUWMsE_WbfFElrXgjxWdimQ/exec";
+    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbzk8_AI50g-pb2lXsnF3wUxiEMo75X5fBcgz4l9qiB6VFnee2mUss2BMAUSFx-tv6JazA/exec";
 
     const form = document.getElementById("contactForm");
     form.action = GAS_EXEC_URL;
 
+    // meta
     document.getElementById("page").value = location.href;
     document.getElementById("ua").value = navigator.userAgent;
     document.getElementById("ts").value = new Date().toISOString();
@@ -272,59 +276,75 @@
 
     function setStatus(msg) { statusEl.textContent = msg; }
 
-    function applyTokenFromGlobal() {
-      const t = window.__TENDON_CONTACT_TOKEN__ || "";
-      if (t && typeof t === "string") {
-        tokenEl.value = t;
+    async function fetchToken() {
+      try {
+        setStatus("トークン取得中です…（数秒待ってから再度お試しください）");
+        sendBtn.disabled = true;
+
+        // GAS側に action=token を追加している前提（推奨）
+        const res = await fetch(GAS_EXEC_URL + "?action=token&v=" + Date.now(), {
+          cache: "no-store",
+          credentials: "omit"
+        });
+
+        // tokenjsしか無い場合に備えて、JSON以外はエラー
+        const data = await res.json();
+        if (!data || !data.token) throw new Error("token missing");
+
+        tokenEl.value = String(data.token);
         sendBtn.disabled = false;
         setStatus("");
-      } else {
-        sendBtn.disabled = true;
-        setStatus("トークン取得中です…（数秒待ってから再度お試しください）");
+      } catch (e) {
+        // フォールバック：tokenjs（PCで動く環境向け）
+        tryTokenJsFallback();
       }
     }
 
-    applyTokenFromGlobal();
+    function tryTokenJsFallback() {
+      setStatus("トークン取得中です…（数秒待ってから再度お試しください）");
+      sendBtn.disabled = true;
 
-    let tries = 0;
-    const timer = setInterval(() => {
-      tries++;
-      applyTokenFromGlobal();
-
-      if (!sendBtn.disabled) {
-        clearInterval(timer);
-      } else if (tries > 25) {
-        clearInterval(timer);
-        setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
-      }
-    }, 200);
-  </script>
-
-  <script>
-    (function(){
+      // tokenjs の script 注入（iOS Safariで失敗することがある）
       const s = document.createElement("script");
       s.src = GAS_EXEC_URL + "?action=tokenjs&v=" + Date.now();
       s.async = true;
-      s.onload = function(){ /* token loaded */ };
-      s.onerror = function(){
-        const statusEl = document.getElementById("status");
-        statusEl.textContent = "トークン取得に失敗しました。時間をおいて再度お試しください。";
-      };
-      document.head.appendChild(s);
-    })();
-  </script>
 
-  <script>
-  document.getElementById("contactForm").addEventListener("submit", function (e) {
-    const email = document.getElementById("email").value.trim();
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!valid) {
-      e.preventDefault();
-      document.getElementById("status").textContent =
-        "正しいメールアドレスを入力してください。";
+      s.onload = function(){
+        const t = window.__TENDON_CONTACT_TOKEN__ || "";
+        if (t && typeof t === "string") {
+          tokenEl.value = t;
+          sendBtn.disabled = false;
+          setStatus("");
+        } else {
+          sendBtn.disabled = true;
+          setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
+        }
+      };
+
+      s.onerror = function(){
+        sendBtn.disabled = true;
+        setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
+      };
+
+      document.head.appendChild(s);
     }
-  });
-</script>
+
+    form.addEventListener("submit", function (e) {
+      const email = document.getElementById("email").value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!valid) {
+        e.preventDefault();
+        setStatus("正しいメールアドレスを入力してください。");
+      }
+      if (!tokenEl.value) {
+        e.preventDefault();
+        setStatus("トークン未取得です。数秒待ってから再度お試しください。");
+      }
+    });
+
+    // start
+    fetchToken();
+  </script>
 
 </body>
 </html>
