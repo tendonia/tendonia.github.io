@@ -11,13 +11,13 @@
 
   <style>
     :root {
-      /* ✅ 文字色はぜんぶこれに統一 */
+      /* ✅ 文字色はすべて同じ */
       --text-main: #111;
 
-      /* ✅ 区切り線は薄め */
+      /* ✅ 罫線 */
       --line-soft: #ececec;
 
-      /* ✅ セクション見出しに色を足す（主張しすぎない範囲） */
+      /* ✅ “見出しの色味” は文字じゃなく「細いライン」で出す */
       --accent-blue: #2b6cff;
       --accent-yellow: #f3b700;
       --accent-red: #ff4b4b;
@@ -56,7 +56,7 @@
       flex-wrap: wrap;
     }
 
-    /* ✅ ロゴは囲まない：完全に素で置く */
+    /* ✅ ロゴは囲まない */
     .hero-icons img {
       height: 64px;
       opacity: 1;
@@ -75,8 +75,8 @@
       font-weight: 500;
       margin-top: 6px;
       letter-spacing: 0.04em;
-      color: var(--text-main); /* ✅ 同じ色に統一 */
-      opacity: 0.62;           /* ✅ 差は透明度で */
+      color: var(--text-main);
+      opacity: 0.62;
     }
 
     /* ===== Sections ===== */
@@ -88,7 +88,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .section-head img {
@@ -96,42 +96,46 @@
       opacity: 1;
     }
 
-    /* ✅ タイトル：文字色は統一しつつ、spanで色を足す */
+    /* ✅ 見出しテキスト色は統一（#111） */
     h2 {
       font-size: 13px;
       font-weight: 600;
       letter-spacing: 0.14em;
       margin: 0;
       color: var(--text-main);
+      position: relative;
+      display: inline-block;
+      padding-bottom: 6px;
     }
+
+    /* ✅ 色味は “細いライン” で足す（ドット無し） */
+    .accent-line::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 42px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--line-soft);
+    }
+    .accent-blue::after   { background: var(--accent-blue); }
+    .accent-yellow::after { background: var(--accent-yellow); }
+    .accent-red::after    { background: var(--accent-red); }
 
     .section-line {
       height: 1px;
       background: var(--line-soft);
-      margin: 14px 0 34px;
+      margin: 18px 0 34px;
     }
 
-    /* ✅ ここが色の差：タイトルの左に小さな色印だけ */
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      display: inline-block;
-      margin-right: 8px;
-      transform: translateY(1px);
-    }
-
-    .dot.blue { background: var(--accent-blue); }
-    .dot.yellow { background: var(--accent-yellow); }
-    .dot.red { background: var(--accent-red); }
-
-    /* ===== Text ===== */
+    /* ===== Text (color unified) ===== */
     .jp {
       font-size: 16px;
-      font-weight: 500;      /* ✅ 日本語は少しだけ厚みを出す */
+      font-weight: 500;
       line-height: 1.65;
       margin-bottom: 10px;
-      color: var(--text-main); /* ✅ 統一 */
+      color: var(--text-main);
     }
 
     .en {
@@ -140,8 +144,16 @@
       font-style: italic;
       letter-spacing: 0.04em;
       margin-bottom: 22px;
-      color: var(--text-main); /* ✅ 統一 */
-      opacity: 0.62;           /* ✅ 差は透明度 */
+      color: var(--text-main);
+      opacity: 0.62;
+    }
+
+    /* ✅ 追加したAbout用の文章ブロック */
+    .jp.small {
+      font-size: 15px;
+      font-weight: 500;
+      opacity: 0.88;
+      margin-top: 14px;
     }
 
     /* ===== App Cards ===== */
@@ -175,7 +187,7 @@
       font-weight: 500;
       margin-bottom: 4px;
       color: var(--text-main);
-      opacity: 0.85; /* ✅ ほんの少し差 */
+      opacity: 0.85;
     }
 
     .app-desc-en {
@@ -207,7 +219,7 @@
       opacity: 0.78;
     }
 
-    /* ===== Coming Soon (inactive) ===== */
+    /* ===== Coming Soon ===== */
     .app-card.coming {
       opacity: 0.58;
     }
@@ -230,7 +242,7 @@
       padding-top: 32px;
       border-top: 1px solid var(--line-soft);
       font-size: 13px;
-      color: var(--text-main); /* ✅ 統一 */
+      color: var(--text-main);
       opacity: 0.62;
       display: flex;
       justify-content: space-between;
@@ -264,7 +276,7 @@
   <section id="about">
     <div class="section-head">
       <img src="assets/blue-透過.png" alt="">
-      <h2><span class="dot blue"></span>ABOUT</h2>
+      <h2 class="accent-line accent-blue">ABOUT</h2>
     </div>
     <div class="section-line"></div>
 
@@ -274,13 +286,26 @@
     <p class="en">
       Independent app studio building iOS apps.
     </p>
+
+    <!-- ✅ About増量 -->
+    <p class="jp small">
+      “迷わず使えること”と“続けられること”を大切に、静かで集中できるUIUXを設計しています。
+    </p>
+
+    <p class="jp small">
+      ひとつひとつのアプリが、生活や学びの中で自然に馴染み、少しずつ前に進めるきっかけになることを目指しています。
+    </p>
+
+    <p class="en">
+      Focused on calm, distraction-free UI and thoughtful design that helps people keep going.
+    </p>
   </section>
 
   <!-- Apps -->
   <section id="apps">
     <div class="section-head">
       <img src="assets/yellow-透過.png" alt="">
-      <h2><span class="dot yellow"></span>APPS</h2>
+      <h2 class="accent-line accent-yellow">APPS</h2>
     </div>
     <div class="section-line"></div>
 
@@ -307,7 +332,7 @@
   <section id="contact">
     <div class="section-head">
       <img src="assets/red-透過.png" alt="">
-      <h2><span class="dot red"></span>CONTACT</h2>
+      <h2 class="accent-line accent-red">CONTACT</h2>
     </div>
     <div class="section-line"></div>
 
