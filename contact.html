@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Contact TendOn for inquiries and support." />
 
-  <!-- Noto Sans JP -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
@@ -16,14 +15,10 @@
       --font:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",sans-serif;
       --pageY:72px; --pageX:22px;
       --h1:32px; --h1-lh:1.2;
-
       --body-jp:15px; --body-en:14px;
       --lh-tight:1.65;
-
       --cardPadY:22px; --cardPadX:24px;
       --btnH:44px;
-
-      /* subtle link accent like pmpboost */
       --link-accent: rgba(17,17,17,0.35);
     }
 
@@ -49,7 +44,6 @@
       to{opacity:1;transform:translateY(0);}
     }
 
-    /* ===== Links (match pmpboost.html) ===== */
     a{
       color:var(--text);
       text-decoration:none;
@@ -72,7 +66,6 @@
       transform: translateY(-1px);
     }
 
-    /* ===== Hero (match pmpboost.html) ===== */
     .hero{
       display:flex;
       align-items:center;
@@ -107,17 +100,8 @@
       color:var(--text);
       line-height:1.55;
     }
-    .subtitle-en{
-      margin-top:4px;
-      opacity:.64;
-    }
+    .subtitle-en{ margin-top:4px; opacity:.64; }
 
-    /* ===== Typography (JP/EN) ===== */
-    p{margin:0 0 10px;}
-    .jp{font-size:var(--body-jp);font-weight:500;opacity:.92;line-height:var(--lh-tight);letter-spacing:.01em;}
-    .en{font-size:var(--body-en);font-weight:400;opacity:.64;letter-spacing:.02em;line-height:var(--lh-tight);}
-
-    /* ===== Card ===== */
     .card{
       margin-top:18px;
       border:1px solid var(--line);
@@ -126,7 +110,6 @@
       padding:var(--cardPadY) var(--cardPadX);
     }
 
-    /* ===== Form ===== */
     label{
       display:block;
       font-size:12px;
@@ -167,10 +150,8 @@
     .help{margin-top:10px;font-size:12px;opacity:.62;line-height:1.6;}
     .status{margin-top:12px;font-size:12px;opacity:.78;line-height:1.6;}
 
-    /* honeypot */
     .hp-wrap{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
 
-    /* ===== Footer ===== */
     footer{
       margin-top:84px;
       padding-top:22px;
@@ -189,13 +170,38 @@
       .hero{ margin-bottom:48px; }
       .app-icon{width:52px;height:52px;}
     }
+
+    /* ===== Toast (popup) ===== */
+    .toast{
+      position: fixed;
+      left: 50%;
+      top: 18px;
+      transform: translateX(-50%);
+      width: min(520px, calc(100% - 28px));
+      z-index: 9999;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      padding: 12px 14px;
+      display: none;
+    }
+    .toast.show{display:block; animation: toastIn .18s ease-out both;}
+    @keyframes toastIn { from{opacity:0;transform:translate(-50%, -6px);} to{opacity:1;transform:translate(-50%, 0);} }
+    .toast-title{font-size:13px;font-weight:600;letter-spacing:.02em;margin:0;line-height:1.4;}
+    .toast-msg{font-size:12px;opacity:.72;margin:4px 0 0;line-height:1.5;}
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <p class="toast-title" id="toastTitle"></p>
+    <p class="toast-msg" id="toastMsg"></p>
+  </div>
 
-    <!-- Hero (aligned to pmpboost.html) -->
+  <div class="container">
     <header class="hero">
       <img class="app-icon" src="assets/red-透過.png" alt="TendOn Contact">
       <div>
@@ -208,8 +214,7 @@
     </header>
 
     <div class="card">
-      <form id="contactForm" method="POST">
-
+      <form id="contactForm" novalidate>
         <label for="name">NAME</label>
         <input id="name" name="name" type="text" autocomplete="name" required>
 
@@ -236,7 +241,6 @@
           <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
         </div>
 
-        <!-- actions -->
         <div class="actions">
           <button class="btn" id="sendBtn" type="submit" disabled>Send</button>
         </div>
@@ -245,102 +249,169 @@
       </form>
     </div>
 
-    <!-- Back (aligned to pmpboost.html) -->
     <a class="link-arrow en" href="index.html">← Back to Home</a>
 
     <footer>
       <a href="privacy.html">プライバシーポリシー</a>
       <span>© TendOn</span>
     </footer>
-
   </div>
 
   <script>
-    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbzf1sOEs942dVdXwfEOuLho1Fi_O8YFpSiEDcuTxnPfxP6CpZkPVx7rd2I9i8Wzd5P-AA/exec";
+    const GAS_EXEC_URL = "https://script.google.com/macros/s/AKfycbzfULprP6DZkCB-W3HHxd2oO3mgQGpYD1lfUJ25k1BZTwVvnZQWjZk37XxLvI56Z17ftw/exec";
 
+    // ===== elements =====
     const form = document.getElementById("contactForm");
-    form.action = GAS_EXEC_URL;
+    const sendBtn = document.getElementById("sendBtn");
+    const statusEl = document.getElementById("status");
+    const tokenEl = document.getElementById("token");
+
+    const toastEl = document.getElementById("toast");
+    const toastTitleEl = document.getElementById("toastTitle");
+    const toastMsgEl = document.getElementById("toastMsg");
 
     // meta
     document.getElementById("page").value = location.href;
     document.getElementById("ua").value = navigator.userAgent;
     document.getElementById("ts").value = new Date().toISOString();
 
-    const tokenEl = document.getElementById("token");
-    const sendBtn = document.getElementById("sendBtn");
-    const statusEl = document.getElementById("status");
+    function setStatus(msg){ statusEl.textContent = msg || ""; }
 
-    function setStatus(msg) { statusEl.textContent = msg; }
+    function showToast(title, msg){
+      toastTitleEl.textContent = title || "";
+      toastMsgEl.textContent = msg || "";
+      toastEl.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toastEl.classList.remove("show"), 2600);
+    }
 
-    async function fetchToken() {
-      try {
-        setStatus("トークン取得中です…（数秒待ってから再度お試しください）");
+    // ===========================
+    // Email validation (front)
+    // ===========================
+    function isValidEmailStrict(email){
+      const e = String(email || "").trim();
+
+      // basic format
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return false;
+
+      const lower = e.toLowerCase();
+      const domain = lower.split("@")[1] || "";
+
+      // ✅ block obvious placeholders / test domains
+      const blockedDomains = new Set([
+        "example.com", "example.net", "example.org",
+        "test.com", "test.jp", "mailinator.com"
+      ]);
+      if (blockedDomains.has(domain)) return false;
+
+      return true;
+    }
+
+    function validateForm(){
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !subject || !message) {
+        return { ok:false, msg:"未入力の項目があります。" };
+      }
+      if (!isValidEmailStrict(email)) {
+        return { ok:false, msg:"有効なメールアドレスを入力してください。（例: example.com は使用できません）" };
+      }
+      if (!tokenEl.value) {
+        return { ok:false, msg:"トークン取得中です。数秒待ってから再度お試しください。" };
+      }
+      return { ok:true };
+    }
+
+    // ===========================
+    // Token (JSON endpoint)
+    // ===========================
+    async function fetchToken(){
+      try{
+        setStatus("トークン取得中です…");
         sendBtn.disabled = true;
 
-        // GAS側に action=token を追加している前提（推奨）
         const res = await fetch(GAS_EXEC_URL + "?action=token&v=" + Date.now(), {
           cache: "no-store",
           credentials: "omit"
         });
 
-        // tokenjsしか無い場合に備えて、JSON以外はエラー
         const data = await res.json();
         if (!data || !data.token) throw new Error("token missing");
 
         tokenEl.value = String(data.token);
         sendBtn.disabled = false;
         setStatus("");
-      } catch (e) {
-        // フォールバック：tokenjs（PCで動く環境向け）
-        tryTokenJsFallback();
-      }
-    }
-
-    function tryTokenJsFallback() {
-      setStatus("トークン取得中です…（数秒待ってから再度お試しください）");
-      sendBtn.disabled = true;
-
-      // tokenjs の script 注入（iOS Safariで失敗することがある）
-      const s = document.createElement("script");
-      s.src = GAS_EXEC_URL + "?action=tokenjs&v=" + Date.now();
-      s.async = true;
-
-      s.onload = function(){
-        const t = window.__TENDON_CONTACT_TOKEN__ || "";
-        if (t && typeof t === "string") {
-          tokenEl.value = t;
-          sendBtn.disabled = false;
-          setStatus("");
-        } else {
-          sendBtn.disabled = true;
-          setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
-        }
-      };
-
-      s.onerror = function(){
+      }catch(e){
         sendBtn.disabled = true;
         setStatus("トークン取得に失敗しました。時間をおいて再度お試しください。");
-      };
-
-      document.head.appendChild(s);
+      }
     }
 
-    form.addEventListener("submit", function (e) {
-      const email = document.getElementById("email").value.trim();
-      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!valid) {
-        e.preventDefault();
-        setStatus("正しいメールアドレスを入力してください。");
+    // ===========================
+    // Submit via fetch (no redirect)
+    // ===========================
+    form.addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+
+      const v = validateForm();
+      if (!v.ok) {
+        showToast("送信できません", v.msg);
+        setStatus(v.msg);
+        return;
       }
-      if (!tokenEl.value) {
-        e.preventDefault();
-        setStatus("トークン未取得です。数秒待ってから再度お試しください。");
+
+      try{
+        sendBtn.disabled = true;
+        setStatus("送信中…");
+
+        const fd = new FormData(form);
+        fd.append("_mode", "json");
+
+        const res = await fetch(GAS_EXEC_URL, {
+          method: "POST",
+          body: new URLSearchParams(fd),
+          cache: "no-store",
+          credentials: "omit"
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (data && data.ok) {
+          showToast("送信完了しました", "お問い合わせありがとうございます。");
+          setStatus("");
+
+          form.reset();
+
+          document.getElementById("page").value = location.href;
+          document.getElementById("ua").value = navigator.userAgent;
+          document.getElementById("ts").value = new Date().toISOString();
+          tokenEl.value = "";
+
+          await fetchToken();
+        } else {
+          const reason = (data && data.error) ? String(data.error) : "UNKNOWN";
+          showToast("送信失敗しました", "時間をおいて再度お試しください。(" + reason + ")");
+          setStatus("送信に失敗しました: " + reason);
+
+          tokenEl.value = "";
+          await fetchToken();
+        }
+
+      }catch(err){
+        showToast("送信失敗しました", "ネットワーク状況をご確認ください。");
+        setStatus("送信に失敗しました（通信エラー）");
+
+        tokenEl.value = "";
+        await fetchToken();
+      }finally{
       }
     });
 
     // start
     fetchToken();
   </script>
-
 </body>
 </html>
