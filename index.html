@@ -4,35 +4,39 @@
   <meta charset="UTF-8" />
   <title>TendOn</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TendOn is an independent app studio building thoughtful iOS apps." />
+
+  <!-- Noto Sans JP -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --main: #111;
-      --sub: #666;
-      --mute: #999;
-      --line: #eaeaea;
+      --text-main: #111;
+      --text-sub: #666;
+      --text-fade: #9a9a9a;
+      --line-soft: #ececec;
     }
 
+    /* ===== Base ===== */
     body {
-      font-family:
-        "Yu Gothic",
-        "Yu Gothic Medium",
-        "游ゴシック";
+      font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       margin: 0;
       padding: 96px 24px;
       background: #fff;
-      color: var(--main);
+      color: var(--text-main);
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
       max-width: 900px;
       margin: 0 auto;
-      animation: fadeIn .8s ease-out both;
+      animation: fadeIn 0.8s ease-out both;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: none; }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== Hero ===== */
@@ -44,38 +48,48 @@
       flex-wrap: wrap;
     }
 
+    .hero-icons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
     .hero-icons img {
       height: 64px;
-      opacity: .95;
+      width: auto;
+      opacity: 0.95;
     }
 
     h1 {
       font-size: 38px;
-      margin: 0;
       font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.02em;
     }
 
     .subtitle {
       font-size: 14px;
-      color: var(--sub);
+      color: var(--text-sub);
       margin-top: 6px;
+      letter-spacing: 0.04em;
     }
 
-    /* ===== Navigation ===== */
+    /* ===== Anchor Nav ===== */
     nav {
+      margin: 48px 0 96px;
       display: flex;
-      gap: 28px;
-      margin-bottom: 96px;
+      gap: 24px;
+      font-size: 14px;
+      letter-spacing: 0.06em;
     }
 
     nav a {
-      font-size: 14px;
-      color: var(--mute);
+      color: var(--text-fade);
       text-decoration: none;
     }
 
     nav a:hover {
-      color: var(--main);
+      color: var(--text-main);
     }
 
     /* ===== Sections ===== */
@@ -87,88 +101,111 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     .section-head img {
-      height: 26px;
-      opacity: .9;
+      height: 22px;
+      width: auto;
     }
 
     h2 {
       font-size: 13px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--mute);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--text-fade);
       margin: 0;
     }
 
-    /* 見出し下の線（About / Contact 用） */
     .section-line {
       height: 1px;
-      background: var(--line);
-      margin: 16px 0 24px;
+      background: var(--line-soft);
+      margin: 16px 0 32px;
     }
 
-    /* ===== Text Styles ===== */
+    /* ===== Text ===== */
     .jp {
       font-size: 16px;
       line-height: 1.65;
-      margin: 0 0 8px;
+      margin-bottom: 10px;
     }
 
     .en {
       font-size: 13px;
-      line-height: 1.6;
+      color: var(--text-sub);
       font-style: italic;
-      letter-spacing: .04em;
-      color: var(--sub);
-      margin: 0 0 24px;
+      letter-spacing: 0.04em;
+      margin-bottom: 22px;
     }
 
     /* ===== Apps ===== */
     .app {
-      padding: 24px 0;
-      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .app:last-child {
+      border-bottom: 1px solid var(--line-soft);
     }
 
     .app-name {
-      font-weight: 600;
       font-size: 16px;
+      font-weight: 600;
       margin-bottom: 6px;
+    }
+
+    .app-desc-jp {
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .app-desc-en {
+      font-size: 13px;
+      color: var(--text-sub);
+      font-style: italic;
+      letter-spacing: 0.04em;
     }
 
     /* ===== Links ===== */
     a {
-      color: var(--main);
+      color: var(--text-main);
       text-decoration: none;
-    }
-
-    .link {
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--line-soft);
       padding-bottom: 2px;
-      font-size: 14px;
     }
 
-    .link:hover {
-      border-color: var(--main);
+    a:hover {
+      border-color: var(--text-main);
+    }
+
+    .link-arrow {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      margin-top: 12px;
+      display: inline-block;
     }
 
     /* ===== Footer ===== */
     footer {
       margin-top: 120px;
       padding-top: 32px;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid var(--line-soft);
       font-size: 13px;
-      color: var(--mute);
+      color: var(--text-fade);
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 32px; }
+      .hero-icons img { height: 52px; }
     }
   </style>
 </head>
-
 <body>
+
 <div class="container">
 
   <!-- Hero -->
@@ -184,7 +221,7 @@
     </div>
   </div>
 
-  <!-- Navigation -->
+  <!-- Nav -->
   <nav>
     <a href="#about">About</a>
     <a href="#apps">Apps</a>
@@ -195,7 +232,7 @@
   <section id="about">
     <div class="section-head">
       <img src="assets/blue-透過.png" alt="">
-      <h2>About</h2>
+      <h2>ABOUT</h2>
     </div>
     <div class="section-line"></div>
 
@@ -211,14 +248,16 @@
   <section id="apps">
     <div class="section-head">
       <img src="assets/yellow-透過.png" alt="">
-      <h2>Apps</h2>
+      <h2>APPS</h2>
     </div>
+    <div class="section-line"></div>
 
     <div class="app">
       <div class="app-name">PMP BOOST</div>
-      <p class="jp">PMP試験対策のための学習アプリ</p>
-      <p class="en">iOS app for PMP exam preparation.</p>
-      <a class="link" href="pmp-boost.html">View details →</a>
+      <div class="app-desc-jp">PMP試験対策のための学習アプリ</div>
+      <div class="app-desc-en">iOS app for PMP exam preparation.</div>
+
+      <a class="link-arrow" href="pmp-boost.html">View details →</a>
     </div>
   </section>
 
@@ -226,7 +265,7 @@
   <section id="contact">
     <div class="section-head">
       <img src="assets/red-透過.png" alt="">
-      <h2>Contact</h2>
+      <h2>CONTACT</h2>
     </div>
     <div class="section-line"></div>
 
@@ -237,14 +276,19 @@
       For inquiries and support, please use the contact form.
     </p>
 
-    <a class="link" href="contact.html">Contact Form →</a>
+    <a class="link-arrow" href="contact.html">Contact Form →</a>
   </section>
 
   <footer>
-    <a href="privacy.html">プライバシーポリシー</a>
-    <span>© TendOn</span>
+    <div>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </div>
+    <div>
+      © TendOn
+    </div>
   </footer>
 
 </div>
+
 </body>
 </html>
