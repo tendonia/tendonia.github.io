@@ -14,7 +14,7 @@
       /* ===== Color ===== */
       --bg: #ffffff;
       --text: #111111;
-      --text-sub: rgba(17,17,17,0.64); /* ✅ indexと同じ英語の薄さ */
+      --text-sub: rgba(17,17,17,0.64);
       --line: #ececec;
 
       /* Accent (headline underline) */
@@ -62,7 +62,6 @@
       --cardPadY: 22px;
       --cardPadX: 24px;
 
-      /* ✅ 見出し下の線：少し長く */
       --lineW: 78px;
       --lineH: 2px;
       --lineGap: 10px;
@@ -105,7 +104,6 @@
     }
     a:hover { border-color: rgba(17,17,17,0.7); }
 
-    /* ✅ 共通の “→” リンク（index寄せ） */
     .link-arrow {
       font-size: 13px;
       letter-spacing: 0.01em;
@@ -141,7 +139,6 @@
       color: var(--text);
     }
 
-    /* ✅ サブタイトル（日英） */
     .subtitle-wrap { margin-top: 6px; }
     .subtitle-jp,
     .subtitle-en {
@@ -152,7 +149,7 @@
       color: var(--text);
       line-height: 1.55;
     }
-    /* ✅ indexと同じ：英語はrgba(0.64)相当の薄さ */
+
     .subtitle-en {
       margin-top: 4px;
       opacity: 0.64;
@@ -209,7 +206,6 @@
       opacity: 0.92; /* index寄せ */
     }
 
-    /* ✅ indexと同じ英語（色/サイズ/太さ/字間/薄さ） */
     .en {
       font-size: var(--body-en);
       font-weight: 400;
@@ -240,15 +236,15 @@
       color: var(--text);
       letter-spacing: 0.01em;
     }
-    /* ✅ 英語リストは本文英語(.en)に完全一致させる */
-.list.en li {
-  font-size: var(--body-en);     /* 14px */
-  font-weight: 400;             /* ← ここが重要 */
-  color: var(--text);
-  opacity: 0.64;                /* indexと同じ薄さ */
-  letter-spacing: 0.02em;       /* .en と同じ */
-  line-height: var(--lh-tight); /* .en と同じ */
-}
+
+  .list.en li {
+    font-size: var(--body-en);  
+    font-weight: 400;
+    color: var(--text);
+    opacity: 0.64;          
+    letter-spacing: 0.02em;     
+    line-height: var(--lh-tight); 
+  }
 
     /* ===== App Store Slot ===== */
     .store-slot {
@@ -274,7 +270,7 @@
       justify-content: space-between;
       gap: 12px;
       align-items: center;
-      opacity: 0.62; /* index寄せ */
+      opacity: 0.62; 
     }
 
     /* ===== Mobile ===== */
@@ -407,7 +403,6 @@
   </div>
 
   <script>
-    // 公開後の App Store URL を入れてください（空なら非表示）
     const APP_STORE_URL = "";
 
     (function () {
