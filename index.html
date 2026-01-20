@@ -17,10 +17,7 @@
       font-family:
         "Yu Gothic",
         "Yu Gothic Medium",
-        "游ゴシック体",
-        "Hiragino Kaku Gothic ProN",
-        "Meiryo",
-        sans-serif;
+        "游ゴシック";
       margin: 0;
       padding: 96px 24px;
       background: #fff;
@@ -90,7 +87,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
     }
 
     .section-head img {
@@ -104,6 +101,13 @@
       text-transform: uppercase;
       color: var(--mute);
       margin: 0;
+    }
+
+    /* 見出し下の線（About / Contact 用） */
+    .section-line {
+      height: 1px;
+      background: var(--line);
+      margin: 16px 0 24px;
     }
 
     /* ===== Text Styles ===== */
@@ -143,7 +147,7 @@
     .link {
       border-bottom: 1px solid var(--line);
       padding-bottom: 2px;
-      font-size: 14px; /* ← 本文と揃える */
+      font-size: 14px;
     }
 
     .link:hover {
@@ -193,6 +197,7 @@
       <img src="assets/blue-透過.png" alt="">
       <h2>About</h2>
     </div>
+    <div class="section-line"></div>
 
     <p class="jp">
       TendOnは、学習や生産性を支えるiOSアプリを個人で制作するアプリスタジオです。
@@ -223,6 +228,7 @@
       <img src="assets/red-透過.png" alt="">
       <h2>Contact</h2>
     </div>
+    <div class="section-line"></div>
 
     <p class="jp">
       お問い合わせ・サポートは専用フォームからお願いいたします。
