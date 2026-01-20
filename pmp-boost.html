@@ -15,13 +15,15 @@
       --text: #111111;
       --line: #ececec;
 
-      /* 見出し下ライン */
+      /* Accent (headline underline) */
       --accent-orange: #ff7a2f;
+
+      /* Link accent (subtle, keeps “TendOn world”) */
+      --link-accent: rgba(255,122,47,0.35);
 
       --radius: 14px;
       --container: 720px;
 
-      /* ✅ タイトルで使っているフォントを全域の唯一の基準にする */
       --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
 
       --h1: 38px;
@@ -55,7 +57,6 @@
 
     * { box-sizing: border-box; }
 
-    /* ✅ “フォントの基準”をここで固定（タイトルと同じ） */
     body {
       font-family: var(--font);
       margin: 0;
@@ -67,10 +68,7 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* ✅ どこで表示されても同じフォントに見えるように inherit を強める */
-    h1, h2, p, a, ul, li, footer, span, div {
-      font-family: inherit;
-    }
+    h1, h2, p, a, ul, li, footer, span, div { font-family: inherit; }
 
     .container {
       max-width: var(--container);
@@ -83,20 +81,33 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ✅ リンクも本文と同じ色（灰にしない） */
+    /* ===== Links (base) ===== */
     a {
       color: var(--text);
       text-decoration: none;
       border-bottom: 1px solid var(--line);
       padding-bottom: 2px;
+      transition: border-color .18s ease, transform .18s ease, opacity .18s ease;
     }
 
+    a:hover {
+      border-color: rgba(17,17,17,0.7);
+    }
+
+    /* ✅ “リンク感”を出しつつ、本文と同じフォント感に寄せる */
     .link-arrow {
       font-size: 13px;
-      letter-spacing: 0.06em;
-      margin-top: 14px;
+      letter-spacing: 0.01em; /* ← 本文と揃えてフォント違いに見せない */
+      font-weight: 500;
       display: inline-block;
-      color: var(--text);
+      margin-top: 14px;
+      border-bottom-color: rgba(17,17,17,0.18);
+    }
+
+    /* ✅ ホバー時だけ“気配”のオレンジ */
+    .link-arrow:hover {
+      border-bottom-color: var(--link-accent);
+      transform: translateY(-1px);
     }
 
     /* ===== Hero ===== */
@@ -111,6 +122,7 @@
     .app-icon {
       height: 58px;
       width: 58px;
+      display: block;
     }
 
     h1 {
@@ -151,6 +163,7 @@
     .section-head img {
       height: 16px;
       width: 16px;
+      display: block;
     }
 
     h2 {
@@ -176,27 +189,26 @@
 
     p { margin: 0 0 var(--paraB); }
 
-/* ✅ 共通（色・字面のルールはここで統一） */
-.jp, .en {
-  color: var(--text);
-  line-height: var(--lh-tight);
-  letter-spacing: 0.01em;
-}
+    /* ✅ 色は統一：英語だけ opacity で管理 */
+    .jp, .en {
+      color: var(--text);
+      line-height: var(--lh-tight);
+      letter-spacing: 0.01em;
+    }
 
-/* ✅ 日本語（濃さはデフォルト＝1） */
-.jp {
-  font-size: var(--body-jp);
-  font-weight: 500;
-  opacity: 1;
-}
+    .jp {
+      font-size: var(--body-jp);
+      font-weight: 500;
+      opacity: 1;
+    }
 
-/* ✅ 英語（薄さはここ “1箇所だけ” で管理） */
-.en {
-  font-size: var(--body-en);
-  font-weight: 500;
-  opacity: 0.78;
-}
+    .en {
+      font-size: var(--body-en);
+      font-weight: 500;
+      opacity: 0.78; /* ← 英語の薄さはここだけ */
+    }
 
+    /* ===== Card ===== */
     .app-card {
       max-width: 560px;
       padding: var(--cardPadY) var(--cardPadX);
@@ -210,14 +222,19 @@
       margin: 14px 0 0;
       padding-left: 18px;
     }
+
     .list li {
       margin: 8px 0;
       font-size: 14px;
       font-weight: 500;
       line-height: 1.7;
       color: var(--text);
-      opacity: 1;
       letter-spacing: 0.01em;
+    }
+
+    /* ✅ 英語リストだけ薄くする（“1箇所管理”を壊さず、.en を継承） */
+    .list.en li {
+      opacity: 0.78;
     }
 
     /* ===== App Store Slot ===== */
@@ -229,10 +246,11 @@
       justify-content: space-between;
       gap: 12px;
       color: var(--text);
+      align-items: baseline;
     }
+
     .store-slot[hidden] { display: none; }
 
-    /* ===== Footer ===== */
     footer {
       margin-top: 84px;
       padding-top: 22px;
@@ -243,6 +261,22 @@
       justify-content: space-between;
       gap: 12px;
       align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      :root {
+        --pageY: 56px;
+        --pageX: 18px;
+        --h1: 32px;
+        --heroB: 48px;
+        --sectionB: 58px;
+        --cardPadY: 20px;
+        --cardPadX: 20px;
+        --lineW: 48px;
+      }
+
+      .app-icon { height: 52px; width: 52px; }
+      .app-card { max-width: 100%; }
     }
   </style>
 </head>
@@ -257,7 +291,7 @@
       <h1>PMP BOOST</h1>
       <div class="subtitle-wrap">
         <p class="subtitle-jp">PMP試験対策アプリ</p>
-        <p class="subtitle-en">iOS app for PMP exam preparation</p>
+        <p class="subtitle-en en">iOS app for PMP exam preparation</p>
       </div>
     </div>
   </div>
@@ -284,9 +318,10 @@
         It reduces decision-making—what to study today, what to revisit, and what to do next—so you can stay in the flow.
       </p>
 
+      <!-- App Store link slot (hidden until launch) -->
       <div class="store-slot" id="appstore-slot" hidden>
-        <span>App Store</span>
-        <a id="appstore-link" href="#" target="_blank" rel="noopener">View on App Store →</a>
+        <span class="en" style="opacity:0.78;">App Store</span>
+        <a class="link-arrow en" id="appstore-link" href="#" target="_blank" rel="noopener">View on App Store →</a>
       </div>
     </div>
   </section>
@@ -306,7 +341,6 @@
         The flow stays intentionally simple—so you can keep both understanding and consistency.
       </p>
 
-      <!-- ✅ 日本語 list -->
       <ul class="list">
         <li>クイズ形式で、短時間でも集中して学習できる</li>
         <li>「苦手」や「保存」で、復習対象をすぐに整理できる</li>
@@ -314,8 +348,7 @@
         <li>次に何をすればよいかが自然に分かる導線</li>
       </ul>
 
-      <!-- ✅ 英語 list（同じ色・同じフォント感） -->
-      <ul class="list">
+      <ul class="list en">
         <li>Learn efficiently through focused, quiz-based sessions</li>
         <li>Organize what to review with weak-point and saved lists</li>
         <li>Track progress and feel steady improvement over time</li>
@@ -363,11 +396,13 @@
         PMP BOOST is designed with privacy in mind and collects only what is necessary for learning.
       </p>
 
-      <a class="link-arrow" href="privacy.html">Privacy Policy →</a>
+      <!-- ✅ リンクも .en を付けて英語の薄さを統一 -->
+      <a class="link-arrow en" href="privacy.html">Privacy Policy →</a>
     </div>
   </section>
 
-  <a class="link-arrow" href="index.html">← Back to Home</a>
+  <!-- Back -->
+  <a class="link-arrow en" href="index.html">← Back to Home</a>
 
   <footer>
     <a href="privacy.html">プライバシーポリシー</a>
@@ -377,14 +412,21 @@
 </div>
 
 <script>
+  // 公開後の App Store URL を入れてください（空なら非表示）
   const APP_STORE_URL = "";
-  const slot = document.getElementById("appstore-slot");
-  const link = document.getElementById("appstore-link");
 
-  if (APP_STORE_URL && APP_STORE_URL.trim().length > 0) {
-    link.href = APP_STORE_URL.trim();
-    slot.hidden = false;
-  }
+  (function () {
+    const slot = document.getElementById("appstore-slot");
+    const link = document.getElementById("appstore-link");
+    if (!slot || !link) return;
+
+    if (APP_STORE_URL && APP_STORE_URL.trim().length > 0) {
+      link.href = APP_STORE_URL.trim();
+      slot.hidden = false;
+    } else {
+      slot.hidden = true;
+    }
+  })();
 </script>
 
 </body>
