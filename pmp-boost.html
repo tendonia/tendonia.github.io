@@ -50,9 +50,14 @@
       --cardPadY: 22px;
       --cardPadX: 24px;
 
-      --lineW: 52px;
+      /* ✅ 見出し下の線：少し長く */
+      --lineW: 78px;  /* ← 52px → 78px */
       --lineH: 2px;
       --lineGap: 10px;
+
+      /* ✅ サブタイトル：日/英のサイズを揃える */
+      --subtitle: 13px;
+      --subtitle-ls: 0.06em;
     }
 
     * { box-sizing: border-box; }
@@ -97,7 +102,7 @@
     /* ✅ “リンク感”を出しつつ、本文と同じフォント感に寄せる */
     .link-arrow {
       font-size: 13px;
-      letter-spacing: 0.01em; /* ← 本文と揃えてフォント違いに見せない */
+      letter-spacing: 0.01em;
       font-weight: 500;
       display: inline-block;
       margin-top: 14px;
@@ -135,19 +140,21 @@
     }
 
     .subtitle-wrap { margin-top: 6px; }
-    .subtitle-jp {
-      font-size: 13px;
+
+    /* ✅ 日英のサイズを揃える（見た目の違いは “薄さ” だけで出す） */
+    .subtitle-jp,
+    .subtitle-en {
+      font-size: var(--subtitle);
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: var(--subtitle-ls);
       margin: 0;
       color: var(--text);
+      line-height: 1.55;
     }
+
     .subtitle-en {
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      margin: 4px 0 0;
-      color: var(--text);
+      margin-top: 4px;
+      opacity: 0.78; /* ← 英語は薄い */
     }
 
     /* ===== Sections ===== */
@@ -205,7 +212,7 @@
     .en {
       font-size: var(--body-en);
       font-weight: 500;
-      opacity: 0.78; /* ← 英語の薄さはここだけ */
+      opacity: 0.78;
     }
 
     /* ===== Card ===== */
@@ -232,7 +239,7 @@
       letter-spacing: 0.01em;
     }
 
-    /* ✅ 英語リストだけ薄くする（“1箇所管理”を壊さず、.en を継承） */
+    /* ✅ 英語リストだけ薄くする */
     .list.en li {
       opacity: 0.78;
     }
@@ -272,7 +279,9 @@
         --sectionB: 58px;
         --cardPadY: 20px;
         --cardPadX: 20px;
-        --lineW: 48px;
+
+        /* ✅ モバイルでも少し長めを維持 */
+        --lineW: 70px;
       }
 
       .app-icon { height: 52px; width: 52px; }
@@ -291,7 +300,7 @@
       <h1>PMP BOOST</h1>
       <div class="subtitle-wrap">
         <p class="subtitle-jp">PMP試験対策アプリ</p>
-        <p class="subtitle-en en">iOS app for PMP exam preparation</p>
+        <p class="subtitle-en">iOS app for PMP exam preparation</p>
       </div>
     </div>
   </div>
@@ -396,7 +405,6 @@
         PMP BOOST is designed with privacy in mind and collects only what is necessary for learning.
       </p>
 
-      <!-- ✅ リンクも .en を付けて英語の薄さを統一 -->
       <a class="link-arrow en" href="privacy.html">Privacy Policy →</a>
     </div>
   </section>
