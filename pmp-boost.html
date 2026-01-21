@@ -95,13 +95,9 @@
         linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
-    h1, h2, p, a, ul, li, footer, span, div { font-family: inherit; }
+    h1, h2, p, a, ul, li, footer, span, div, figure, figcaption { font-family: inherit; }
 
-    img{
-      max-width: 100%;
-      height: auto;
-      display: block; /* ✅ Safariでインライン扱いの隙間/崩れを回避 */
-    }
+    img{ display:block; max-width:100%; }
 
     .container{
       max-width: var(--container);
@@ -132,7 +128,6 @@
     .app-icon{
       width: 56px;
       height: 56px;
-      aspect-ratio: 1 / 1;
       object-fit: contain;
       object-position: center;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,0.08));
@@ -206,11 +201,6 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--surface);
-
-      /* ✅ iPhone Safari安定：backdrop-filter を使わない */
-      /* backdrop-filter: blur(6px); */
-      /* -webkit-backdrop-filter: blur(6px); */
-
       box-shadow: var(--shadow-xs);
       padding: var(--cardPadY) var(--cardPadX);
     }
@@ -279,21 +269,31 @@
       min-width: 0;
       border-radius: var(--shotRadius);
       border: 1px solid rgba(15,15,16,0.10);
-      overflow: hidden;
       background: rgba(255,255,255,0.60);
+      overflow: hidden;
+
+      min-height: 520px;
     }
 
-    /* ✅ 超安定：枠は aspect-ratio だけで確保。img は通常配置 */
     .shot .shot-media{
+      position: relative;
       width: 100%;
       background: rgba(255,255,255,0.40);
-      aspect-ratio: 9 / 19.5;
       overflow: hidden;
     }
+    .shot .shot-media::before{
+      content:"";
+      display:block;
+      padding-top: 216.6667%; /* 19.5 / 9 * 100 */
+    }
     .shot .shot-media img{
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .shot-cap{
@@ -385,6 +385,7 @@
       .app-icon{ width: 52px; height: 52px; }
       footer{ flex-direction: column; align-items: flex-start; }
       .shot-row{ flex-direction: column; }
+      .shot{ min-height: 0; } 
     }
   </style>
 </head>
@@ -392,7 +393,7 @@
 <body>
   <div class="container">
 
-    <!-- Hero（ボタン類なし） -->
+    <!-- Hero -->
     <header class="hero">
       <img class="app-icon" src="assets/PMPBOOST_icon-透過.png" alt="PMP BOOST Icon">
       <div>
@@ -401,7 +402,7 @@
       </div>
     </header>
 
-    <!-- OVERVIEW（LaunchView + HomeView.jpeg） -->
+    <!-- OVERVIEW -->
     <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
@@ -532,7 +533,7 @@
       </div>
     </section>
 
-    <!-- DESIGNED FOR CONSISTENCY（ResultView + BonusView） -->
+    <!-- DESIGNED FOR CONSISTENCY -->
     <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
@@ -583,7 +584,6 @@
 
     <a class="back" href="index.html" aria-label="Back to Home">← Back to Home</a>
 
-    <!-- Footer（Privacyのみ） -->
     <footer>
       <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">プライバシーポリシー</a>
       <span>© TendOn</span>
