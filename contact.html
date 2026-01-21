@@ -259,15 +259,11 @@
       .hero{ margin-bottom: 36px; }
       .app-icon{ width: 52px; height: 52px; }
 
-      /* ✅ 修正：スマホでもPC同様、左右配置に固定 */
       footer{
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
       }
-
-      /* もし小さい端末で詰まる場合は、次を有効化（左右順は維持したまま2段に逃げる） */
-      /* footer{ flex-wrap: wrap; } */
     }
 
     /* ===== Toast (popup) ===== */
@@ -300,6 +296,11 @@
       .btn, .back, .footer-link{ transition:none; }
     }
   </style>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-clear.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-clear.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-clear.png">
 </head>
 
 <body>
