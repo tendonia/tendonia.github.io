@@ -629,9 +629,7 @@
       const layer = document.getElementById('logoRainLayer');
 
       const sources = [
-        "assets/blue-透過.png",
-        "assets/yellow-透過.png",
-        "assets/red-透過.png"
+        "assets/rice-透過.png",
       ];
 
       let last = 0;
@@ -639,7 +637,7 @@
 
       function dropOnce(){
         const now = Date.now();
-        if(now - last < 260) return;
+        if(now - last < 360) return;
         last = now;
 
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
