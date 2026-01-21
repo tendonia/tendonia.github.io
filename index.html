@@ -21,9 +21,14 @@
       --accent-yellow: #f3b700;
       --accent-red: #ff4b4b;
 
-      /* NEW: subtle surface */
+      /* Subtle surfaces */
       --surface: rgba(17,17,17,0.02);
       --surface-strong: rgba(17,17,17,0.04);
+
+      /* Tint backgrounds (per section) */
+      --tint-blue: rgba(43,108,255,0.05);
+      --tint-yellow: rgba(243,183,0,0.06);
+      --tint-red: rgba(255,75,75,0.05);
 
       /* ===== Radius / Shadow ===== */
       --radius: 14px;
@@ -33,7 +38,7 @@
       /* ===== Layout ===== */
       --container: 720px;
 
-      /* ===== Typography scale ===== */
+      /* ===== Typography ===== */
       --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
 
       --h1: 38px;
@@ -51,28 +56,25 @@
       --lh: 1.8;
       --lh-tight: 1.65;
 
-      /* ===== Spacing scale ===== */
+      /* ===== Spacing ===== */
       --pageY: 72px;
       --pageX: 22px;
 
       --heroB: 56px;
       --sectionB: 72px;
 
-      --headB: 14px;      /* section head bottom */
-      --paraB: 10px;      /* paragraph bottom */
+      --headB: 14px;
+
+      --paraB: 10px;
       --paraB-last: 0px;
 
-      --cardPadY: 22px;
-      --cardPadX: 24px;
-      --cardGap: 16px;
+      --cardPadY: 16px;
+      --cardPadX: 16px;
+      --cardGap: 12px;
 
       --lineW: 52px;
       --lineH: 2px;
       --lineGap: 10px;
-
-      /* NEW: section body padding */
-      --bodyPadY: 16px;
-      --bodyPadX: 18px;
     }
 
     /* ===== Base ===== */
@@ -110,16 +112,6 @@
       transition: border-color .18s ease, opacity .18s ease, transform .18s ease;
     }
     a:hover { border-color: rgba(17,17,17,0.75); }
-
-    .link-arrow {
-      font-size: 13px;
-      letter-spacing: 0.06em;
-      margin-top: 12px;
-      display: inline-block;
-      opacity: 0.78;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 2px;
-    }
 
     /* ===== Hero ===== */
     .hero {
@@ -211,16 +203,7 @@
     .accent-yellow::after { background: var(--accent-yellow); }
     .accent-red::after    { background: var(--accent-red); }
 
-    /* ===== NEW: Section Body Surface ===== */
-    .section-body {
-      border: 1px solid var(--line);
-      background: var(--surface);
-      border-radius: calc(var(--radius) - 2px);
-      padding: var(--bodyPadY) var(--bodyPadX);
-      box-shadow: var(--shadow-xs);
-    }
-
-    /* ===== Paragraphs ===== */
+    /* ===== Typography ===== */
     p { margin: 0 0 var(--paraB) 0; }
 
     .jp {
@@ -241,7 +224,7 @@
       line-height: var(--lh-tight);
     }
 
-    /* NEW: JP/EN pair */
+    /* JP/EN pair block */
     .pair {
       display: grid;
       gap: 6px;
@@ -254,85 +237,20 @@
     }
     .pair:last-child { padding-bottom: 0; }
 
-    /* ===== Cards ===== */
-    .card-stack { margin-top: 10px; }
-
-    .app-card {
-      width: 100%;
-      max-width: var(--container);
-
-      padding: var(--cardPadY) var(--cardPadX);
+    /* ===== Unified Panel Card (same as CONTACT) ===== */
+    .panel {
       border: 1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius: calc(var(--radius) - 2px);
       background: #fff;
-
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      box-shadow: var(--shadow-xs);
+      padding: var(--cardPadY) var(--cardPadX);
     }
+    .panel.tint-blue { background: var(--tint-blue); }
+    .panel.tint-yellow { background: var(--tint-yellow); }
+    .panel.tint-red { background: var(--tint-red); }
 
-    .app-card + .app-card { margin-top: var(--cardGap); }
-
-    a.app-card {
-      display: block;
-      border-bottom: none; 
-      padding-bottom: 0;
-    }
-
-    .app-card:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-      border-color: rgba(17,17,17,0.10);
-    }
-
-    a.app-card:focus-visible {
-      outline: 2px solid rgba(43,108,255,0.25);
-      outline-offset: 4px;
-    }
-
-    .app-name {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 0 0 6px 0;
-      letter-spacing: 0.01em;
-    }
-
-    .app-desc-jp {
-      font-size: 14px;
-      font-weight: 500;
-      margin: 0 0 4px 0;
-      opacity: 0.86;
-      line-height: 1.6;
-    }
-
-    .app-desc-en {
-      font-size: 13px;
-      font-weight: 400;
-      margin: 0;
-      opacity: 0.62;
-      letter-spacing: 0.02em;
-      line-height: 1.6;
-    }
-
-    .app-card .link-arrow {
-      border-bottom: 1px solid var(--line);
-      width: fit-content;
-    }
-
-    /* ===== Coming Soon ===== */
-    .app-card.coming { opacity: 0.55; }
-    .app-card.coming:hover {
-      transform: none;
-      box-shadow: none;
-      border-color: var(--line);
-    }
-    .link-arrow.disabled {
-      opacity: 0.42;
-      border-bottom: none;
-      cursor: default;
-      pointer-events: none;
-    }
-
-    /* ===== NEW: Contact CTA ===== */
-    .contact-cta {
+    /* ===== Unified CTA Card (used by Apps + Contact) ===== */
+    .cta-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -343,33 +261,35 @@
       background: #fff;
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
-    .contact-cta:hover {
+    .cta-card:hover {
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
       border-color: rgba(17,17,17,0.10);
     }
-    .contact-cta:focus-visible {
-      outline: 2px solid rgba(255,75,75,0.20);
+    .cta-card:focus-visible {
+      outline: 2px solid rgba(17,17,17,0.12);
       outline-offset: 4px;
     }
-    .contact-cta .meta {
+
+    .cta-card .meta {
       display: grid;
       gap: 4px;
       min-width: 0;
     }
-    .contact-cta .meta .title {
+    .cta-card .meta .title {
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.01em;
       margin: 0;
     }
-    .contact-cta .meta .desc {
+    .cta-card .meta .desc {
       font-size: 13px;
       opacity: 0.62;
       margin: 0;
       line-height: 1.55;
     }
-    .contact-cta .pill {
+
+    .cta-card .pill {
       flex: 0 0 auto;
       font-size: 12px;
       font-weight: 600;
@@ -381,6 +301,27 @@
       opacity: 0.9;
       white-space: nowrap;
     }
+
+    /* Apps stack */
+    .cta-stack { display: grid; gap: var(--cardGap); }
+
+    /* Disabled / coming soon (same card, non-interactive) */
+    .cta-card.is-disabled {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .cta-card.is-disabled:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: var(--line);
+    }
+    .cta-card.is-disabled .pill{
+      opacity: 0.45;
+      background: transparent;
+    }
+
+    /* Remove default underline for card links */
+    a.cta-card { border-bottom: none; padding-bottom: 0; }
 
     /* ===== Footer ===== */
     footer {
@@ -397,7 +338,7 @@
       align-items: center;
     }
 
-    /* ===== NEW: Logo Rain ===== */
+    /* ===== Logo Rain ===== */
     .logo-rain-layer{
       position: fixed;
       inset: 0;
@@ -426,7 +367,7 @@
       .container{ animation: none; }
       .drop{ display:none; }
       .hero-logo-btn{ transition: none; }
-      .app-card, .contact-cta{ transition: none; }
+      .cta-card{ transition: none; }
     }
 
     /* ===== Mobile ===== */
@@ -434,27 +375,17 @@
       :root {
         --pageY: 56px;
         --pageX: 18px;
-
         --h1: 32px;
-
         --heroB: 48px;
         --sectionB: 58px;
-
-        --cardPadY: 20px;
-        --cardPadX: 20px;
-
-        --lineW: 48px;
-        --bodyPadY: 14px;
-        --bodyPadX: 14px;
       }
 
       .hero-icons img { height: 52px; }
-      .app-card { max-width: 100%; }
 
-      .contact-cta{
+      .cta-card{
         padding: 14px 12px;
       }
-      .contact-cta .pill{
+      .cta-card .pill{
         padding: 9px 10px;
       }
     }
@@ -462,7 +393,6 @@
 </head>
 
 <body>
-  <!-- Logo rain layer (JS injects drops here) -->
   <div class="logo-rain-layer" id="logoRainLayer" aria-hidden="true"></div>
 
   <div class="container">
@@ -488,8 +418,7 @@
         <h2 class="accent-line accent-blue">ABOUT</h2>
       </div>
 
-      <!-- ✅ body surface -->
-      <div class="section-body">
+      <div class="panel tint-blue">
         <div class="pair">
           <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
           <p class="en">TendOn designs and builds iOS apps for learning and productivity.</p>
@@ -508,20 +437,27 @@
         <h2 class="accent-line accent-yellow">APPS</h2>
       </div>
 
-      <div class="card-stack">
-        <!-- PMP BOOST -->
-        <a class="app-card" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
-          <div class="app-name">PMP BOOST</div>
-          <p class="app-desc-jp">PMP試験対策のための学習アプリ</p>
-          <p class="app-desc-en">iOS app for PMP exam preparation.</p>
-          <span class="link-arrow">View details →</span>
-        </a>
+      <div class="panel tint-yellow">
+        <div class="cta-stack">
 
-        <div class="app-card coming" aria-disabled="true">
-          <div class="app-name">Coming soon...</div>
-          <p class="app-desc-jp">新しいアプリを準備中です</p>
-          <p class="app-desc-en">A new app is currently in development.</p>
-          <span class="link-arrow disabled">View details →</span>
+          <!-- PMP BOOST -->
+          <a class="cta-card" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
+            <div class="meta">
+              <p class="title">PMP BOOST</p>
+              <p class="desc">PMP試験対策のための学習アプリ / iOS app for PMP exam preparation.</p>
+            </div>
+            <div class="pill">View →</div>
+          </a>
+
+          <!-- Coming soon -->
+          <div class="cta-card is-disabled" aria-disabled="true">
+            <div class="meta">
+              <p class="title">Coming soon...</p>
+              <p class="desc">新しいアプリを準備中です / A new app is currently in development.</p>
+            </div>
+            <div class="pill">View →</div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -533,9 +469,8 @@
         <h2 class="accent-line accent-red">CONTACT</h2>
       </div>
 
-      <!-- ✅ body surface -->
-      <div class="section-body" style="background: rgba(255,75,75,0.02);">
-        <a class="contact-cta" href="contact.html" aria-label="Open contact form">
+      <div class="panel tint-red">
+        <a class="cta-card" href="contact.html" aria-label="Open contact form">
           <div class="meta">
             <p class="title">Contact Form</p>
             <p class="desc">ご連絡はこちらから。1〜2営業日以内に返信します。</p>
@@ -557,29 +492,25 @@
       const logoBtn = document.getElementById('logoButton');
       const layer = document.getElementById('logoRainLayer');
 
-      // assets (3 logos)
       const sources = [
         "assets/blue-透過.png",
         "assets/yellow-透過.png",
         "assets/red-透過.png"
       ];
 
-      // prevent spam-click overload
       let last = 0;
-
       function rand(min, max){ return Math.random() * (max - min) + min; }
 
       function dropOnce(){
         const now = Date.now();
-        if(now - last < 220) return; // small debounce
+        if(now - last < 220) return;
         last = now;
 
-        // reduced motion: do nothing
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           return;
         }
 
-        const count = 18; // "たくさん" 感：ここで調整
+        const count = 18;
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
         for(let i=0; i<count; i++){
@@ -590,23 +521,20 @@
           el.decoding = 'async';
           el.loading = 'eager';
 
-          // position + motion
           const left = rand(0, vw - 28);
-          const duration = rand(900, 1500); // ms
-          const delay = rand(0, 220);       // ms
+          const duration = rand(900, 1500);
+          const delay = rand(0, 220);
 
           el.style.left = left + 'px';
           el.style.animationDuration = duration + 'ms';
           el.style.animationDelay = delay + 'ms';
 
-          // slight size variance
           const size = rand(22, 30);
           el.style.width = size + 'px';
           el.style.height = size + 'px';
 
           layer.appendChild(el);
 
-          // cleanup
           const totalLife = duration + delay + 200;
           window.setTimeout(()=>{ el.remove(); }, totalLife);
         }
