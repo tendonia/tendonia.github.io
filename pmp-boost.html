@@ -97,7 +97,7 @@
 
     h1, h2, p, a, ul, li, footer, span, div, figure, figcaption { font-family: inherit; }
 
-    img{ display:block; max-width:100%; }
+    img{ display:block; max-width:100%; height:auto; }
 
     .container{
       max-width: var(--container);
@@ -254,46 +254,31 @@
       line-height: 1.65;
     }
 
-    /* ===== Inline screenshots (inside cards) ===== */
+    /* ===== Screenshots ===== */
     .shot-row{
-      display:flex;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--shotGap);
       margin-top: 14px;
-      flex-wrap: nowrap;
     }
 
     figure{ margin: 0; }
 
     .shot{
-      flex: 1 1 0;
-      min-width: 0;
       border-radius: var(--shotRadius);
       border: 1px solid rgba(15,15,16,0.10);
       background: rgba(255,255,255,0.60);
       overflow: hidden;
-
-      min-height: 520px;
     }
 
-    .shot .shot-media{
-      position: relative;
+    .shot-media{
       width: 100%;
       background: rgba(255,255,255,0.40);
-      overflow: hidden;
     }
-    .shot .shot-media::before{
-      content:"";
-      display:block;
-      padding-top: 216.6667%; /* 19.5 / 9 * 100 */
-    }
-    .shot .shot-media img{
-      position: absolute;
-      inset: 0;
+
+    .shot-media img{
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      user-select: none;
-      -webkit-user-drag: none;
+      height: auto;
     }
 
     .shot-cap{
@@ -384,8 +369,7 @@
       }
       .app-icon{ width: 52px; height: 52px; }
       footer{ flex-direction: column; align-items: flex-start; }
-      .shot-row{ flex-direction: column; }
-      .shot{ min-height: 0; } 
+      .shot-row{ grid-template-columns: 1fr; } 
     }
   </style>
 </head>
@@ -398,7 +382,6 @@
       <img class="app-icon" src="assets/PMPBOOST_icon-透過.png" alt="PMP BOOST Icon">
       <div>
         <h1>PMP BOOST</h1>
-        <p style="font-weight:700;color:red;">DEBUG-OK-123</p>
         <div class="subtitle">iOS app for PMP exam preparation</div>
       </div>
     </header>
