@@ -7,337 +7,427 @@
   <meta name="description" content="TendOn is an independent app studio building thoughtful iOS apps." />
 
   <!-- Noto Sans JP -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root {
+    :root{
       /* ===== Color ===== */
-      --bg: #ffffff;
-      --text: #111111;
-      --text-sub: rgba(17,17,17,0.62);
-      --line: #ececec;
+      --bg: #fcfcfd;
+      --surface: #ffffff;
+      --text: #0f0f10;
+      --text-sub: rgba(15,15,16,0.64);
+      --text-faint: rgba(15,15,16,0.46);
+      --line: rgba(15,15,16,0.10);
 
       --accent-blue: #2b6cff;
       --accent-yellow: #f3b700;
       --accent-red: #ff4b4b;
 
       /* ===== Radius / Shadow ===== */
-      --radius: 14px;
-      --shadow-xs: 0 6px 16px rgba(0,0,0,0.05);
-      --shadow-sm: 0 10px 24px rgba(0,0,0,0.06);
+      --r-lg: 18px;
+      --r-md: 14px;
+      --shadow-xs: 0 10px 28px rgba(0,0,0,0.05);
+      --shadow-sm: 0 14px 38px rgba(0,0,0,0.07);
 
       /* ===== Layout ===== */
-      --container: 720px;
+      --container: 820px;
+      --pageX: 22px;
+      --pageY: 64px;
 
       /* ===== Typography ===== */
       --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-      --h1: 38px;
-      --h1-lh: 1.15;
+      --h1: clamp(30px, 3.6vw, 44px);
+      --h1-lh: 1.12;
 
       --kicker: 12px;
       --kicker-ls: 0.14em;
 
-      --section: 12px;
-      --section-ls: 0.18em;
+      --h2: 12px;
+      --h2-ls: 0.20em;
 
+      --lead: 16px;
       --body: 14px;
-      --lh: 1.7;
+      --lh: 1.85;
 
       /* ===== Spacing ===== */
-      --pageY: 72px;
-      --pageX: 22px;
-
-      --heroB: 56px;
-      --sectionB: 72px;
-
-      --headB: 14px;
-
-      --lineW: 52px;
-      --lineH: 2px;
-      --lineGap: 10px;
+      --gap-1: 10px;
+      --gap-2: 14px;
+      --gap-3: 18px;
+      --gap-4: 26px;
+      --gap-5: 44px;
 
       /* ===== Card ===== */
-      --cardPadY: 18px;   /* ✅ 高さに効く */
       --cardPadX: 18px;
-      --cardGap: 14px;
+      --cardPadY: 18px;
+      --cardMinH: 84px;
 
-      --pillPadY: 10px;
       --pillPadX: 14px;
-
-      --cardMinH: 76px;   /* ✅ リンクカードの“低さ”を解消 */
+      --pillPadY: 10px;
     }
 
-    /* ===== Base ===== */
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
       font-family: var(--font);
-      margin: 0;
+      margin:0;
       padding: var(--pageY) var(--pageX);
-      background: var(--bg);
+      background:
+        radial-gradient(1200px 420px at 20% -10%, rgba(43,108,255,0.06), transparent 60%),
+        radial-gradient(1200px 420px at 85% 15%, rgba(243,183,0,0.06), transparent 60%),
+        radial-gradient(1200px 420px at 70% 110%, rgba(255,75,75,0.05), transparent 60%),
+        var(--bg);
       color: var(--text);
       line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    .container {
+    .container{
       max-width: var(--container);
       margin: 0 auto;
-      animation: fadeIn .7s ease-out both;
-      position: relative;
+      animation: fadeIn .6s ease-out both;
+    }
+    @keyframes fadeIn{
+      from{ opacity:0; transform: translateY(8px); }
+      to{ opacity:1; transform: translateY(0); }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ===== Accessibility ===== */
+    .sr-only{
+      position:absolute !important;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
     }
 
-    /* ===== Links (default) ===== */
-    a {
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 2px;
-      transition: border-color .18s ease, opacity .18s ease, transform .18s ease;
-    }
-    a:hover { border-color: rgba(17,17,17,0.75); }
-
-    /* ===== Hero ===== */
-    .hero {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: var(--heroB);
-      flex-wrap: wrap;
-      position: relative;
-    }
-
-    .hero-logo-btn{
-      appearance: none;
-      border: none;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      cursor: pointer;
-      border-radius: 12px;
-      transition: transform .16s ease;
-      line-height: 0;
-    }
-    .hero-logo-btn:hover { transform: translateY(-1px); }
-    .hero-logo-btn:focus-visible {
-      outline: 2px solid rgba(43,108,255,0.25);
-      outline-offset: 6px;
-    }
-
-    .hero-icons img {
-      height: 58px;
-      display: block;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    h1 {
-      font-size: var(--h1);
-      line-height: var(--h1-lh);
-      font-weight: 600;
-      margin: 0;
-      letter-spacing: 0.02em;
-    }
-
-    .subtitle {
-      margin-top: 6px;
-      font-size: var(--kicker);
-      font-weight: 500;
-      letter-spacing: var(--kicker-ls);
-      color: var(--text-sub);
-    }
-
-    /* ===== Sections ===== */
-    section { margin-bottom: var(--sectionB); }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: var(--headB);
-    }
-
-    .section-head img {
-      height: 16px;
-      display: block;
-    }
-
-    h2 {
-      font-size: var(--section);
-      font-weight: 600;
-      letter-spacing: var(--section-ls);
-      margin: 0;
-      color: var(--text);
-      position: relative;
-      display: inline-block;
-      padding-bottom: calc(var(--lineGap) + var(--lineH));
-    }
-
-    .accent-line::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: var(--lineW);
-      height: var(--lineH);
-      border-radius: 999px;
-      background: var(--line);
-    }
-    .accent-blue::after   { background: var(--accent-blue); }
-    .accent-yellow::after { background: var(--accent-yellow); }
-    .accent-red::after    { background: var(--accent-red); }
-
-    /* ===== Unified Cards ===== */
-    .stack { display: grid; gap: var(--cardGap); }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: #fff;
-      box-shadow: var(--shadow-xs);
-      padding: var(--cardPadY) var(--cardPadX);
-    }
-
-    .card-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      min-height: var(--cardMinH);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-    }
-
-    a.card-link {
-      border-bottom: none;
-      padding-bottom: 0;
-    }
-
-    .card-link:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-      border-color: rgba(17,17,17,0.10);
-    }
-
-    a.card-link:focus-visible {
-      outline: 2px solid rgba(17,17,17,0.12);
+    /* ===== Links ===== */
+    a{ color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible{
+      outline: 2px solid rgba(15,15,16,0.22);
       outline-offset: 4px;
+      border-radius: 12px;
     }
 
-    .meta {
-      display: grid;
-      gap: 6px;
+    /* ===== Top ===== */
+    .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: var(--gap-5);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 14px;
       min-width: 0;
     }
 
-    .title {
+    .logo-btn{
+      appearance:none;
+      border:none;
+      background: transparent;
+      padding:0;
+      margin:0;
+      cursor:pointer;
+      line-height:0;
+      border-radius: 14px;
+      transition: transform .18s ease;
+    }
+    .logo-btn:hover{ transform: translateY(-1px); }
+
+    .logo{
+      width: 56px;
+      height: 56px;
+      display:block;
+      user-select:none;
+      -webkit-user-drag:none;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.08));
+    }
+
+    .brand-text{ min-width:0; }
+    h1{
+      font-size: var(--h1);
+      line-height: var(--h1-lh);
+      margin:0;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .tagline{
+      margin-top: 8px;
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .tagline .jp{
+      font-size: var(--lead);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+    .tagline .en{
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: var(--text-sub);
+    }
+
+    .top-cta{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .ghost{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.04);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      color: rgba(15,15,16,0.72);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      white-space:nowrap;
+    }
+    .ghost:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.06);
+      border-color: rgba(15,15,16,0.14);
+    }
+    .ghost .arrow{ opacity:0.65; }
+
+    /* ===== Sections ===== */
+    section{ margin-bottom: 56px; }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width:0;
+    }
+
+    .section-ico{
+      width: 16px;
+      height: 16px;
+      display:block;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+    }
+
+    .h2-wrap{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+    }
+
+    h2{
+      margin:0;
+      font-size: var(--h2);
+      font-weight: 700;
+      letter-spacing: var(--h2-ls);
+      color: rgba(15,15,16,0.88);
+    }
+
+    .underline{
+      width: 64px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--line);
+    }
+    .u-blue{ background: var(--accent-blue); }
+    .u-yellow{ background: var(--accent-yellow); }
+    .u-red{ background: var(--accent-red); }
+
+    /* ===== Surface / Cards ===== */
+    .surface{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-xs);
+    }
+
+    .about{
+      padding: 22px 22px;
+    }
+
+    .about .block{
+      display:grid;
+      gap: 10px;
+      padding: 2px 0;
+    }
+
+    .about .jp{
       font-size: 15px;
       font-weight: 600;
       letter-spacing: 0.01em;
-      margin: 0;
+      line-height: 1.75;
+      color: rgba(15,15,16,0.92);
+      margin:0;
+    }
+
+    .about .en{
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      line-height: 1.7;
+      color: var(--text-sub);
+      margin:0;
+    }
+
+    .about .sep{
+      height: 1px;
+      background: rgba(15,15,16,0.08);
+      margin: 16px 0;
+    }
+
+    .stack{
+      display:grid;
+      gap: 14px;
+    }
+
+    .card-link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+      padding: var(--cardPadY) var(--cardPadX);
+      min-height: var(--cardMinH);
+      border-radius: var(--r-lg);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-xs);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .card-link:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+      border-color: rgba(15,15,16,0.14);
+    }
+
+    .meta{
+      min-width:0;
+      display:grid;
+      gap: 8px;
+    }
+
+    .title{
+      margin:0;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
       line-height: 1.25;
     }
 
-    /* ✅ desc = JP/EN 2行 */
-    .desc {
-      display: grid;
-      gap: 4px;
-      margin: 0;
+    .desc{
+      display:grid;
+      gap: 5px;
+      margin:0;
     }
-    .desc .jp {
+    .desc .jp{
+      margin:0;
       font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      opacity: 0.72;
-      line-height: 1.5;
+      font-weight: 600;
+      color: rgba(15,15,16,0.74);
+      line-height: 1.6;
       letter-spacing: 0.01em;
-      margin: 0;
     }
-    .desc .en {
+    .desc .en{
+      margin:0;
       font-size: 12.5px;
-      font-weight: 400;
-      color: var(--text);
-      opacity: 0.58;
-      line-height: 1.5;
-      letter-spacing: 0.02em;
-      margin: 0;
-    }
-
-    /* About typography (match the same “nuance”) */
-    .about-line {
-      font-size: var(--body);
       font-weight: 500;
-      margin: 0;
-      color: var(--text);
-      opacity: 0.86;
-      line-height: 1.65;
-      letter-spacing: 0.01em;
-    }
-    .about-sub {
-      font-size: 13px;
-      font-weight: 400;
-      margin: 0;
-      color: var(--text);
-      opacity: 0.62;
+      color: rgba(15,15,16,0.56);
       line-height: 1.6;
       letter-spacing: 0.02em;
     }
 
-    .divider {
-      height: 1px;
-      background: rgba(17,17,17,0.08);
-      margin: 14px 0;
-    }
-
-    .pill {
+    .pill{
       flex: 0 0 auto;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
       padding: var(--pillPadY) var(--pillPadX);
       border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(17,17,17,0.02);
-      opacity: 0.92;
+      border: 1px solid rgba(15,15,16,0.12);
+      background: rgba(15,15,16,0.02);
+      color: rgba(15,15,16,0.78);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
       white-space: nowrap;
     }
+    .pill .arrow{
+      font-weight: 900;
+      opacity: 0.65;
+      transform: translateY(-0.5px);
+    }
 
-    /* Disabled / coming soon */
-    .is-disabled {
-      opacity: 0.55;
-      pointer-events: none;
-    }
-    .is-disabled:hover {
-      transform: none;
+    /* Disabled card */
+    .is-disabled{
+      opacity: 0.52;
+      pointer-events:none;
       box-shadow: var(--shadow-xs);
-      border-color: var(--line);
+      transform:none !important;
     }
-    .is-disabled .pill {
-      opacity: 0.45;
+    .is-disabled .pill{
+      opacity: 0.55;
       background: transparent;
     }
 
     /* ===== Footer ===== */
-    footer {
-      margin-top: 84px;
-      padding-top: 22px;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-      color: var(--text);
-      opacity: 0.62;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
+    footer{
+      margin-top: 64px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(15,15,16,0.10);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 14px;
+      color: var(--text-faint);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
-    /* ===== Logo Rain ===== */
+    .footer-link{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      color: rgba(15,15,16,0.62);
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+      white-space:nowrap;
+    }
+    .footer-link:hover{
+      background: rgba(15,15,16,0.03);
+      border-color: rgba(15,15,16,0.10);
+      transform: translateY(-1px);
+    }
+
+    /* ===== Logo Rain (Easter egg) ===== */
     .logo-rain-layer{
       position: fixed;
       inset: 0;
@@ -347,7 +437,7 @@
     }
     .drop{
       position: absolute;
-      top: -80px;
+      top: -90px;
       width: 26px;
       height: 26px;
       opacity: 0.92;
@@ -356,37 +446,39 @@
       will-change: transform, opacity;
     }
     @keyframes fall{
-      0%   { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
-      8%   { opacity: 0.95; }
-      100% { transform: translate3d(0, calc(100vh + 140px), 0) rotate(220deg); opacity: 0; }
+      0%   { transform: translate3d(0, -24px, 0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.95; }
+      100% { transform: translate3d(0, calc(100vh + 160px), 0) rotate(220deg); opacity: 0; }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .container{ animation: none; }
+      .container{ animation:none; }
       .drop{ display:none; }
-      .hero-logo-btn{ transition: none; }
-      .card-link{ transition: none; }
+      .logo-btn, .card-link, .ghost, .footer-link{ transition:none; }
     }
 
     /* ===== Mobile ===== */
-    @media (max-width: 640px) {
-      :root {
-        --pageY: 56px;
+    @media (max-width: 680px){
+      :root{
+        --pageY: 48px;
         --pageX: 18px;
-        --h1: 32px;
-        --heroB: 48px;
-        --sectionB: 58px;
-
+        --cardPadX: 16px;
         --cardPadY: 16px;
-        --cardPadX: 14px;
-        --cardMinH: 72px;
+        --cardMinH: 82px;
       }
 
-      .hero-icons img { height: 52px; }
-
-      .pill{
-        padding: 9px 12px;
+      .top{
+        align-items:flex-start;
+        margin-bottom: 36px;
       }
+
+      .logo{ width: 52px; height: 52px; }
+
+      .top-cta{ width:100%; justify-content:flex-start; }
+
+      .about{ padding: 18px 16px; }
+
+      footer{ flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
@@ -395,48 +487,73 @@
   <div class="logo-rain-layer" id="logoRainLayer" aria-hidden="true"></div>
 
   <div class="container">
+    <!-- Top / Brand -->
+    <header class="top">
+      <div class="brand">
+        <button class="logo-btn" id="logoButton" aria-label="TendOn logo (easter egg)">
+          <img class="logo" src="assets/tendon_logo-透過.png" alt="TendOn logo">
+        </button>
 
-    <!-- Hero -->
-    <div class="hero">
-      <button class="hero-logo-btn" id="logoButton" aria-label="TendOn logo (easter egg)">
-        <div class="hero-icons">
-          <img src="assets/tendon_logo-透過.png" alt="">
+        <div class="brand-text">
+          <h1>TendOn</h1>
+          <div class="tagline">
+            <div class="jp">学習と生産性を、心地よく。</div>
+            <div class="en">Independent iOS app studio for learning & productivity.</div>
+          </div>
         </div>
-      </button>
-      <div>
-        <h1>TendOn</h1>
-        <div class="subtitle">Independent App Studio</div>
       </div>
-    </div>
+
+      <nav class="top-cta" aria-label="Quick links">
+        <a class="ghost" href="#apps" aria-label="Jump to Apps section">
+          APPS <span class="arrow">→</span>
+        </a>
+        <a class="ghost" href="#contact" aria-label="Jump to Contact section">
+          CONTACT <span class="arrow">→</span>
+        </a>
+      </nav>
+    </header>
 
     <!-- About -->
-    <section id="about">
+    <section id="about" aria-labelledby="aboutTitle">
       <div class="section-head">
-        <img src="assets/blue-透過.png" alt="">
-        <h2 class="accent-line accent-blue">ABOUT</h2>
+        <div class="section-title">
+          <img class="section-ico" src="assets/blue-透過.png" alt="" aria-hidden="true">
+          <div class="h2-wrap">
+            <h2 id="aboutTitle">ABOUT</h2>
+            <div class="underline u-blue" aria-hidden="true"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <p class="about-line">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
-        <p class="about-sub" style="margin-top: 10px;">TendOn designs and builds iOS apps for learning and productivity.</p>
+      <div class="surface about">
+        <div class="block">
+          <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
+          <p class="en">TendOn designs and builds iOS apps for learning and productivity.</p>
+        </div>
 
-        <div class="divider"></div>
+        <div class="sep" aria-hidden="true"></div>
 
-        <p class="about-line">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
-        <p class="about-sub" style="margin-top: 10px;">We focus on apps that feel effortless to use—and easy to stick with—while keeping a sense of play.</p>
+        <div class="block">
+          <p class="jp">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
+          <p class="en">We focus on apps that feel effortless to use—and easy to stick with—while keeping a sense of play.</p>
+        </div>
       </div>
     </section>
 
     <!-- Apps -->
-    <section id="apps">
+    <section id="apps" aria-labelledby="appsTitle">
       <div class="section-head">
-        <img src="assets/yellow-透過.png" alt="">
-        <h2 class="accent-line accent-yellow">APPS</h2>
+        <div class="section-title">
+          <img class="section-ico" src="assets/yellow-透過.png" alt="" aria-hidden="true">
+          <div class="h2-wrap">
+            <h2 id="appsTitle">APPS</h2>
+            <div class="underline u-yellow" aria-hidden="true"></div>
+          </div>
+        </div>
       </div>
 
       <div class="stack">
-        <!-- PMP BOOST -->
-        <a class="card card-link" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
+        <a class="card-link" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
           <div class="meta">
             <p class="title">PMP BOOST</p>
             <div class="desc">
@@ -444,31 +561,35 @@
               <p class="en">iOS app for PMP exam preparation.</p>
             </div>
           </div>
-          <div class="pill">View →</div>
+          <div class="pill">VIEW <span class="arrow">→</span></div>
         </a>
 
-        <!-- Coming soon -->
-        <div class="card card-link is-disabled" aria-disabled="true">
+        <div class="card-link is-disabled" aria-disabled="true">
           <div class="meta">
-            <p class="title">Coming soon...</p>
+            <p class="title">Coming soon…</p>
             <div class="desc">
               <p class="jp">新しいアプリを準備中です</p>
               <p class="en">A new app is currently in development.</p>
             </div>
           </div>
-          <div class="pill">View →</div>
+          <div class="pill">VIEW <span class="arrow">→</span></div>
         </div>
       </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact">
+    <section id="contact" aria-labelledby="contactTitle">
       <div class="section-head">
-        <img src="assets/red-透過.png" alt="">
-        <h2 class="accent-line accent-red">CONTACT</h2>
+        <div class="section-title">
+          <img class="section-ico" src="assets/red-透過.png" alt="" aria-hidden="true">
+          <div class="h2-wrap">
+            <h2 id="contactTitle">CONTACT</h2>
+            <div class="underline u-red" aria-hidden="true"></div>
+          </div>
+        </div>
       </div>
 
-      <a class="card card-link" href="contact.html" aria-label="Open contact form">
+      <a class="card-link" href="contact.html" aria-label="Open contact form">
         <div class="meta">
           <p class="title">Contact Form</p>
           <div class="desc">
@@ -476,15 +597,16 @@
             <p class="en">Reach out via the form. We’ll reply within 1–2 business days.</p>
           </div>
         </div>
-        <div class="pill">Open →</div>
+        <div class="pill">OPEN <span class="arrow">→</span></div>
       </a>
     </section>
 
     <footer>
-      <a href="privacy.html">プライバシーポリシー</a>
+      <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">
+        プライバシーポリシー <span class="arrow">→</span>
+      </a>
       <span>© TendOn</span>
     </footer>
-
   </div>
 
   <script>
@@ -503,12 +625,12 @@
 
       function dropOnce(){
         const now = Date.now();
-        if(now - last < 220) return;
+        if(now - last < 260) return;
         last = now;
 
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        const count = 18;
+        const count = 16;
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 
         for(let i=0; i<count; i++){
@@ -518,8 +640,8 @@
           el.alt = '';
 
           const left = rand(0, vw - 28);
-          const duration = rand(900, 1500);
-          const delay = rand(0, 220);
+          const duration = rand(980, 1600);
+          const delay = rand(0, 240);
 
           el.style.left = left + 'px';
           el.style.animationDuration = duration + 'ms';
@@ -530,7 +652,7 @@
           el.style.height = size + 'px';
 
           layer.appendChild(el);
-          window.setTimeout(()=>{ el.remove(); }, duration + delay + 200);
+          window.setTimeout(()=>{ el.remove(); }, duration + delay + 260);
         }
       }
 
