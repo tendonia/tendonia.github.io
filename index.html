@@ -13,7 +13,7 @@
     :root{
       /* ===== Color ===== */
       --bg: #fbfcff;   
-      --bg2: #f4f7ff;   
+      --bg2: #f4f7ff;      
       --surface: rgba(255,255,255,0.92);
       --text: #0f0f10;
       --text-sub: rgba(15,15,16,0.62);
@@ -62,18 +62,27 @@
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       font-family: var(--font);
       margin:0;
       padding: var(--pageY) var(--pageX);
-      background:
-        radial-gradient(1100px 520px at 18% -12%, rgba(43,108,255,0.10), transparent 62%),
-        radial-gradient(1200px 620px at 78% 112%, rgba(43,108,255,0.08), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
+      background: var(--bg);       
       color: var(--text);
       line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      position: relative;
+    }
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(1100px 520px at 18% -12%, rgba(43,108,255,0.10), transparent 62%),
+        radial-gradient(1200px 620px at 78% 112%, rgba(43,108,255,0.08), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
     .container{
@@ -118,9 +127,9 @@
 
     .hero-icons img{
       height: 56px;
-      width: 56px;        
-      aspect-ratio: 1 / 1;   
-      object-fit: contain;  
+      width: 56px;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
       display:block;
       user-select:none;
       -webkit-user-drag:none;
@@ -214,10 +223,16 @@
       border-color: rgba(15,15,16,0.14);
     }
 
+    /* About card */
     .about-card{
       padding: 20px 20px;
-      user-select: none;
+      user-select: none; 
     }
+    .about-stack{
+      display:grid;
+      gap: 10px;
+    }
+    .about-gap{ height: 6px; }
 
     .about-text{
       margin:0;
@@ -234,14 +249,6 @@
       letter-spacing: 0.02em;
       line-height: 1.75;
       color: var(--text-sub);
-    }
-
-    .about-stack{
-      display:grid;
-      gap: 10px;
-    }
-    .about-gap{
-      height: 6px;
     }
 
     .meta{
@@ -414,7 +421,6 @@
         </div>
       </div>
 
-      <!-- About -->
       <div class="card about-card" aria-label="About TendOn">
         <div class="about-stack">
           <p class="about-text">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
