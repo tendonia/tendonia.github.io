@@ -14,26 +14,17 @@
       /* ===== Color ===== */
       --bg: #ffffff;
       --text: #111111;
-      --text-sub: rgba(17,17,17,0.64);
+      --text-sub: rgba(17,17,17,0.62);
       --line: #ececec;
 
       --accent-blue: #2b6cff;
       --accent-yellow: #f3b700;
       --accent-red: #ff4b4b;
 
-      /* Subtle surfaces */
-      --surface: rgba(17,17,17,0.02);
-      --surface-strong: rgba(17,17,17,0.04);
-
-      /* Tint backgrounds (per section) */
-      --tint-blue: rgba(43,108,255,0.05);
-      --tint-yellow: rgba(243,183,0,0.06);
-      --tint-red: rgba(255,75,75,0.05);
-
       /* ===== Radius / Shadow ===== */
       --radius: 14px;
-      --shadow-sm: 0 10px 24px rgba(0,0,0,0.06);
       --shadow-xs: 0 6px 16px rgba(0,0,0,0.05);
+      --shadow-sm: 0 10px 24px rgba(0,0,0,0.06);
 
       /* ===== Layout ===== */
       --container: 720px;
@@ -50,11 +41,8 @@
       --section: 12px;
       --section-ls: 0.18em;
 
-      --body-jp: 15px;
-      --body-en: 14px;
-
-      --lh: 1.8;
-      --lh-tight: 1.65;
+      --body: 14px;
+      --lh: 1.7;
 
       /* ===== Spacing ===== */
       --pageY: 72px;
@@ -65,16 +53,19 @@
 
       --headB: 14px;
 
-      --paraB: 10px;
-      --paraB-last: 0px;
-
-      --cardPadY: 16px;
-      --cardPadX: 16px;
-      --cardGap: 12px;
-
       --lineW: 52px;
       --lineH: 2px;
       --lineGap: 10px;
+
+      /* ===== Card ===== */
+      --cardPadY: 18px;   /* ✅ 高さに効く */
+      --cardPadX: 18px;
+      --cardGap: 14px;
+
+      --pillPadY: 10px;
+      --pillPadX: 14px;
+
+      --cardMinH: 76px;   /* ✅ リンクカードの“低さ”を解消 */
     }
 
     /* ===== Base ===== */
@@ -103,7 +94,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== Links ===== */
+    /* ===== Links (default) ===== */
     a {
       color: var(--text);
       text-decoration: none;
@@ -131,7 +122,7 @@
       margin: 0;
       cursor: pointer;
       border-radius: 12px;
-      transition: transform .16s ease, background .16s ease;
+      transition: transform .16s ease;
       line-height: 0;
     }
     .hero-logo-btn:hover { transform: translateY(-1px); }
@@ -203,125 +194,134 @@
     .accent-yellow::after { background: var(--accent-yellow); }
     .accent-red::after    { background: var(--accent-red); }
 
-    /* ===== Typography ===== */
-    p { margin: 0 0 var(--paraB) 0; }
+    /* ===== Unified Cards ===== */
+    .stack { display: grid; gap: var(--cardGap); }
 
-    .jp {
-      font-size: var(--body-jp);
-      font-weight: 500;
-      color: var(--text);
-      opacity: 0.92;
-      line-height: var(--lh-tight);
-      letter-spacing: 0.01em;
-    }
-
-    .en {
-      font-size: var(--body-en);
-      font-weight: 400;
-      color: var(--text);
-      opacity: 0.64;
-      letter-spacing: 0.02em;
-      line-height: var(--lh-tight);
-    }
-
-    /* JP/EN pair block */
-    .pair {
-      display: grid;
-      gap: 6px;
-      padding: 10px 0;
-      border-top: 1px dashed rgba(17,17,17,0.10);
-    }
-    .pair:first-child {
-      padding-top: 0;
-      border-top: none;
-    }
-    .pair:last-child { padding-bottom: 0; }
-
-    /* ===== Unified Panel Card (same as CONTACT) ===== */
-    .panel {
+    .card {
       border: 1px solid var(--line);
-      border-radius: calc(var(--radius) - 2px);
+      border-radius: var(--radius);
       background: #fff;
       box-shadow: var(--shadow-xs);
       padding: var(--cardPadY) var(--cardPadX);
     }
-    .panel.tint-blue { background: var(--tint-blue); }
-    .panel.tint-yellow { background: var(--tint-yellow); }
-    .panel.tint-red { background: var(--tint-red); }
 
-    /* ===== Unified CTA Card (used by Apps + Contact) ===== */
-    .cta-card {
+    .card-link {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      padding: 14px 14px;
-      border-radius: calc(var(--radius) - 2px);
-      border: 1px solid var(--line);
-      background: #fff;
+      gap: 16px;
+      min-height: var(--cardMinH);
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
-    .cta-card:hover {
+
+    a.card-link {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .card-link:hover {
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
       border-color: rgba(17,17,17,0.10);
     }
-    .cta-card:focus-visible {
+
+    a.card-link:focus-visible {
       outline: 2px solid rgba(17,17,17,0.12);
       outline-offset: 4px;
     }
 
-    .cta-card .meta {
+    .meta {
       display: grid;
-      gap: 4px;
+      gap: 6px;
       min-width: 0;
     }
-    .cta-card .meta .title {
-      font-size: 14px;
+
+    .title {
+      font-size: 15px;
       font-weight: 600;
       letter-spacing: 0.01em;
       margin: 0;
-    }
-    .cta-card .meta .desc {
-      font-size: 13px;
-      opacity: 0.62;
-      margin: 0;
-      line-height: 1.55;
+      line-height: 1.25;
     }
 
-    .cta-card .pill {
+    /* ✅ desc = JP/EN 2行 */
+    .desc {
+      display: grid;
+      gap: 4px;
+      margin: 0;
+    }
+    .desc .jp {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      opacity: 0.72;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+      margin: 0;
+    }
+    .desc .en {
+      font-size: 12.5px;
+      font-weight: 400;
+      color: var(--text);
+      opacity: 0.58;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
+    /* About typography (match the same “nuance”) */
+    .about-line {
+      font-size: var(--body);
+      font-weight: 500;
+      margin: 0;
+      color: var(--text);
+      opacity: 0.86;
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+    }
+    .about-sub {
+      font-size: 13px;
+      font-weight: 400;
+      margin: 0;
+      color: var(--text);
+      opacity: 0.62;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(17,17,17,0.08);
+      margin: 14px 0;
+    }
+
+    .pill {
       flex: 0 0 auto;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.08em;
-      padding: 10px 12px;
+      padding: var(--pillPadY) var(--pillPadX);
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: var(--surface);
-      opacity: 0.9;
+      background: rgba(17,17,17,0.02);
+      opacity: 0.92;
       white-space: nowrap;
     }
 
-    /* Apps stack */
-    .cta-stack { display: grid; gap: var(--cardGap); }
-
-    /* Disabled / coming soon (same card, non-interactive) */
-    .cta-card.is-disabled {
+    /* Disabled / coming soon */
+    .is-disabled {
       opacity: 0.55;
       pointer-events: none;
     }
-    .cta-card.is-disabled:hover {
+    .is-disabled:hover {
       transform: none;
-      box-shadow: none;
+      box-shadow: var(--shadow-xs);
       border-color: var(--line);
     }
-    .cta-card.is-disabled .pill{
+    .is-disabled .pill {
       opacity: 0.45;
       background: transparent;
     }
-
-    /* Remove default underline for card links */
-    a.cta-card { border-bottom: none; padding-bottom: 0; }
 
     /* ===== Footer ===== */
     footer {
@@ -331,7 +331,6 @@
       font-size: 13px;
       color: var(--text);
       opacity: 0.62;
-
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -362,12 +361,11 @@
       100% { transform: translate3d(0, calc(100vh + 140px), 0) rotate(220deg); opacity: 0; }
     }
 
-    /* Motion reduce */
     @media (prefers-reduced-motion: reduce){
       .container{ animation: none; }
       .drop{ display:none; }
       .hero-logo-btn{ transition: none; }
-      .cta-card{ transition: none; }
+      .card-link{ transition: none; }
     }
 
     /* ===== Mobile ===== */
@@ -378,15 +376,16 @@
         --h1: 32px;
         --heroB: 48px;
         --sectionB: 58px;
+
+        --cardPadY: 16px;
+        --cardPadX: 14px;
+        --cardMinH: 72px;
       }
 
       .hero-icons img { height: 52px; }
 
-      .cta-card{
-        padding: 14px 12px;
-      }
-      .cta-card .pill{
-        padding: 9px 10px;
+      .pill{
+        padding: 9px 12px;
       }
     }
   </style>
@@ -404,7 +403,6 @@
           <img src="assets/tendon_logo-透過.png" alt="">
         </div>
       </button>
-
       <div>
         <h1>TendOn</h1>
         <div class="subtitle">Independent App Studio</div>
@@ -418,15 +416,14 @@
         <h2 class="accent-line accent-blue">ABOUT</h2>
       </div>
 
-      <div class="panel tint-blue">
-        <div class="pair">
-          <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
-          <p class="en">TendOn designs and builds iOS apps for learning and productivity.</p>
-        </div>
-        <div class="pair">
-          <p class="jp">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
-          <p class="en">We focus on apps that feel effortless to use—and easy to stick with—while keeping a sense of play.</p>
-        </div>
+      <div class="card">
+        <p class="about-line">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
+        <p class="about-sub" style="margin-top: 10px;">TendOn designs and builds iOS apps for learning and productivity.</p>
+
+        <div class="divider"></div>
+
+        <p class="about-line">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
+        <p class="about-sub" style="margin-top: 10px;">We focus on apps that feel effortless to use—and easy to stick with—while keeping a sense of play.</p>
       </div>
     </section>
 
@@ -437,27 +434,29 @@
         <h2 class="accent-line accent-yellow">APPS</h2>
       </div>
 
-      <div class="panel tint-yellow">
-        <div class="cta-stack">
-
-          <!-- PMP BOOST -->
-          <a class="cta-card" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
-            <div class="meta">
-              <p class="title">PMP BOOST</p>
-              <p class="desc">PMP試験対策のための学習アプリ / iOS app for PMP exam preparation.</p>
+      <div class="stack">
+        <!-- PMP BOOST -->
+        <a class="card card-link" href="pmp-boost.html" aria-label="Open PMP BOOST details page">
+          <div class="meta">
+            <p class="title">PMP BOOST</p>
+            <div class="desc">
+              <p class="jp">PMP試験対策のための学習アプリ</p>
+              <p class="en">iOS app for PMP exam preparation.</p>
             </div>
-            <div class="pill">View →</div>
-          </a>
-
-          <!-- Coming soon -->
-          <div class="cta-card is-disabled" aria-disabled="true">
-            <div class="meta">
-              <p class="title">Coming soon...</p>
-              <p class="desc">新しいアプリを準備中です / A new app is currently in development.</p>
-            </div>
-            <div class="pill">View →</div>
           </div>
+          <div class="pill">View →</div>
+        </a>
 
+        <!-- Coming soon -->
+        <div class="card card-link is-disabled" aria-disabled="true">
+          <div class="meta">
+            <p class="title">Coming soon...</p>
+            <div class="desc">
+              <p class="jp">新しいアプリを準備中です</p>
+              <p class="en">A new app is currently in development.</p>
+            </div>
+          </div>
+          <div class="pill">View →</div>
         </div>
       </div>
     </section>
@@ -469,15 +468,16 @@
         <h2 class="accent-line accent-red">CONTACT</h2>
       </div>
 
-      <div class="panel tint-red">
-        <a class="cta-card" href="contact.html" aria-label="Open contact form">
-          <div class="meta">
-            <p class="title">Contact Form</p>
-            <p class="desc">ご連絡はこちらから。1〜2営業日以内に返信します。</p>
+      <a class="card card-link" href="contact.html" aria-label="Open contact form">
+        <div class="meta">
+          <p class="title">Contact Form</p>
+          <div class="desc">
+            <p class="jp">ご連絡はこちらから。1〜2営業日以内に返信します。</p>
+            <p class="en">Reach out via the form. We’ll reply within 1–2 business days.</p>
           </div>
-          <div class="pill">Open →</div>
-        </a>
-      </div>
+        </div>
+        <div class="pill">Open →</div>
+      </a>
     </section>
 
     <footer>
@@ -506,9 +506,7 @@
         if(now - last < 220) return;
         last = now;
 
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          return;
-        }
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         const count = 18;
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -518,8 +516,6 @@
           el.className = 'drop';
           el.src = sources[Math.floor(Math.random()*sources.length)];
           el.alt = '';
-          el.decoding = 'async';
-          el.loading = 'eager';
 
           const left = rand(0, vw - 28);
           const duration = rand(900, 1500);
@@ -534,9 +530,7 @@
           el.style.height = size + 'px';
 
           layer.appendChild(el);
-
-          const totalLife = duration + delay + 200;
-          window.setTimeout(()=>{ el.remove(); }, totalLife);
+          window.setTimeout(()=>{ el.remove(); }, duration + delay + 200);
         }
       }
 
