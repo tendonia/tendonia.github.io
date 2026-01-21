@@ -226,12 +226,15 @@
     /* About card */
     .about-card{
       padding: 20px 20px;
-      padding-top: 24px; 
+      padding-top: 24px;
       padding-right: 92px;
       user-select: none;
       position: relative;
-      overflow: hidden;  
-      cursor: pointer;  
+
+      /* ✅ 外に出すので visible */
+      overflow: visible;
+
+      cursor: pointer;
     }
     .about-card:focus-visible{
       outline: 2px solid rgba(15,15,16,0.22);
@@ -243,7 +246,7 @@
       display:grid;
       gap: 10px;
       position: relative;
-      z-index: 1;
+      z-index: 2; /* 文字は前面 */
     }
     .about-gap{ height: 6px; }
 
@@ -264,8 +267,7 @@
       color: var(--text-sub);
     }
 
-    /* ===== About Shake + Peek (Random Icon) ===== */
-
+    /* ===== About Shake ===== */
     .about-card.shake{
       animation: shakeX 420ms cubic-bezier(.36,.07,.19,.97) both;
       transform: translate3d(0,0,0);
@@ -283,63 +285,115 @@
       100% { transform: translate3d(0,0,0); }
     }
 
+    /* ===== Peek：カードの裏から外へ（右上 / もっと大きい） ===== */
     .peek{
       position: absolute;
-      right: 14px;
-      top: 0px;
-  
-      width: 76px;
-      height: 76px;
-    
-      border-radius: 18px;
-    
-      pointer-events: none;
+      right: 18px;
+      top: 16px;
+
+      /* ✅ もっともっと大きい */
+      width: 170px;
+      height: 170px;
+
       display: grid;
       place-items: center;
-    
-      transform: translateY(-120%);
+      pointer-events: none;
+
+      /* ✅ 裏側（カードの下） */
+      z-index: -1;
+
+      /* 初期：裏に隠れてる */
+      transform: translate3d(0, 18px, 0) scale(0.90);
       opacity: 0;
-    
+
       transition:
-        transform 560ms cubic-bezier(.2,.9,.2,1),
+        transform 620ms cubic-bezier(.2,.9,.2,1),
         opacity 220ms ease;
-    
-      filter: drop-shadow(0 14px 22px rgba(0,0,0,0.12));
-      z-index: 0;
+
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,0.16));
     }
 
     .peek-icon{
-      width: 62px;
-      height: 62px;
+      width: 150px;
+      height: 150px;
       object-fit: contain;
       display: block;
       user-select: none;
       -webkit-user-drag: none;
       transition: opacity 120ms ease;
     }
+    .peek-icon.is-swapping{ opacity: 0; }
 
-    .peek-icon.is-swapping{ opacity: 0.0; }
-
+    /* 開いた時：外へ飛び出す（右上へ） */
     .about-card.is-open .peek{
-      transform: translateY(-14%);
       opacity: 1;
-      animation: peekBopTop 620ms 120ms both;
-    }
-    
-    @keyframes peekBopTop{
-      0%   { transform: translateY(-26%); }
-      45%  { transform: translateY(-10%); }
-      70%  { transform: translateY(-18%); }
-      100% { transform: translateY(-14%); }
+      transform: translate3d(28px, -118px, 0) scale(1.02);
+      animation: popBehind 720ms 30ms both;
     }
 
-    .peek-icon{
-      transition: opacity 120ms ease;
-    }
-    .peek-icon.is-swapping{
-      opacity: 0.0;
+    @keyframes popBehind{
+      0%   { transform: translate3d(18px, -78px, 0) scale(0.96); }
+      45%  { transform: translate3d(28px, -132px, 0) scale(1.06); }
+      70%  { transform: translate3d(28px, -112px, 0) scale(1.01); }
+      100% { transform: translate3d(28px, -118px, 0) scale(1.02); }
     }
 
+    /* ===== スリット演出（右上の角から“切れ目”が光る） =====
+       - カードの上に見せたいので z-index: 3
+       - 一瞬だけ出す（is-open のとき）
+    */
+    .slit{
+      position: absolute;
+      right: 18px;
+      top: 12px;
+      width: 92px;
+      height: 14px;
+      pointer-events: none;
+      z-index: 3;
+
+      /* 初期は見えない */
+      opacity: 0;
+      transform: translate3d(6px, 0, 0) scaleX(0.2);
+      transform-origin: right center;
+
+      /* スリットっぽい細い光 */
+      border-radius: 999px;
+      background:
+        linear-gradient(90deg,
+          rgba(255,255,255,0.00),
+          rgba(255,255,255,0.85),
+          rgba(255,255,255,0.20),
+          rgba(255,255,255,0.00)
+        );
+      box-shadow:
+        0 1px 0 rgba(15,15,16,0.10),
+        0 10px 22px rgba(0,0,0,0.10);
+      mix-blend-mode: screen;
+    }
+
+    /* 角に“切れ目”の縁取り（薄い） */
+    .slit::after{
+      content:"";
+      position:absolute;
+      inset: -5px -6px -5px -6px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,15,16,0.10);
+      opacity: 0.35;
+    }
+
+    .about-card.is-open .slit{
+      opacity: 1;
+      animation: slitFlash 560ms cubic-bezier(.2,.9,.2,1) both;
+    }
+
+    @keyframes slitFlash{
+      0%   { opacity: 0; transform: translate3d(10px, 0, 0) scaleX(0.15); filter: blur(0.6px); }
+      25%  { opacity: 1; transform: translate3d(0px, 0, 0) scaleX(1.02); filter: blur(0.0px); }
+      55%  { opacity: 0.85; transform: translate3d(-2px, 0, 0) scaleX(0.92); }
+      100% { opacity: 0; transform: translate3d(-6px, 0, 0) scaleX(0.55); }
+    }
+
+    /* ===== Apps / Contact card text ===== */
     .meta{
       min-width:0;
       display:grid;
@@ -465,6 +519,7 @@
       .hero-logo-btn, .card-link, .footer-link{ transition:none; }
       .about-card.shake{ animation:none; }
       .peek{ transition:none; animation:none; }
+      .slit{ display:none; }
     }
 
     /* ===== Mobile ===== */
@@ -485,7 +540,13 @@
         align-items: center;
       }
 
-      .about-card{ padding: 18px 16px; }
+      .about-card{ padding: 18px 16px; padding-right: 16px; }
+
+      /* スマホは少しだけ控えめに */
+      .peek{ width: 140px; height: 140px; right: 10px; top: 10px; }
+      .peek-icon{ width: 125px; height: 125px; }
+      .about-card.is-open .peek{ transform: translate3d(18px, -96px, 0) scale(1.02); }
+      .slit{ right: 12px; top: 10px; width: 86px; }
     }
   </style>
 </head>
@@ -520,9 +581,13 @@
 
       <!-- ✅ About card (clickable) -->
       <div class="card about-card" id="aboutCard" aria-label="About TendOn" role="button" tabindex="0">
+
+        <!-- ✅ スリット -->
+        <div class="slit" aria-hidden="true"></div>
+
         <!-- ✅ Peek icon (random per click) -->
         <div class="peek" aria-hidden="true">
-          <img class="peek-icon" id="peekIcon" src="assets/yellow-透過.png" alt="">
+          <img class="peek-icon" id="peekIcon" src="assets/tendon_logo-透過.png" alt="">
         </div>
 
         <div class="about-stack">
@@ -661,11 +726,22 @@
         "assets/blue-透過.png",
         "assets/yellow-透過.png",
         "assets/red-透過.png",
-         "assets/tendon_logo-透過.png"
+        "assets/tendon_logo-透過.png"
       ];
 
       function pickRandom(arr){
         return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      let lastPeek = "";
+      function pickRandomNoRepeat(arr){
+        if(arr.length <= 1) return arr[0] || "";
+        let next = pickRandom(arr);
+        while(next === lastPeek){
+          next = pickRandom(arr);
+        }
+        lastPeek = next;
+        return next;
       }
 
       let busy = false;
@@ -677,7 +753,7 @@
 
         const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        const nextSrc = pickRandom(peekSources);
+        const nextSrc = pickRandomNoRepeat(peekSources);
         peekIcon.classList.add('is-swapping');
         window.setTimeout(()=>{
           peekIcon.src = nextSrc;
@@ -701,7 +777,7 @@
         window.setTimeout(()=>{
           aboutCard.classList.remove('shake');
           busy = false;
-        }, 520);
+        }, 560);
       }
 
       if(aboutCard){
