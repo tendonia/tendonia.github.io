@@ -226,6 +226,8 @@
     /* About card */
     .about-card{
       padding: 20px 20px;
+      padding-top: 24px; 
+      padding-right: 92px;
       user-select: none;
       position: relative;
       overflow: hidden;  
@@ -283,45 +285,52 @@
 
     .peek{
       position: absolute;
-      right: 16px;
-      bottom: 0px;
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      right: 14px;
+      top: 0px;
+  
+      width: 76px;
+      height: 76px;
+    
+      border-radius: 18px;
+    
       pointer-events: none;
       display: grid;
       place-items: center;
-
-      transform: translateY(120%);
+    
+      transform: translateY(-120%);
       opacity: 0;
-
+    
       transition:
-        transform 520ms cubic-bezier(.2,.85,.2,1),
+        transform 560ms cubic-bezier(.2,.9,.2,1),
         opacity 220ms ease;
-
-      filter: drop-shadow(0 12px 18px rgba(0,0,0,0.10));
+    
+      filter: drop-shadow(0 14px 22px rgba(0,0,0,0.12));
       z-index: 0;
     }
 
     .peek-icon{
-      width: 34px;
-      height: 34px;
+      width: 62px;
+      height: 62px;
       object-fit: contain;
       display: block;
       user-select: none;
       -webkit-user-drag: none;
+      transition: opacity 120ms ease;
     }
 
+    .peek-icon.is-swapping{ opacity: 0.0; }
+
     .about-card.is-open .peek{
-      transform: translateY(12%);
+      transform: translateY(-14%);
       opacity: 1;
-      animation: peekBop 560ms 140ms both;
+      animation: peekBopTop 620ms 120ms both;
     }
-    @keyframes peekBop{
-      0%   { transform: translateY(20%); }
-      45%  { transform: translateY(4%); }
-      70%  { transform: translateY(14%); }
-      100% { transform: translateY(12%); }
+    
+    @keyframes peekBopTop{
+      0%   { transform: translateY(-26%); }
+      45%  { transform: translateY(-10%); }
+      70%  { transform: translateY(-18%); }
+      100% { transform: translateY(-14%); }
     }
 
     .peek-icon{
