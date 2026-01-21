@@ -367,9 +367,20 @@
         --cardPadX: 16px;
         --lineW: 58px;
       }
+
       .app-icon{ width: 52px; height: 52px; }
-      footer{ flex-direction: column; align-items: flex-start; }
-      .shot-row{ grid-template-columns: 1fr; } 
+
+      footer{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .footer-link{
+        padding: 10px 10px;
+      }
+
+      .shot-row{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
