@@ -97,6 +97,12 @@
 
     h1, h2, p, a, ul, li, footer, span, div { font-family: inherit; }
 
+    img{
+      max-width: 100%;
+      height: auto;
+      display: block; /* ✅ Safariでインライン扱いの隙間/崩れを回避 */
+    }
+
     .container{
       max-width: var(--container);
       margin: 0 auto;
@@ -129,7 +135,6 @@
       aspect-ratio: 1 / 1;
       object-fit: contain;
       object-position: center;
-      display: block;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,0.08));
       user-select: none;
       -webkit-user-drag: none;
@@ -165,7 +170,6 @@
     .section-ico{
       width: 16px;
       height: 16px;
-      display: block;
       flex: 0 0 auto;
       filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
       margin-top: 2px;
@@ -202,8 +206,11 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--surface);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+
+      /* ✅ iPhone Safari安定：backdrop-filter を使わない */
+      /* backdrop-filter: blur(6px); */
+      /* -webkit-backdrop-filter: blur(6px); */
+
       box-shadow: var(--shadow-xs);
       padding: var(--cardPadY) var(--cardPadX);
     }
@@ -263,7 +270,6 @@
       gap: var(--shotGap);
       margin-top: 14px;
       flex-wrap: nowrap;
-      overflow: visible; /* ✅ iPhoneで潰れてもcaptionを巻き込まない保険 */
     }
 
     figure{ margin: 0; }
@@ -275,35 +281,19 @@
       border: 1px solid rgba(15,15,16,0.10);
       overflow: hidden;
       background: rgba(255,255,255,0.60);
-      position: relative;
     }
 
-    /*
-      ✅ iPhone Safari 安定版：
-      - aspect-ratio + ::before の併用をやめる
-      - 高さ確保は「padding-top ハック」だけに統一
-      - img は absolute で枠にフィット（昔のSafariでも安定）
-    */
+    /* ✅ 超安定：枠は aspect-ratio だけで確保。img は通常配置 */
     .shot .shot-media{
       width: 100%;
-      position: relative;
       background: rgba(255,255,255,0.40);
+      aspect-ratio: 9 / 19.5;
       overflow: hidden;
     }
-    .shot .shot-media::before{
-      content:"";
-      display:block;
-      padding-top: 216.6667%; /* 19.5 / 9 * 100 */
-    }
     .shot .shot-media img{
-      position: absolute;
-      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      user-select: none;
-      -webkit-user-drag: none;
     }
 
     .shot-cap{
@@ -395,11 +385,6 @@
       .app-icon{ width: 52px; height: 52px; }
       footer{ flex-direction: column; align-items: flex-start; }
       .shot-row{ flex-direction: column; }
-
-      .card{
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-      }
     }
   </style>
 </head>
@@ -444,7 +429,6 @@
         <div class="shot-row" aria-label="Overview screenshots">
           <figure class="shot">
             <div class="shot-media">
-              <!-- ✅ iPhone切り分けのため、まずlazyは外す（必要なら後で戻してOK） -->
               <img src="assets/LaunchView.jpg" alt="起動画面：PMP BOOST">
             </div>
             <figcaption class="shot-cap">
