@@ -273,14 +273,25 @@
       border: 1px solid rgba(15,15,16,0.10);
       overflow: hidden;
       background: rgba(255,255,255,0.60);
+      position: relative;
     }
 
-    .shot img{
+    .shot .shot-media{
+      aspect-ratio: 9 / 19.5;
       width: 100%;
-      height: auto;
-      display:block;
-      user-select:none;
-      -webkit-user-drag:none;
+      background: rgba(255,255,255,0.40);
+      position: relative;
+    }
+
+    .shot .shot-media img{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .shot-cap{
@@ -372,6 +383,11 @@
       .app-icon{ width: 52px; height: 52px; }
       footer{ flex-direction: column; align-items: flex-start; }
       .shot-row{ flex-direction: column; }
+
+      .card{
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
     }
   </style>
 </head>
@@ -388,7 +404,7 @@
       </div>
     </header>
 
-    <!-- OVERVIEW（✅ LaunchView + HomeView.jpeg） -->
+    <!-- OVERVIEW（LaunchView + HomeView.jpeg） -->
     <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
@@ -415,7 +431,9 @@
 
         <div class="shot-row" aria-label="Overview screenshots">
           <figure class="shot">
-            <img src="assets/LaunchView.jpg" alt="起動画面：PMP BOOST">
+            <div class="shot-media">
+              <img src="assets/LaunchView.jpg" alt="起動画面：PMP BOOST">
+            </div>
             <figcaption class="shot-cap">
               Launch
               <span class="sub">アプリの起動画面</span>
@@ -423,7 +441,9 @@
           </figure>
 
           <figure class="shot">
-            <img src="assets/HomeView.jpeg" alt="ホーム：今日のチャレンジと復習導線">
+            <div class="shot-media">
+              <img src="assets/HomeView.jpeg" alt="ホーム：今日のチャレンジと復習導線">
+            </div>
             <figcaption class="shot-cap">
               Home
               <span class="sub">今日の学習・復習をはじめる</span>
@@ -471,7 +491,9 @@
 
         <div class="shot-row" aria-label="Feature screenshots">
           <figure class="shot">
-            <img src="assets/QuizView1.jpg" alt="問題にチャレンジ：設問画面">
+            <div class="shot-media">
+              <img src="assets/QuizView1.jpg" alt="問題にチャレンジ：設問画面">
+            </div>
             <figcaption class="shot-cap">
               Quiz
               <span class="sub">テンポよく取り組める</span>
@@ -479,7 +501,9 @@
           </figure>
 
           <figure class="shot">
-            <img src="assets/QuizView2.jpg" alt="解説表示：正解/不正解と解説">
+            <div class="shot-media">
+              <img src="assets/QuizView2.jpg" alt="解説表示：正解/不正解と解説">
+            </div>
             <figcaption class="shot-cap">
               Explanation
               <span class="sub">解説を確認して理解をサポート</span>
@@ -489,7 +513,9 @@
 
         <div class="shot-row" aria-label="Review screenshots" style="margin-top:12px;">
           <figure class="shot">
-            <img src="assets/BookmarkView.jpg" alt="ブックマーク：保存した問題の一覧">
+            <div class="shot-media">
+              <img src="assets/BookmarkView.jpg" alt="ブックマーク：保存した問題の一覧">
+            </div>
             <figcaption class="shot-cap">
               Bookmark
               <span class="sub">後で見返す問題を保存</span>
@@ -497,7 +523,9 @@
           </figure>
 
           <figure class="shot">
-            <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量の可視化">
+            <div class="shot-media">
+              <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量の可視化">
+            </div>
             <figcaption class="shot-cap">
               Analytics
               <span class="sub">達成率・正解数・学習時間など積み重ねを実感</span>
@@ -507,7 +535,7 @@
       </div>
     </section>
 
-    <!-- DESIGNED FOR CONSISTENCY（✅ ResultView + BonusView） -->
+    <!-- DESIGNED FOR CONSISTENCY（ResultView + BonusView） -->
     <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
@@ -534,7 +562,9 @@
 
         <div class="shot-row" aria-label="Consistency screenshots">
           <figure class="shot">
-            <img src="assets/ResultView.jpg" alt="結果：学習結果の表示">
+            <div class="shot-media">
+              <img src="assets/ResultView.jpg" alt="結果：学習結果の表示">
+            </div>
             <figcaption class="shot-cap">
               Result
               <span class="sub">区切りを作って続けやすく</span>
@@ -542,10 +572,12 @@
           </figure>
 
           <figure class="shot">
-            <img src="assets/BonusView.jpeg" alt="ボーナス：学習の息抜き要素">
+            <div class="shot-media">
+              <img src="assets/BonusView.jpeg" alt="ボーナス：学習の息抜き要素">
+            </div>
             <figcaption class="shot-cap">
               Bonus
-              <span class="sub">UFOをクリックしてみると何かが起こる…？</span>
+              <span class="sub">UFOをクリックしてみると何かが起きる…？</span>
             </figcaption>
           </figure>
         </div>
