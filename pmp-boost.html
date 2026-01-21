@@ -226,7 +226,6 @@
       letter-spacing: 0.02em;
     }
 
-    /* ✅ 目立たせない脚注（囲まない） */
     .footnote{
       margin-top: 10px;
       font-size: 12.2px;
@@ -266,6 +265,8 @@
       flex-wrap: nowrap;
     }
 
+    figure{ margin: 0; } 
+
     .shot{
       flex: 1 1 0;
       min-width: 0;
@@ -277,10 +278,19 @@
     }
 
     .shot .shot-media{
-      aspect-ratio: 9 / 19.5;
       width: 100%;
-      background: rgba(255,255,255,0.40);
       position: relative;
+      background: rgba(255,255,255,0.40);
+      aspect-ratio: 9 / 19.5;
+      overflow: hidden;
+    }
+    .shot .shot-media::before{
+      content:"";
+      display:block;
+      padding-top: 216.6667%; /* 19.5 / 9 * 100 */
+    }
+    @supports (aspect-ratio: 1 / 1){
+      .shot .shot-media::before{ padding-top: 0; }
     }
 
     .shot .shot-media img{
@@ -432,7 +442,7 @@
         <div class="shot-row" aria-label="Overview screenshots">
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/LaunchView.jpg" alt="起動画面：PMP BOOST">
+              <img src="assets/LaunchView.jpg" alt="起動画面：PMP BOOST" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Launch
@@ -442,7 +452,7 @@
 
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/HomeView.jpeg" alt="ホーム：今日のチャレンジと復習導線">
+              <img src="assets/HomeView.jpeg" alt="ホーム：今日のチャレンジと復習導線" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Home
@@ -492,7 +502,7 @@
         <div class="shot-row" aria-label="Feature screenshots">
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/QuizView1.jpg" alt="問題にチャレンジ：設問画面">
+              <img src="assets/QuizView1.jpg" alt="問題にチャレンジ：設問画面" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Quiz
@@ -502,7 +512,7 @@
 
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/QuizView2.jpg" alt="解説表示：正解/不正解と解説">
+              <img src="assets/QuizView2.jpg" alt="解説表示：正解/不正解と解説" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Explanation
@@ -514,7 +524,7 @@
         <div class="shot-row" aria-label="Review screenshots" style="margin-top:12px;">
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/BookmarkView.jpg" alt="ブックマーク：保存した問題の一覧">
+              <img src="assets/BookmarkView.jpg" alt="ブックマーク：保存した問題の一覧" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Bookmark
@@ -524,7 +534,7 @@
 
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量の可視化">
+              <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量の可視化" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Analytics
@@ -563,7 +573,7 @@
         <div class="shot-row" aria-label="Consistency screenshots">
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/ResultView.jpg" alt="結果：学習結果の表示">
+              <img src="assets/ResultView.jpg" alt="結果：学習結果の表示" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Result
@@ -573,7 +583,7 @@
 
           <figure class="shot">
             <div class="shot-media">
-              <img src="assets/BonusView.jpeg" alt="ボーナス：学習の息抜き要素">
+              <img src="assets/BonusView.jpeg" alt="ボーナス：学習の息抜き要素" loading="lazy">
             </div>
             <figcaption class="shot-cap">
               Bonus
