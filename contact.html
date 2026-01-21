@@ -6,166 +6,259 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Contact TendOn for inquiries and support." />
 
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Noto Sans JP -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#fff; --text:#111; --text-sub:rgba(17,17,17,.64); --line:#ececec;
-      --radius:14px; --container:720px;
+      /* ===== Color===== */
+      --bg: #fbfcff;
+      --bg2:#f4f7ff;
+
+      --surface: rgba(255,255,255,0.92);
+      --text:#0f0f10;
+      --text-sub: rgba(15,15,16,0.62);
+      --text-faint: rgba(15,15,16,0.48);
+      --line: rgba(15,15,16,0.10);
+
+      --accent-blue:#2b6cff;
+      --accent-yellow:#f3b700;
+      --accent-red:#ff4b4b;
+
+      /* ===== Radius / Shadow ===== */
+      --radius: 18px;
+      --shadow-xs: 0 10px 28px rgba(0,0,0,0.05);
+      --shadow-sm: 0 14px 38px rgba(0,0,0,0.07);
+
+      /* ===== Layout ===== */
+      --container: 820px;
+      --pageY: 72px;
+      --pageX: 22px;
+
+      /* ===== Typography ===== */
       --font:"Noto Sans JP",system-ui,-apple-system,"Segoe UI",sans-serif;
-      --pageY:72px; --pageX:22px;
-      --h1:32px; --h1-lh:1.2;
-      --cardPadY:22px; --cardPadX:24px;
-      --btnH:44px;
-      --link-accent: rgba(17,17,17,0.35);
+      --h1: 32px;
+      --h1-lh: 1.2;
+
+      /* ===== Card ===== */
+      --cardPadY: 20px;
+      --cardPadX: 20px;
+
+      /* ===== Form ===== */
+      --btnH: 44px;
     }
 
-    *{box-sizing:border-box;}
+    *{ box-sizing:border-box; }
     html, body { height:100%; }
 
     body{
-      font-family:var(--font); margin:0;
-      padding:var(--pageY) var(--pageX);
-      background:var(--bg); color:var(--text);
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      font-family: var(--font);
+      margin:0;
+      padding: var(--pageY) var(--pageX);
+      background: var(--bg); 
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       line-height: 1.8;
+      position: relative;
+    }
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(1100px 520px at 18% -12%, rgba(43,108,255,0.10), transparent 62%),
+        radial-gradient(1200px 620px at 78% 112%, rgba(43,108,255,0.08), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
     .container{
-      max-width:var(--container);
-      margin:0 auto;
-      animation:fadeIn .7s ease-out both;
+      max-width: var(--container);
+      margin: 0 auto;
+      animation: fadeIn .6s ease-out both;
     }
-
     @keyframes fadeIn{
-      from{opacity:0;transform:translateY(8px);}
-      to{opacity:1;transform:translateY(0);}
+      from{ opacity:0; transform: translateY(8px); }
+      to{ opacity:1; transform: translateY(0); }
     }
 
-    a{
-      color:var(--text);
-      text-decoration:none;
-      border-bottom:1px solid var(--line);
-      padding-bottom:2px;
-      transition:border-color .18s ease, transform .18s ease, opacity .18s ease;
-    }
-    a:hover{ border-color: rgba(17,17,17,0.7); }
-
-    .link-arrow{
-      font-size:13px;
-      letter-spacing:0.01em;
-      font-weight:500;
-      display:inline-block;
-      margin-top:28px;
-      border-bottom-color: rgba(17,17,17,0.18);
-    }
-    .link-arrow:hover{
-      border-bottom-color: var(--link-accent);
-      transform: translateY(-1px);
+    a{ color: inherit; text-decoration:none; }
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+      outline: 2px solid rgba(15,15,16,0.22);
+      outline-offset: 4px;
+      border-radius: 12px;
     }
 
+    /* ===== Hero ===== */
     .hero{
       display:flex;
       align-items:center;
       gap:16px;
-      margin-bottom:56px;
-      flex-wrap:wrap;
+      margin-bottom: 44px;
+      flex-wrap: wrap;
     }
 
     .app-icon{
-      width:58px;
-      height:58px;
+      width: 56px;
+      height: 56px;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      object-position: center;
       display:block;
-      object-fit:contain;
-      object-position:center;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.08));
+      user-select:none;
+      -webkit-user-drag:none;
     }
 
     h1{
-      font-size:var(--h1);
-      line-height:var(--h1-lh);
-      font-weight:600;
-      margin:0;
-      letter-spacing:.02em;
+      font-size: var(--h1);
+      line-height: var(--h1-lh);
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: .02em;
     }
 
-    .subtitle-wrap{ margin-top:6px; }
-    .subtitle-jp,
+    .subtitle-wrap{ margin-top: 8px; }
+    .subtitle-jp{
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      margin: 0;
+      color: rgba(15,15,16,0.86);
+      line-height: 1.6;
+    }
     .subtitle-en{
-      font-size:13px;
-      font-weight:500;
-      letter-spacing:0.06em;
-      margin:0;
-      color:var(--text);
-      line-height:1.55;
+      font-size: 12.5px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin: 6px 0 0;
+      color: var(--text-sub);
+      line-height: 1.6;
     }
-    .subtitle-en{ margin-top:4px; opacity:.64; }
 
+    /* ===== Card ===== */
     .card{
-      margin-top:18px;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:#fff;
-      padding:var(--cardPadY) var(--cardPadX);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-xs);
+      padding: var(--cardPadY) var(--cardPadX);
     }
 
+    /* ===== Form ===== */
     label{
       display:block;
-      font-size:12px;
-      font-weight:600;
-      letter-spacing:.14em;
-      margin:16px 0 6px;
-      opacity:.9;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      margin: 16px 0 6px;
+      color: rgba(15,15,16,0.78);
     }
-    input,textarea{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:12px;
-      font:inherit;
-      font-size:14px;
-      color:var(--text);
-      outline:none;
-    }
-    textarea{min-height:140px;resize:vertical;}
 
-    .actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap;}
+    input, textarea{
+      width: 100%;
+      border: 1px solid rgba(15,15,16,0.12);
+      border-radius: 12px;
+      padding: 12px;
+      font: inherit;
+      font-size: 14px;
+      color: var(--text);
+      background: rgba(255,255,255,0.90);
+      outline: none;
+      transition: border-color .16s ease, box-shadow .16s ease;
+    }
+    input:focus, textarea:focus{
+      border-color: rgba(43,108,255,0.25);
+      box-shadow: 0 0 0 4px rgba(43,108,255,0.08);
+    }
+    textarea{ min-height: 140px; resize: vertical; }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
 
     .btn{
-      height:var(--btnH);
-      padding:0 16px;
-      border-radius:12px;
-      border:1px solid rgba(17,17,17,.10);
-      background:#111;
+      height: var(--btnH);
+      padding: 0 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(15,15,16,0.10);
+      background: #111;
       color:#fff;
-      font-weight:600;
-      letter-spacing:.02em;
-      cursor:pointer;
-      transition:transform .18s ease, opacity .18s ease;
+      font-weight: 700;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .18s ease, opacity .18s ease;
     }
-    .btn:hover{transform:translateY(-1px);}
-    .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+    .btn:hover{ transform: translateY(-1px); }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; }
 
-    .help{margin-top:10px;font-size:12px;opacity:.62;line-height:1.6;}
+    .hp-wrap{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
 
-    .hp-wrap{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .back{
+      display:inline-flex;
+      align-items:center;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      color: rgba(15,15,16,0.62);
+      margin-top: 18px;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+      font-weight: 700;
+      font-size: 12.5px;
+      letter-spacing: 0.02em;
+    }
+    .back:hover{
+      background: rgba(15,15,16,0.03);
+      border-color: rgba(15,15,16,0.10);
+      transform: translateY(-1px);
+    }
 
     footer{
-      margin-top:84px;
-      padding-top:22px;
-      border-top:1px solid var(--line);
-      font-size:13px;
-      color:var(--text);
+      margin-top: 64px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(15,15,16,0.10);
+      font-size: 12.5px;
+      color: var(--text-faint);
       display:flex;
-      justify-content:space-between;
-      gap:12px;
+      justify-content: space-between;
+      gap: 12px;
       align-items:center;
-      opacity:.62;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
-    @media (max-width:640px){
-      :root{--pageY:56px;--pageX:18px;--h1:28px;}
-      .hero{ margin-bottom:48px; }
-      .app-icon{width:52px;height:52px;}
+    .footer-link{
+      display:inline-flex;
+      align-items:center;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      color: rgba(15,15,16,0.62);
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+      white-space: nowrap;
+    }
+    .footer-link:hover{
+      background: rgba(15,15,16,0.03);
+      border-color: rgba(15,15,16,0.10);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 640px){
+      :root{
+        --pageY: 56px;
+        --pageX: 18px;
+        --h1: 28px;
+      }
+      .hero{ margin-bottom: 36px; }
+      .app-icon{ width: 52px; height: 52px; }
+      footer{ flex-direction: column; align-items: flex-start; }
     }
 
     /* ===== Toast (popup) ===== */
@@ -176,7 +269,7 @@
       transform: translateX(-50%);
       width: min(520px, calc(100% - 28px));
       z-index: 9999;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(15,15,16,0.10);
       border-radius: 14px;
       background: rgba(255,255,255,0.92);
       backdrop-filter: blur(10px);
@@ -185,10 +278,18 @@
       padding: 12px 14px;
       display: none;
     }
-    .toast.show{display:block; animation: toastIn .18s ease-out both;}
-    @keyframes toastIn { from{opacity:0;transform:translate(-50%, -6px);} to{opacity:1;transform:translate(-50%, 0);} }
-    .toast-title{font-size:13px;font-weight:600;letter-spacing:.02em;margin:0;line-height:1.4;}
-    .toast-msg{font-size:12px;opacity:.72;margin:4px 0 0;line-height:1.5;}
+    .toast.show{ display:block; animation: toastIn .18s ease-out both; }
+    @keyframes toastIn{
+      from{ opacity:0; transform:translate(-50%, -6px); }
+      to{ opacity:1; transform:translate(-50%, 0); }
+    }
+    .toast-title{ font-size:13px; font-weight:700; letter-spacing:.02em; margin:0; line-height:1.4; }
+    .toast-msg{ font-size:12px; opacity:.72; margin:4px 0 0; line-height:1.5; }
+
+    @media (prefers-reduced-motion: reduce){
+      .container{ animation:none; }
+      .btn, .back, .footer-link{ transition:none; }
+    }
   </style>
 </head>
 
@@ -242,14 +343,13 @@
         <div class="actions">
           <button class="btn" id="sendBtn" type="submit" disabled>Send</button>
         </div>
-
       </form>
     </div>
 
-    <a class="link-arrow" href="index.html">← Back to Home</a>
+    <a class="back" href="index.html" aria-label="Back to Home">← Back to Home</a>
 
     <footer>
-      <a href="privacy.html">プライバシーポリシー</a>
+      <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">プライバシーポリシー</a>
       <span>© TendOn</span>
     </footer>
   </div>
@@ -284,7 +384,6 @@
     // ===========================
     function isValidEmailStrict(email){
       const e = String(email || "").trim();
-
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) return false;
 
       const lower = e.toLowerCase();
@@ -375,7 +474,6 @@
 
           form.reset();
 
-          // hidden再設定
           document.getElementById("page").value = location.href;
           document.getElementById("ua").value = navigator.userAgent;
           document.getElementById("ts").value = new Date().toISOString();
