@@ -12,11 +12,11 @@
   <style>
     :root{
       /* ===== Color ===== */
-      --bg: #fcfcfd;
+      --bg: #ffffff;
       --surface: #ffffff;
       --text: #0f0f10;
-      --text-sub: rgba(15,15,16,0.64);
-      --text-faint: rgba(15,15,16,0.46);
+      --text-sub: rgba(15,15,16,0.62);
+      --text-faint: rgba(15,15,16,0.48);
       --line: rgba(15,15,16,0.10);
 
       --accent-blue: #2b6cff;
@@ -32,7 +32,7 @@
       /* ===== Layout ===== */
       --container: 820px;
       --pageX: 22px;
-      --pageY: 64px;
+      --pageY: 72px;
 
       /* ===== Typography ===== */
       --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -46,7 +46,7 @@
       --h2: 12px;
       --h2-ls: 0.20em;
 
-      --lead: 16px;
+      --lead: 15px;
       --body: 14px;
       --lh: 1.85;
 
@@ -72,11 +72,7 @@
       font-family: var(--font);
       margin:0;
       padding: var(--pageY) var(--pageX);
-      background:
-        radial-gradient(1200px 420px at 20% -10%, rgba(43,108,255,0.06), transparent 60%),
-        radial-gradient(1200px 420px at 85% 15%, rgba(243,183,0,0.06), transparent 60%),
-        radial-gradient(1200px 420px at 70% 110%, rgba(255,75,75,0.05), transparent 60%),
-        var(--bg);
+      background: var(--bg);
       color: var(--text);
       line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
@@ -110,23 +106,16 @@
       border-radius: 12px;
     }
 
-    /* ===== Top ===== */
-    .top{
+    /* ===== Hero ===== */
+    .hero{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap: 14px;
+      gap: 16px;
       margin-bottom: var(--gap-5);
+      flex-wrap: wrap;
     }
 
-    .brand{
-      display:flex;
-      align-items:center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .logo-btn{
+    .hero-logo-btn{
       appearance:none;
       border:none;
       background: transparent;
@@ -137,9 +126,9 @@
       border-radius: 14px;
       transition: transform .18s ease;
     }
-    .logo-btn:hover{ transform: translateY(-1px); }
+    .hero-logo-btn:hover{ transform: translateY(-1px); }
 
-    .logo{
+    .hero-icons img{
       width: 56px;
       height: 56px;
       display:block;
@@ -148,7 +137,6 @@
       filter: drop-shadow(0 10px 18px rgba(0,0,0,0.08));
     }
 
-    .brand-text{ min-width:0; }
     h1{
       font-size: var(--h1);
       line-height: var(--h1-lh);
@@ -156,74 +144,23 @@
       font-weight: 700;
       letter-spacing: 0.02em;
     }
-    .tagline{
+
+    .subtitle{
       margin-top: 8px;
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-    }
-    .tagline .jp{
-      font-size: var(--lead);
+      font-size: var(--kicker);
       font-weight: 600;
-      letter-spacing: 0.01em;
-      color: var(--text);
-    }
-    .tagline .en{
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: none;
+      letter-spacing: var(--kicker-ls);
       color: var(--text-sub);
     }
-
-    .top-cta{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-
-    .ghost{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.6);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.04);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.10em;
-      color: rgba(15,15,16,0.72);
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      white-space:nowrap;
-    }
-    .ghost:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 14px 30px rgba(0,0,0,0.06);
-      border-color: rgba(15,15,16,0.14);
-    }
-    .ghost .arrow{ opacity:0.65; }
 
     /* ===== Sections ===== */
     section{ margin-bottom: 56px; }
 
     .section-head{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .section-title{
-      display:flex;
-      align-items:center;
+      align-items:flex-start;
       gap: 10px;
-      min-width:0;
+      margin-bottom: 14px;
     }
 
     .section-ico{
@@ -232,6 +169,7 @@
       display:block;
       flex: 0 0 auto;
       filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+      margin-top: 2px;
     }
 
     .h2-wrap{
@@ -258,53 +196,44 @@
     .u-yellow{ background: var(--accent-yellow); }
     .u-red{ background: var(--accent-red); }
 
-    /* ===== Surface / Cards ===== */
-    .surface{
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
-      border-radius: var(--r-lg);
-      box-shadow: var(--shadow-xs);
-    }
-
+    /* ===== About (no floating, no divider) ===== */
     .about{
-      padding: 22px 22px;
+      padding: 0;                 /* ✅ “浮きカード”をやめる */
+      border: none;
+      background: transparent;
+      box-shadow: none;
     }
 
     .about .block{
       display:grid;
       gap: 10px;
-      padding: 2px 0;
+      padding: 0;
     }
 
     .about .jp{
+      margin:0;
       font-size: 15px;
       font-weight: 600;
       letter-spacing: 0.01em;
-      line-height: 1.75;
+      line-height: 1.8;
       color: rgba(15,15,16,0.92);
-      margin:0;
     }
 
     .about .en{
+      margin:0;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.02em;
-      line-height: 1.7;
+      line-height: 1.75;
       color: var(--text-sub);
-      margin:0;
     }
 
-    .about .sep{
-      height: 1px;
-      background: rgba(15,15,16,0.08);
-      margin: 16px 0;
+    .about .gap{
+      height: 16px;               /* ✅ 区切り線ではなく“余白”で分ける */
     }
 
-    .stack{
-      display:grid;
-      gap: 14px;
-    }
+    /* ===== Cards ===== */
+    .stack{ display:grid; gap: 14px; }
 
     .card-link{
       display:flex;
@@ -315,8 +244,7 @@
       min-height: var(--cardMinH);
       border-radius: var(--r-lg);
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(6px);
+      background: var(--surface);
       box-shadow: var(--shadow-xs);
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
@@ -377,11 +305,6 @@
       letter-spacing: 0.10em;
       white-space: nowrap;
     }
-    .pill .arrow{
-      font-weight: 900;
-      opacity: 0.65;
-      transform: translateY(-0.5px);
-    }
 
     /* Disabled card */
     .is-disabled{
@@ -413,7 +336,6 @@
     .footer-link{
       display:inline-flex;
       align-items:center;
-      gap: 8px;
       padding: 8px 10px;
       border-radius: 12px;
       border: 1px solid transparent;
@@ -454,30 +376,19 @@
     @media (prefers-reduced-motion: reduce){
       .container{ animation:none; }
       .drop{ display:none; }
-      .logo-btn, .card-link, .ghost, .footer-link{ transition:none; }
+      .hero-logo-btn, .card-link, .footer-link{ transition:none; }
     }
 
     /* ===== Mobile ===== */
     @media (max-width: 680px){
       :root{
-        --pageY: 48px;
+        --pageY: 56px;
         --pageX: 18px;
         --cardPadX: 16px;
         --cardPadY: 16px;
         --cardMinH: 82px;
       }
-
-      .top{
-        align-items:flex-start;
-        margin-bottom: 36px;
-      }
-
-      .logo{ width: 52px; height: 52px; }
-
-      .top-cta{ width:100%; justify-content:flex-start; }
-
-      .about{ padding: 18px 16px; }
-
+      .hero-icons img{ width: 52px; height: 52px; }
       footer{ flex-direction:column; align-items:flex-start; }
     }
   </style>
@@ -487,51 +398,38 @@
   <div class="logo-rain-layer" id="logoRainLayer" aria-hidden="true"></div>
 
   <div class="container">
-    <!-- Top / Brand -->
-    <header class="top">
-      <div class="brand">
-        <button class="logo-btn" id="logoButton" aria-label="TendOn logo (easter egg)">
-          <img class="logo" src="assets/tendon_logo-透過.png" alt="TendOn logo">
-        </button>
 
-        <div class="brand-text">
-          <h1>TendOn</h1>
-          <div class="tagline">
-            <div class="jp">学習と生産性を、心地よく。</div>
-            <div class="en">Independent iOS app studio for learning & productivity.</div>
-          </div>
+    <!-- Hero -->
+    <div class="hero">
+      <button class="hero-logo-btn" id="logoButton" aria-label="TendOn logo (easter egg)">
+        <div class="hero-icons">
+          <img src="assets/tendon_logo-透過.png" alt="TendOn logo">
         </div>
+      </button>
+      <div>
+        <h1>TendOn</h1>
+        <div class="subtitle">Independent App Studio</div>
       </div>
-
-      <nav class="top-cta" aria-label="Quick links">
-        <a class="ghost" href="#apps" aria-label="Jump to Apps section">
-          APPS <span class="arrow">→</span>
-        </a>
-        <a class="ghost" href="#contact" aria-label="Jump to Contact section">
-          CONTACT <span class="arrow">→</span>
-        </a>
-      </nav>
-    </header>
+    </div>
 
     <!-- About -->
     <section id="about" aria-labelledby="aboutTitle">
       <div class="section-head">
-        <div class="section-title">
-          <img class="section-ico" src="assets/blue-透過.png" alt="" aria-hidden="true">
-          <div class="h2-wrap">
-            <h2 id="aboutTitle">ABOUT</h2>
-            <div class="underline u-blue" aria-hidden="true"></div>
-          </div>
+        <img class="section-ico" src="assets/blue-透過.png" alt="" aria-hidden="true">
+        <div class="h2-wrap">
+          <h2 id="aboutTitle">ABOUT</h2>
+          <div class="underline u-blue" aria-hidden="true"></div>
         </div>
       </div>
 
-      <div class="surface about">
+      <!-- ✅ 浮かせない / ✅ 区切り線なし / ✅ JP→EN -->
+      <div class="about">
         <div class="block">
           <p class="jp">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
           <p class="en">TendOn designs and builds iOS apps for learning and productivity.</p>
         </div>
 
-        <div class="sep" aria-hidden="true"></div>
+        <div class="gap" aria-hidden="true"></div>
 
         <div class="block">
           <p class="jp">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
@@ -543,12 +441,10 @@
     <!-- Apps -->
     <section id="apps" aria-labelledby="appsTitle">
       <div class="section-head">
-        <div class="section-title">
-          <img class="section-ico" src="assets/yellow-透過.png" alt="" aria-hidden="true">
-          <div class="h2-wrap">
-            <h2 id="appsTitle">APPS</h2>
-            <div class="underline u-yellow" aria-hidden="true"></div>
-          </div>
+        <img class="section-ico" src="assets/yellow-透過.png" alt="" aria-hidden="true">
+        <div class="h2-wrap">
+          <h2 id="appsTitle">APPS</h2>
+          <div class="underline u-yellow" aria-hidden="true"></div>
         </div>
       </div>
 
@@ -561,7 +457,7 @@
               <p class="en">iOS app for PMP exam preparation.</p>
             </div>
           </div>
-          <div class="pill">VIEW <span class="arrow">→</span></div>
+          <div class="pill">View →</div>
         </a>
 
         <div class="card-link is-disabled" aria-disabled="true">
@@ -572,7 +468,7 @@
               <p class="en">A new app is currently in development.</p>
             </div>
           </div>
-          <div class="pill">VIEW <span class="arrow">→</span></div>
+          <div class="pill">View →</div>
         </div>
       </div>
     </section>
@@ -580,12 +476,10 @@
     <!-- Contact -->
     <section id="contact" aria-labelledby="contactTitle">
       <div class="section-head">
-        <div class="section-title">
-          <img class="section-ico" src="assets/red-透過.png" alt="" aria-hidden="true">
-          <div class="h2-wrap">
-            <h2 id="contactTitle">CONTACT</h2>
-            <div class="underline u-red" aria-hidden="true"></div>
-          </div>
+        <img class="section-ico" src="assets/red-透過.png" alt="" aria-hidden="true">
+        <div class="h2-wrap">
+          <h2 id="contactTitle">CONTACT</h2>
+          <div class="underline u-red" aria-hidden="true"></div>
         </div>
       </div>
 
@@ -597,16 +491,16 @@
             <p class="en">Reach out via the form. We’ll reply within 1–2 business days.</p>
           </div>
         </div>
-        <div class="pill">OPEN <span class="arrow">→</span></div>
+        <div class="pill">Open →</div>
       </a>
     </section>
 
     <footer>
-      <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">
-        プライバシーポリシー <span class="arrow">→</span>
-      </a>
+      <!-- ✅ 矢印なし -->
+      <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">プライバシーポリシー</a>
       <span>© TendOn</span>
     </footer>
+
   </div>
 
   <script>
