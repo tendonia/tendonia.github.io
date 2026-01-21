@@ -17,26 +17,24 @@
 
       /* ===== Foreground ===== */
       --surface: rgba(255,255,255,0.92);
-      --surface-strong: rgba(255,255,255,0.96);
       --text:#0f0f10;
       --text-sub: rgba(15,15,16,0.62);
-      --text-faint: rgba(15,15,16,0.48);
+      --text-faint: rgba(15,15,16,0.46);
       --line: rgba(15,15,16,0.10);
 
       /* ===== Accent ===== */
       --accent-orange: #ff7a2f;
-      --accent-soft: rgba(255,122,47,0.12);
 
       /* ===== Radius / Shadow ===== */
       --radius: 18px;
       --shadow-xs: 0 10px 28px rgba(0,0,0,0.05);
-      --shadow-sm: 0 14px 38px rgba(0,0,0,0.07);
 
       /* ===== Layout ===== */
-      --container: 980px;
+      --container: 820px;
 
       /* ===== Typography ===== */
       --font: "Noto Sans JP", system-ui, -apple-system, "Segoe UI", sans-serif;
+
       --h1: clamp(30px, 3.6vw, 44px);
       --h1-lh: 1.12;
 
@@ -68,7 +66,8 @@
       --lineW: 64px;
       --lineH: 3px;
 
-      --gap: 14px;
+      --shotGap: 12px;
+      --shotRadius: 16px;
     }
 
     *{ box-sizing: border-box; }
@@ -109,7 +108,7 @@
     }
 
     a{ color: inherit; text-decoration: none; }
-    a:focus-visible, button:focus-visible{
+    a:focus-visible{
       outline: 2px solid rgba(15,15,16,0.22);
       outline-offset: 4px;
       border-radius: 12px;
@@ -119,16 +118,8 @@
     .hero{
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 16px;
       margin-bottom: var(--heroB);
-      flex-wrap: wrap;
-    }
-
-    .hero-left{
-      display:flex;
-      align-items:center;
-      gap: 16px;
       flex-wrap: wrap;
     }
 
@@ -137,6 +128,7 @@
       height: 56px;
       aspect-ratio: 1 / 1;
       object-fit: contain;
+      object-position: center;
       display: block;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,0.08));
       user-select: none;
@@ -155,67 +147,9 @@
     .subtitle{
       margin-top: 8px;
       font-size: var(--kicker);
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: var(--kicker-ls);
       color: var(--text-sub);
-      text-transform: uppercase;
-    }
-
-    .hero-cta{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items:center;
-    }
-
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(15,15,16,0.10);
-      background: rgba(255,255,255,0.68);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      box-shadow: var(--shadow-xs);
-      font-size: 12.5px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: rgba(15,15,16,0.78);
-      white-space: nowrap;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 8px;
-      padding: 11px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,122,47,0.22);
-      background: rgba(255,122,47,0.10);
-      color: rgba(15,15,16,0.84);
-      font-size: 12.8px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-      white-space: nowrap;
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,122,47,0.13);
-      border-color: rgba(255,122,47,0.32);
-    }
-
-    .btn.ghost{
-      border: 1px solid rgba(15,15,16,0.12);
-      background: rgba(255,255,255,0.62);
-      color: rgba(15,15,16,0.72);
-    }
-    .btn.ghost:hover{
-      background: rgba(15,15,16,0.03);
-      border-color: rgba(15,15,16,0.16);
     }
 
     /* ===== Sections ===== */
@@ -247,7 +181,7 @@
 
     h2{
       font-size: var(--section);
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: var(--section-ls);
       margin: 0;
       color: rgba(15,15,16,0.88);
@@ -274,9 +208,6 @@
       padding: var(--cardPadY) var(--cardPadX);
     }
 
-    .card.tight{ padding: 16px 16px; }
-    .card.strong{ background: var(--surface-strong); }
-
     /* ===== Typography (JP/EN) ===== */
     p{ margin: 0 0 var(--paraB); }
 
@@ -295,17 +226,14 @@
       letter-spacing: 0.02em;
     }
 
-    .note{
+    /* ✅ 目立たせない脚注（囲まない） */
+    .footnote{
       margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(15,15,16,0.10);
-      background: rgba(15,15,16,0.02);
-      color: rgba(15,15,16,0.70);
-      font-size: 12.8px;
+      font-size: 12.2px;
       font-weight: 600;
-      line-height: 1.65;
-      letter-spacing: 0.01em;
+      line-height: 1.6;
+      color: var(--text-faint);
+      letter-spacing: 0.02em;
     }
 
     /* ===== Lists ===== */
@@ -316,7 +244,7 @@
     .list li{
       margin: 8px 0;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       line-height: 1.7;
       color: rgba(15,15,16,0.86);
       letter-spacing: 0.01em;
@@ -330,32 +258,27 @@
       line-height: 1.65;
     }
 
-    /* ===== Screenshot Gallery ===== */
-    .shots{
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--gap);
-      align-items: start;
-    }
-
-    .shot-grid{
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: var(--gap);
+    /* ===== Inline screenshots (inside cards) ===== */
+    .shot-row{
+      display:flex;
+      gap: var(--shotGap);
+      margin-top: 14px;
+      flex-wrap: nowrap;
     }
 
     .shot{
-      border-radius: 18px;
+      flex: 1 1 0;
+      min-width: 0;
+      border-radius: var(--shotRadius);
       border: 1px solid rgba(15,15,16,0.10);
-      background: rgba(255,255,255,0.72);
-      box-shadow: var(--shadow-xs);
       overflow: hidden;
+      background: rgba(255,255,255,0.60);
     }
 
     .shot img{
       width: 100%;
       height: auto;
-      display: block;
+      display:block;
       user-select:none;
       -webkit-user-drag:none;
     }
@@ -363,99 +286,24 @@
     .shot-cap{
       padding: 10px 12px 12px;
       border-top: 1px solid rgba(15,15,16,0.08);
-      background: rgba(255,255,255,0.78);
-      font-size: 12.5px;
+      font-size: 12.4px;
       font-weight: 700;
-      letter-spacing: 0.01em;
-      color: rgba(15,15,16,0.76);
+      color: rgba(15,15,16,0.72);
       line-height: 1.45;
+      letter-spacing: 0.01em;
+      background: rgba(255,255,255,0.70);
     }
 
     .shot-cap .sub{
       display:block;
       margin-top: 4px;
+      font-size: 12px;
       font-weight: 600;
-      color: rgba(15,15,16,0.56);
-      letter-spacing: 0.02em;
-      font-size: 12px;
-    }
-
-    .shot-primary{
-      position: sticky;
-      top: 18px;
-    }
-
-    /* ===== Support box ===== */
-    .support-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--gap);
-    }
-
-    .kv{
-      display:flex;
-      flex-direction: column;
-      gap: 6px;
-      padding: 14px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(15,15,16,0.10);
-      background: rgba(255,255,255,0.72);
-    }
-    .kv .k{
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.18em;
       color: rgba(15,15,16,0.52);
-      text-transform: uppercase;
-    }
-    .kv .v{
-      font-size: 14px;
-      font-weight: 800;
-      color: rgba(15,15,16,0.86);
-      letter-spacing: 0.01em;
-      line-height: 1.6;
-      word-break: break-word;
-    }
-    .kv .v a{
-      text-decoration: underline;
-      text-decoration-color: rgba(255,122,47,0.35);
-      text-underline-offset: 4px;
-    }
-
-    /* App Store slot */
-    .store-slot{
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(15,15,16,0.10);
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: baseline;
-      color: rgba(15,15,16,0.78);
-    }
-    .store-slot[hidden]{ display:none; }
-
-    .store-link{
-      display:inline-flex;
-      align-items:center;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,122,47,0.18);
-      background: rgba(255,122,47,0.06);
-      color: rgba(15,15,16,0.78);
-      font-size: 12.5px;
-      font-weight: 800;
       letter-spacing: 0.02em;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-      white-space: nowrap;
-    }
-    .store-link:hover{
-      transform: translateY(-1px);
-      background: rgba(255,122,47,0.08);
-      border-color: rgba(255,122,47,0.28);
     }
 
-    /* Back link */
+    /* ===== Back link ===== */
     .back{
       display:inline-flex;
       align-items:center;
@@ -465,7 +313,7 @@
       color: rgba(15,15,16,0.62);
       margin-top: 18px;
       transition: background .18s ease, border-color .18s ease, transform .18s ease;
-      font-weight: 800;
+      font-weight: 700;
       font-size: 12.5px;
       letter-spacing: 0.02em;
     }
@@ -475,7 +323,7 @@
       transform: translateY(-1px);
     }
 
-    /* Footer */
+    /* ===== Footer ===== */
     footer{
       margin-top: 64px;
       padding-top: 18px;
@@ -486,15 +334,8 @@
       justify-content: space-between;
       gap: 12px;
       align-items: center;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.02em;
-      flex-wrap: wrap;
-    }
-    .footer-links{
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items:center;
     }
     .footer-link{
       display:inline-flex;
@@ -514,17 +355,11 @@
 
     @media (prefers-reduced-motion: reduce){
       .container{ animation:none; }
-      .back, .store-link, .footer-link, .btn{ transition:none; }
+      .back, .footer-link{ transition:none; }
     }
 
-    /* Mobile */
-    @media (max-width: 900px){
-      .shots{ grid-template-columns: 1fr; }
-      .shot-primary{ position: static; }
-      .support-grid{ grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 640px){
+    /* ===== Mobile ===== */
+    @media (max-width: 720px){
       :root{
         --pageY: 56px;
         --pageX: 18px;
@@ -535,7 +370,8 @@
         --lineW: 58px;
       }
       .app-icon{ width: 52px; height: 52px; }
-      .shot-grid{ grid-template-columns: 1fr; }
+      footer{ flex-direction: column; align-items: flex-start; }
+      .shot-row{ flex-direction: column; }
     }
   </style>
 </head>
@@ -543,25 +379,17 @@
 <body>
   <div class="container">
 
-    <!-- Hero -->
+    <!-- Hero（✅ ボタン類は削除） -->
     <header class="hero">
-      <div class="hero-left">
-        <img class="app-icon" src="assets/PMPBOOST_icon-透過.png" alt="PMP BOOST App Icon">
-        <div>
-          <h1>PMP BOOST</h1>
-          <div class="subtitle">iOS app for PMP exam preparation</div>
-        </div>
-      </div>
-
-      <div class="hero-cta" aria-label="Quick links">
-        <span class="chip">✅ 学習の流れを迷わず続ける</span>
-        <a class="btn ghost" href="#support">サポート</a>
-        <a class="btn" href="#screenshots">スクリーンショット</a>
+      <img class="app-icon" src="assets/PMPBOOST_icon-透過.png" alt="PMP BOOST Icon">
+      <div>
+        <h1>PMP BOOST</h1>
+        <div class="subtitle">iOS app for PMP exam preparation</div>
       </div>
     </header>
 
     <!-- OVERVIEW -->
-    <section id="overview">
+    <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
         <div class="h2-wrap">
@@ -575,7 +403,7 @@
           PMP BOOSTは、PMP試験に向けた学習を「静かに」「迷わず」「続けられる」状態に整えるための学習アプリです。
         </p>
         <p class="jp">
-          今日取り組むこと、理解が浅い問題、次に復習すべき問題——その判断コストをできるだけ減らし、学習の流れに集中できるように設計しています。
+          今日取り組むこと、理解が浅い問題、次に復習すべき問題——その判断をできるだけ減らし、学習の流れに集中できるように設計しています。
         </p>
 
         <p class="en">
@@ -585,94 +413,34 @@
           It reduces decision-making—what to study today, what to revisit, and what to do next—so you can stay in the flow.
         </p>
 
-        <!-- App Store link slot (hidden until launch) -->
-        <div class="store-slot" id="appstore-slot" hidden>
-          <span class="en" style="margin:0;">App Store</span>
-          <a class="store-link" id="appstore-link" href="#" target="_blank" rel="noopener">View on App Store</a>
+        <!-- ✅ 対応スクショ：ホーム中心 -->
+        <div class="shot-row" aria-label="Overview screenshots">
+          <figure class="shot">
+            <img src="assets/HomeView.jpg" alt="ホーム：今日のチャレンジと復習導線">
+            <figcaption class="shot-cap">
+              ホーム：今日のチャレンジ
+              <span class="sub">「つづきから」「はじめから」＋復習導線</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <img src="assets/SettingView.jpg" alt="設定：Pro登録とサポート情報">
+            <figcaption class="shot-cap">
+              設定：学習/アプリ情報
+              <span class="sub">Pro 状態・学習設定など</span>
+            </figcaption>
+          </figure>
         </div>
 
-        <div class="note">
+        <!-- ✅ 目立たない脚注（囲まない） -->
+        <div class="footnote">
           ※ PMP BOOST は PMI®（Project Management Institute）および PMP® 試験の公式アプリではありません。
         </div>
       </div>
     </section>
 
-    <!-- SCREENSHOTS -->
-    <section id="screenshots">
-      <div class="section-head">
-        <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
-        <div class="h2-wrap">
-          <h2>SCREENSHOTS</h2>
-          <div class="underline" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <div class="shots">
-        <!-- Primary / Sticky on desktop -->
-        <div class="shot shot-primary" aria-label="Primary screenshot">
-          <img src="assets/HomeView.jpg" alt="ホーム：今日のチャレンジと復習導線">
-          <div class="shot-cap">
-            ホーム：今日のチャレンジ
-            <span class="sub">「つづきから」「はじめから」＋復習導線</span>
-          </div>
-        </div>
-
-        <!-- Grid -->
-        <div class="shot-grid" aria-label="Screenshot gallery">
-          <div class="shot">
-            <img src="assets/QuizView1.jpg" alt="問題にチャレンジ：設問画面">
-            <div class="shot-cap">
-              クイズ：設問画面
-              <span class="sub">テンポよく解いて、迷いを減らす</span>
-            </div>
-          </div>
-
-          <div class="shot">
-            <img src="assets/QuizView2.jpg" alt="解説表示：正解/不正解と解説">
-            <div class="shot-cap">
-              解説：判断の根拠を整理
-              <span class="sub">変更要求なら選択肢と影響を評価</span>
-            </div>
-          </div>
-
-          <div class="shot">
-            <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量の可視化">
-            <div class="shot-cap">
-              分析：学習の記録
-              <span class="sub">達成率・正解数・学習時間など</span>
-            </div>
-          </div>
-
-          <div class="shot">
-            <img src="assets/BookmarkView.jpg" alt="ブックマーク：保存した問題の一覧">
-            <div class="shot-cap">
-              ブックマーク：保存一覧
-              <span class="sub">後で見返す問題をまとめる</span>
-            </div>
-          </div>
-
-          <div class="shot">
-            <img src="assets/SettingView.jpg" alt="設定：Pro登録・学習設定・サポート情報">
-            <div class="shot-cap">
-              設定：サポート/情報
-              <span class="sub">お問い合わせ・プライバシー等へ</span>
-            </div>
-          </div>
-
-          <!-- Optional: BonusView (使いたい場合だけ表示) -->
-          <div class="shot">
-            <img src="assets/BonusView.jpeg" alt="ボーナス：学習のちょっとした遊び要素">
-            <div class="shot-cap">
-              ボーナス要素（任意）
-              <span class="sub">学習の息抜き（※審査上不要なら削除OK）</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- WHAT YOU CAN DO -->
-    <section id="features">
+    <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
         <div class="h2-wrap">
@@ -702,123 +470,101 @@
           <li>Track progress and feel steady improvement over time</li>
           <li>Always know the next step without breaking concentration</li>
         </ul>
+
+        <!-- ✅ 対応スクショ：クイズ/解説（横並び） -->
+        <div class="shot-row" aria-label="Feature screenshots">
+          <figure class="shot">
+            <img src="assets/QuizView1.jpg" alt="問題にチャレンジ：設問画面">
+            <figcaption class="shot-cap">
+              クイズ：設問
+              <span class="sub">テンポよく解く</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <img src="assets/QuizView2.jpg" alt="解説表示：正解/不正解と解説">
+            <figcaption class="shot-cap">
+              解説：理解を固める
+              <span class="sub">判断の根拠を整理</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- ✅ ブックマークもここに寄せる（必要なら） -->
+        <div class="shot-row" aria-label="Review screenshots" style="margin-top:12px;">
+          <figure class="shot">
+            <img src="assets/BookmarkView.jpg" alt="ブックマーク：保存した問題の一覧">
+            <figcaption class="shot-cap">
+              ブックマーク：保存一覧
+              <span class="sub">後で見返す問題をまとめる</span>
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量の可視化">
+            <figcaption class="shot-cap">
+              分析：学習の記録
+              <span class="sub">達成率・正解数・学習時間など</span>
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
-    <!-- PRICING / SUBSCRIPTION (Apple review friendly) -->
-    <section id="pricing">
+    <!-- DESIGNED FOR CONSISTENCY -->
+    <section>
       <div class="section-head">
         <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
         <div class="h2-wrap">
-          <h2>PRICING</h2>
-          <div class="underline" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <div class="card strong">
-        <p class="jp">
-          PMP BOOST には、学習を拡張できる <strong>Pro（サブスクリプション）</strong> が用意されています。
-        </p>
-        <p class="jp">
-          アプリ内の「設定」→「Pro（サブスクリプション）」から、購入・復元が可能です。
-        </p>
-
-        <p class="en">
-          PMP BOOST offers an optional Pro subscription. You can purchase or restore it from Settings in the app.
-        </p>
-
-        <div class="note">
-          ※ 価格・請求周期・無料枠/制限の内容は、App Store 上の表示が正式な情報です（国/地域により異なる場合があります）。
-        </div>
-      </div>
-    </section>
-
-    <!-- SUPPORT / CONTACT (Apple review friendly) -->
-    <section id="support">
-      <div class="section-head">
-        <img class="section-ico" src="assets/PMPBOOST_icon-透過.png" alt="" aria-hidden="true">
-        <div class="h2-wrap">
-          <h2>SUPPORT</h2>
+          <h2>DESIGNED FOR CONSISTENCY</h2>
           <div class="underline" aria-hidden="true"></div>
         </div>
       </div>
 
       <div class="card">
         <p class="jp">
-          不具合報告・ご要望・サブスクリプションのご相談は、以下からご連絡ください。
+          PMPの学習では、長時間の集中よりも、日々の小さな積み重ねが結果につながります。
+        </p>
+        <p class="jp">
+          PMP BOOSTは、余計な刺激や迷いを減らし、「また開きたくなる」感覚を大切に設計しています。
+        </p>
+
+        <p class="en">
+          Consistency matters more than intensity in PMP preparation.
         </p>
         <p class="en">
-          For bug reports, requests, or subscription questions, contact us via the options below.
+          PMP BOOST reduces noise and decision fatigue, making it easy to come back every day.
         </p>
 
-        <div class="support-grid" style="margin-top:12px;">
-          <div class="kv">
-            <div class="k">Contact Form</div>
-            <div class="v">
-              <a href="contact.html" aria-label="Open contact page">お問い合わせページ</a>
-            </div>
-          </div>
+        <!-- ✅ 対応スクショ：継続・可視化（横並び） -->
+        <div class="shot-row" aria-label="Consistency screenshots">
+          <figure class="shot">
+            <img src="assets/HomeView.jpg" alt="ホーム：今日のチャレンジ達成表示">
+            <figcaption class="shot-cap">
+              習慣化：今日の達成
+              <span class="sub">毎日の流れが崩れにくい</span>
+            </figcaption>
+          </figure>
 
-          <div class="kv">
-            <div class="k">Email</div>
-            <div class="v">
-              <!-- ✅ Apple審査では実在するメールが望ましいので、ここは必ずあなたのメールに置き換えてください -->
-              <a href="mailto:YOUR_SUPPORT_EMAIL@example.com" aria-label="Send email to support">YOUR_SUPPORT_EMAIL@example.com</a>
-            </div>
-          </div>
-
-          <div class="kv">
-            <div class="k">Privacy Policy</div>
-            <div class="v"><a href="privacy.html" aria-label="Open privacy policy">privacy.html</a></div>
-          </div>
-
-          <div class="kv">
-            <div class="k">Terms</div>
-            <div class="v">
-              <!-- もし terms.html があるなら差し替え -->
-              <a href="terms.html" aria-label="Open terms of use">terms.html</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="note">
-          サブスクリプションの「購入を復元」は、アプリ内「設定」→「購入を復元」から実行できます。
+          <figure class="shot">
+            <img src="assets/AnalyticsView.jpg" alt="学習の記録：進捗と学習量">
+            <figcaption class="shot-cap">
+              可視化：積み重ね
+              <span class="sub">進捗を確認して続けやすく</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
     <a class="back" href="index.html" aria-label="Back to Home">← Back to Home</a>
 
+    <!-- ✅ フッター：不要なリンクは削除（Privacyのみ残す） -->
     <footer>
-      <div class="footer-links" aria-label="Footer links">
-        <a class="footer-link" href="contact.html" aria-label="Open contact">お問い合わせ</a>
-        <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">プライバシーポリシー</a>
-        <a class="footer-link" href="terms.html" aria-label="Open terms">利用規約</a>
-      </div>
+      <a class="footer-link" href="privacy.html" aria-label="Open privacy policy">プライバシーポリシー</a>
       <span>© TendOn</span>
     </footer>
 
   </div>
-
-  <script>
-    /**
-     * ✅ App Store URL（リリース後に入れる）
-     * 例: https://apps.apple.com/jp/app/idXXXXXXXXXX
-     */
-    const APP_STORE_URL = "";
-
-    (function () {
-      const slot = document.getElementById("appstore-slot");
-      const link = document.getElementById("appstore-link");
-      if (!slot || !link) return;
-
-      if (APP_STORE_URL && APP_STORE_URL.trim().length > 0) {
-        link.href = APP_STORE_URL.trim();
-        slot.hidden = false;
-      } else {
-        slot.hidden = true;
-      }
-    })();
-  </script>
 </body>
 </html>
