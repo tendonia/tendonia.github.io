@@ -12,8 +12,8 @@
   <style>
     :root{
       /* ===== Color ===== */
-      --bg: #fbfcff;   
-      --bg2: #f4f7ff;      
+      --bg: #fbfcff;
+      --bg2: #f4f7ff;
       --surface: rgba(255,255,255,0.92);
       --text: #0f0f10;
       --text-sub: rgba(15,15,16,0.62);
@@ -67,7 +67,7 @@
       font-family: var(--font);
       margin:0;
       padding: var(--pageY) var(--pageX);
-      background: var(--bg);       
+      background: var(--bg);
       color: var(--text);
       line-height: var(--lh);
       -webkit-font-smoothing: antialiased;
@@ -226,11 +226,22 @@
     /* About card */
     .about-card{
       padding: 20px 20px;
-      user-select: none; 
+      user-select: none;
+      position: relative;
+      overflow: hidden;  
+      cursor: pointer;  
     }
+    .about-card:focus-visible{
+      outline: 2px solid rgba(15,15,16,0.22);
+      outline-offset: 4px;
+      border-radius: 18px;
+    }
+
     .about-stack{
       display:grid;
       gap: 10px;
+      position: relative;
+      z-index: 1;
     }
     .about-gap{ height: 6px; }
 
@@ -249,6 +260,75 @@
       letter-spacing: 0.02em;
       line-height: 1.75;
       color: var(--text-sub);
+    }
+
+    /* ===== About Shake + Peek (Random Icon) ===== */
+
+    .about-card.shake{
+      animation: shakeX 420ms cubic-bezier(.36,.07,.19,.97) both;
+      transform: translate3d(0,0,0);
+    }
+    @keyframes shakeX{
+      0%   { transform: translate3d(0,0,0); }
+      10%  { transform: translate3d(-2px,0,0); }
+      20%  { transform: translate3d( 3px,0,0); }
+      30%  { transform: translate3d(-4px,0,0); }
+      40%  { transform: translate3d( 4px,0,0); }
+      50%  { transform: translate3d(-3px,0,0); }
+      60%  { transform: translate3d( 3px,0,0); }
+      70%  { transform: translate3d(-2px,0,0); }
+      80%  { transform: translate3d( 2px,0,0); }
+      100% { transform: translate3d(0,0,0); }
+    }
+
+    .peek{
+      position: absolute;
+      right: 16px;
+      bottom: 0px;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      pointer-events: none;
+      display: grid;
+      place-items: center;
+
+      transform: translateY(120%);
+      opacity: 0;
+
+      transition:
+        transform 520ms cubic-bezier(.2,.85,.2,1),
+        opacity 220ms ease;
+
+      filter: drop-shadow(0 12px 18px rgba(0,0,0,0.10));
+      z-index: 0;
+    }
+
+    .peek-icon{
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .about-card.is-open .peek{
+      transform: translateY(12%);
+      opacity: 1;
+      animation: peekBop 560ms 140ms both;
+    }
+    @keyframes peekBop{
+      0%   { transform: translateY(20%); }
+      45%  { transform: translateY(4%); }
+      70%  { transform: translateY(14%); }
+      100% { transform: translateY(12%); }
+    }
+
+    .peek-icon{
+      transition: opacity 120ms ease;
+    }
+    .peek-icon.is-swapping{
+      opacity: 0.0;
     }
 
     .meta{
@@ -374,6 +454,8 @@
       .container{ animation:none; }
       .drop{ display:none; }
       .hero-logo-btn, .card-link, .footer-link{ transition:none; }
+      .about-card.shake{ animation:none; }
+      .peek{ transition:none; animation:none; }
     }
 
     /* ===== Mobile ===== */
@@ -388,15 +470,11 @@
       .hero-icons img{ height: 52px; width: 52px; }
       .pill{ margin-right: 12px; }
 
-      /* ✅ 修正：スマホでもPCと同じ左右配置 */
       footer{
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
       }
-
-      /* ✅ 折り返し対策（必要なら） */
-      /* footer{ flex-wrap: wrap; } */
 
       .about-card{ padding: 18px 16px; }
     }
@@ -431,7 +509,13 @@
         </div>
       </div>
 
-      <div class="card about-card" aria-label="About TendOn">
+      <!-- ✅ About card (clickable) -->
+      <div class="card about-card" id="aboutCard" aria-label="About TendOn" role="button" tabindex="0">
+        <!-- ✅ Peek icon (random per click) -->
+        <div class="peek" aria-hidden="true">
+          <img class="peek-icon" id="peekIcon" src="assets/yellow-透過.png" alt="">
+        </div>
+
         <div class="about-stack">
           <p class="about-text">TendOnは、学習や生産性を支えるiOSアプリを企画・開発しています。</p>
           <p class="about-text">“迷わず使えること”と“続けられること”を大切に、遊び心を忘れない体験を届けます。</p>
@@ -559,6 +643,67 @@
       logoBtn.addEventListener('keydown', (e) => {
         if(e.key === 'Enter' || e.key === ' ') dropOnce();
       });
+
+      // ===== About: Shake + Peek (Random Icon) =====
+      const aboutCard = document.getElementById('aboutCard');
+      const peekIcon = document.getElementById('peekIcon');
+
+      const peekSources = [
+        "assets/blue-透過.png",
+        "assets/yellow-透過.png",
+        "assets/red-透過.png"
+         "assets/tendon_logo-透過.png"
+      ];
+
+      function pickRandom(arr){
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      let busy = false;
+
+      function triggerAboutPeek(){
+        if(!aboutCard || !peekIcon) return;
+        if(busy) return;
+        busy = true;
+
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        const nextSrc = pickRandom(peekSources);
+        peekIcon.classList.add('is-swapping');
+        window.setTimeout(()=>{
+          peekIcon.src = nextSrc;
+          peekIcon.classList.remove('is-swapping');
+        }, 70);
+
+        if(reduce){
+          aboutCard.classList.toggle('is-open');
+          busy = false;
+          return;
+        }
+
+        aboutCard.classList.remove('shake');
+        void aboutCard.offsetWidth; // reflow
+        aboutCard.classList.add('shake');
+
+        window.setTimeout(()=>{
+          aboutCard.classList.toggle('is-open');
+        }, 180);
+
+        window.setTimeout(()=>{
+          aboutCard.classList.remove('shake');
+          busy = false;
+        }, 520);
+      }
+
+      if(aboutCard){
+        aboutCard.addEventListener('click', triggerAboutPeek);
+        aboutCard.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            triggerAboutPeek();
+          }
+        });
+      }
     })();
   </script>
 </body>
