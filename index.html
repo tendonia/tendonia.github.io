@@ -387,7 +387,17 @@
       }
       .hero-icons img{ height: 52px; width: 52px; }
       .pill{ margin-right: 12px; }
-      footer{ flex-direction:column; align-items:flex-start; }
+
+      /* ✅ 修正：スマホでもPCと同じ左右配置 */
+      footer{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* ✅ 折り返し対策（必要なら） */
+      /* footer{ flex-wrap: wrap; } */
+
       .about-card{ padding: 18px 16px; }
     }
   </style>
