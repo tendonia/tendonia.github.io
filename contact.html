@@ -5,9 +5,12 @@
   <title>Contact – TendOn</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Contact TendOn for inquiries and support." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
   <!-- Noto Sans JP -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/common.css" />
 
   <style>
     :root{
@@ -48,42 +51,6 @@
       --btnH: 44px;
     }
 
-    *{ box-sizing:border-box; }
-    html, body { height:100%; }
-
-    body{
-      font-family: var(--font);
-      margin:0;
-      padding: var(--pageY) var(--pageX);
-      background: var(--bg); 
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      line-height: 1.8;
-      position: relative;
-    }
-    body::before{
-      content:"";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background:
-        radial-gradient(1100px 520px at 18% -12%, rgba(43,108,255,0.10), transparent 62%),
-        radial-gradient(1200px 620px at 78% 112%, rgba(43,108,255,0.08), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-    }
-
-    .container{
-      max-width: var(--container);
-      margin: 0 auto;
-      animation: fadeIn .6s ease-out both;
-    }
-    @keyframes fadeIn{
-      from{ opacity:0; transform: translateY(8px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
-
-    a{ color: inherit; text-decoration:none; }
     a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
       outline: 2px solid rgba(15,15,16,0.22);
       outline-offset: 4px;
@@ -201,55 +168,6 @@
 
     .hp-wrap{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
 
-    .back{
-      display:inline-flex;
-      align-items:center;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      color: rgba(15,15,16,0.62);
-      margin-top: 18px;
-      transition: background .18s ease, border-color .18s ease, transform .18s ease;
-      font-weight: 700;
-      font-size: 12.5px;
-      letter-spacing: 0.02em;
-    }
-    .back:hover{
-      background: rgba(15,15,16,0.03);
-      border-color: rgba(15,15,16,0.10);
-      transform: translateY(-1px);
-    }
-
-    footer{
-      margin-top: 64px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(15,15,16,0.10);
-      font-size: 12.5px;
-      color: var(--text-faint);
-      display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items:center;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    .footer-link{
-      display:inline-flex;
-      align-items:center;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      color: rgba(15,15,16,0.62);
-      transition: background .18s ease, border-color .18s ease, transform .18s ease;
-      white-space: nowrap;
-    }
-    .footer-link:hover{
-      background: rgba(15,15,16,0.03);
-      border-color: rgba(15,15,16,0.10);
-      transform: translateY(-1px);
-    }
-
     @media (max-width: 640px){
       :root{
         --pageY: 56px;
@@ -296,13 +214,10 @@
       .btn, .back, .footer-link{ transition:none; }
     }
   </style>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-clear.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-clear.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon-clear.png" />
 </head>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-clear.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-clear.png">
-  <link rel="apple-touch-icon" href="/assets/favicon-clear.png">
-  
 <body>
   <!-- Toast only -->
   <div class="toast" id="toast" role="status" aria-live="polite">
@@ -312,7 +227,7 @@
 
   <div class="container">
     <header class="hero">
-      <img class="app-icon" src="assets/red-clear.png" alt="TendOn Contact">
+      <img class="app-icon" src="assets/red-clear.png" alt="TendOn Contact" decoding="async">
       <div>
         <h1>Contact</h1>
         <div class="subtitle-wrap">
@@ -370,16 +285,27 @@
     // ===== elements =====
     const form = document.getElementById("contactForm");
     const sendBtn = document.getElementById("sendBtn");
-    const tokenEl = document.getElementById("token");
+    const fields = {
+      name: document.getElementById("name"),
+      email: document.getElementById("email"),
+      subject: document.getElementById("subject"),
+      message: document.getElementById("message"),
+      token: document.getElementById("token"),
+      page: document.getElementById("page"),
+      ua: document.getElementById("ua"),
+      ts: document.getElementById("ts"),
+    };
 
     const toastEl = document.getElementById("toast");
     const toastTitleEl = document.getElementById("toastTitle");
     const toastMsgEl = document.getElementById("toastMsg");
 
-    // meta
-    document.getElementById("page").value = location.href;
-    document.getElementById("ua").value = navigator.userAgent;
-    document.getElementById("ts").value = new Date().toISOString();
+    function fillMeta(){
+      fields.page.value = location.href;
+      fields.ua.value = navigator.userAgent;
+      fields.ts.value = new Date().toISOString();
+    }
+    fillMeta();
 
     function showToast(title, msg){
       toastTitleEl.textContent = title || "";
@@ -411,10 +337,10 @@
     }
 
     function validateForm(){
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const subject = document.getElementById("subject").value.trim();
-      const message = document.getElementById("message").value.trim();
+      const name = fields.name.value.trim();
+      const email = fields.email.value.trim();
+      const subject = fields.subject.value.trim();
+      const message = fields.message.value.trim();
 
       if (!name || !email || !subject || !message) {
         return { ok:false, msg:"未入力の項目があります。" };
@@ -422,7 +348,7 @@
       if (!isValidEmailStrict(email)) {
         return { ok:false, msg:"有効なメールアドレスを入力してください。" };
       }
-      if (!tokenEl.value) {
+      if (!fields.token.value) {
         return { ok:false, msg:"トークン取得中です。数秒待ってから再度お試しください。" };
       }
       return { ok:true };
@@ -439,11 +365,12 @@
           cache: "no-store",
           credentials: "omit"
         });
+        if (!res.ok) throw new Error("token request failed");
 
         const data = await res.json();
         if (!data || !data.token) throw new Error("token missing");
 
-        tokenEl.value = String(data.token);
+        fields.token.value = String(data.token);
         sendBtn.disabled = false;
 
       }catch(e){
@@ -476,6 +403,7 @@
           cache: "no-store",
           credentials: "omit"
         });
+        if (!res.ok) throw new Error("submit request failed");
 
         const data = await res.json().catch(() => ({}));
 
@@ -483,25 +411,22 @@
           showToast("送信完了しました", "お問い合わせありがとうございます。");
 
           form.reset();
-
-          document.getElementById("page").value = location.href;
-          document.getElementById("ua").value = navigator.userAgent;
-          document.getElementById("ts").value = new Date().toISOString();
-          tokenEl.value = "";
+          fillMeta();
+          fields.token.value = "";
 
           await fetchToken();
         } else {
           const reason = (data && data.error) ? String(data.error) : "UNKNOWN";
           showToast("送信失敗しました", "時間をおいて再度お試しください。(" + reason + ")");
 
-          tokenEl.value = "";
+          fields.token.value = "";
           await fetchToken();
         }
 
       }catch(err){
         showToast("送信失敗しました", "ネットワーク状況をご確認ください。");
 
-        tokenEl.value = "";
+        fields.token.value = "";
         await fetchToken();
       }
     });
