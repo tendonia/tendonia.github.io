@@ -468,7 +468,7 @@
         </div>
       </div>
 
-      <div class="about-card" id="aboutCard" aria-label="About TendOn" role="button" tabindex="0">
+      <div class="about-card" id="aboutCard" aria-label="About TendOn" role="button" tabindex="0" aria-expanded="false">
 
         <div class="peek" aria-hidden="true">
           <img class="peek-icon" id="peekIcon" src="assets/tendon_logo-clear.png" alt="" loading="lazy" decoding="async">
@@ -568,6 +568,7 @@
       function rand(min, max){ return Math.random() * (max - min) + min; }
 
       function dropOnce(){
+        if(!layer) return;
         const now = Date.now();
         if(now - last < 260) return;
         last = now;
@@ -600,10 +601,10 @@
         }
       }
 
-      logoBtn.addEventListener('click', dropOnce);
-      logoBtn.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter' || e.key === ' ') dropOnce();
-      });
+      if(logoBtn){
+        // <button> already handles keyboard activation; click listener is enough.
+        logoBtn.addEventListener('click', dropOnce);
+      }
 
       // ===== About: shake + behind-pop =====
       const aboutCard = document.getElementById('aboutCard');
@@ -613,6 +614,11 @@
         "assets/shrimp1-clear.png",
         "assets/shrimp2-clear.png"
       ];
+      // Preload so the first open does not flicker while image is fetched.
+      peekSources.forEach((src)=>{
+        const img = new Image();
+        img.src = src;
+      });
 
       function pickRandom(arr){
         return arr[Math.floor(Math.random() * arr.length)];
@@ -620,19 +626,27 @@
 
       let lastPeek = "";
       function pickRandomNoRepeat(arr){
-        if(arr.length <= 1) return arr[0] || "";
-        let next = pickRandom(arr);
-        while(next === lastPeek){
-          next = pickRandom(arr);
+        const list = Array.isArray(arr) ? arr.filter(Boolean) : [];
+        if(list.length === 0) return "";
+        if(list.length === 1){
+          lastPeek = list[0];
+          return list[0];
         }
+        const candidates = list.filter((src) => src !== lastPeek);
+        const next = pickRandom(candidates.length ? candidates : list);
         lastPeek = next;
         return next;
       }
 
       let busy = false;
+      function syncAboutExpanded(){
+        if(!aboutCard) return;
+        const open = aboutCard.classList.contains('is-open');
+        aboutCard.setAttribute('aria-expanded', String(open));
+      }
 
       function triggerAbout(){
-        if(!aboutCard || !peekIcon) return;
+        if(!aboutCard) return;
         if(busy) return;
         busy = true;
 
@@ -641,17 +655,18 @@
         const isOpen = aboutCard.classList.contains('is-open');
         const willOpen = !isOpen;
 
-        if(willOpen){
+        if(willOpen && peekIcon){
           const nextSrc = pickRandomNoRepeat(peekSources);
           peekIcon.classList.add('is-swapping');
           window.setTimeout(()=>{
-            peekIcon.src = nextSrc;
+            if(nextSrc) peekIcon.src = nextSrc;
             peekIcon.classList.remove('is-swapping');
           }, 70);
         }
 
         if(reduce){
           aboutCard.classList.toggle('is-open');
+          syncAboutExpanded();
           busy = false;
           return;
         }
@@ -664,6 +679,7 @@
         // toggle open/close
         window.setTimeout(()=>{
           aboutCard.classList.toggle('is-open');
+          syncAboutExpanded();
         }, 170);
 
         window.setTimeout(()=>{
@@ -673,6 +689,7 @@
       }
 
       if(aboutCard){
+        syncAboutExpanded();
         aboutCard.addEventListener('click', triggerAbout);
         aboutCard.addEventListener('keydown', (e)=>{
           if(e.key === 'Enter' || e.key === ' '){
