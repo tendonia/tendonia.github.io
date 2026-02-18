@@ -373,6 +373,31 @@
       }
     }
 
+    async function parseSubmitResult(res){
+      const contentType = String(res.headers.get("content-type") || "").toLowerCase();
+
+      if (contentType.includes("application/json")) {
+        return res.json().catch(() => ({ ok:false, error:"INVALID_JSON" }));
+      }
+
+      const html = await res.text();
+      const hasErrorInHtml = /送信に失敗しました|Error:/u.test(html);
+      const redirectedToThanks = res.redirected && String(res.url || "").includes("action=thanks");
+      const thanksInHtml = /送信しました|Message sent successfully|お問い合わせありがとうございます/u.test(html);
+
+      if (hasErrorInHtml) {
+        return { ok:false, error:"HTML_ERROR" };
+      }
+      if (redirectedToThanks || thanksInHtml) {
+        return { ok:true, mode:"html" };
+      }
+      if (res.redirected) {
+        return { ok:true, mode:"redirect" };
+      }
+
+      return { ok:false, error:"NON_JSON_RESPONSE" };
+    }
+
     // ===========================
     // Submit via fetch (no redirect)
     // ===========================
@@ -390,8 +415,10 @@
 
         const fd = new FormData(form);
         fd.append("_mode", "json");
+        fd.append("mode", "json");
+        const submitUrl = GAS_EXEC_URL + "?_mode=json&mode=json";
 
-        const res = await fetch(GAS_EXEC_URL, {
+        const res = await fetch(submitUrl, {
           method: "POST",
           body: new URLSearchParams(fd),
           cache: "no-store",
@@ -399,7 +426,7 @@
         });
         if (!res.ok) throw new Error("submit request failed");
 
-        const data = await res.json().catch(() => ({}));
+        const data = await parseSubmitResult(res);
 
         if (data && data.ok) {
           showToast("送信完了しました", "お問い合わせありがとうございます。");
